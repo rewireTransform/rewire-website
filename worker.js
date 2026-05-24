@@ -11,7 +11,7 @@ export default {
 
     // Allow CORS from your domain
     const corsHeaders = {
-      'Access-Control-Allow-Origin': 'https://www.rewiretransform.com',
+      'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
     };
