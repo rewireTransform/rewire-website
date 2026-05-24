@@ -174,25 +174,159 @@
 })();
 
 
-// ── Contact form → Cloudflare Worker ─────────────────────────
+// ── Contact form — validation + sanitization + Web3Forms ─────
 (function () {
   const form = document.getElementById('contact-form');
   if (!form) return;
 
   const WEB3FORMS_ACCESS_KEY = 'dbbc517d-3d56-4812-9c20-81b9ea7d9534';
 
+  // Strip HTML tags and dangerous characters (XSS/injection prevention)
+  function sanitize(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#x27;')
+      .replace(/\//g, '&#x2F;')
+      .trim();
+  }
+
+  // RFC 5322 email validation
+  function isValidEmail(email) {
+    const re = /^[a-zA-Z0-9.!#$%&*+/=?^_{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z]{2,})+$/;
+    return re.test(email) && email.length <= 254;
+  }
+
+  // Detect common injection and spam patterns
+  function containsInjection(str) {
+    const patterns = [
+      /script\s*:/i,
+      /<script/i,
+      /on\w+\s*=/i,
+      /eval\s*\(/i,
+      /expression\s*\(/i,
+      /vbscript\s*:/i,
+      /\{\{.*\}\}/,
+      /(union|select|insert|update|delete|drop)\s+/i,
+    ];
+    return patterns.some(p => p.test(str));
+  }
+
+  // Show inline field error
+  function setError(field, msg) {
+    field.style.borderColor = '#ef4444';
+    field.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.15)';
+    let err = field.parentElement.querySelector('.field-error');
+    if (!err) {
+      err = document.createElement('span');
+      err.className = 'field-error';
+      err.style.cssText = 'display:block;color:#ef4444;font-size:0.75rem;margin-top:0.35rem;font-family:var(--font-mono)';
+      field.parentElement.appendChild(err);
+    }
+    err.textContent = msg;
+  }
+
+  // Clear field error
+  function clearError(field) {
+    field.style.borderColor = '';
+    field.style.boxShadow = '';
+    const err = field.parentElement.querySelector('.field-error');
+    if (err) err.remove();
+  }
+
+  // Clear errors live as user types
+  ['name', 'email', 'message', 'company'].forEach(id => {
+    const el = form.elements[id];
+    if (el) el.addEventListener('input', () => clearError(el));
+  });
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
     const btn = form.querySelector('button[type="submit"]');
     const original = btn.innerHTML;
+
+    const nameVal      = (form.elements['name']?.value      || '').trim();
+    const emailVal     = (form.elements['email']?.value     || '').trim();
+    const companyVal   = (form.elements['company']?.value   || '').trim();
+    const challengeVal = (form.elements['challenge']?.value || '').trim();
+    const messageVal   = (form.elements['message']?.value   || '').trim();
+
+    let hasError = false;
+
+    // Name
+    if (!nameVal) {
+      setError(form.elements['name'], 'Name is required.');
+      hasError = true;
+    } else if (nameVal.length < 2) {
+      setError(form.elements['name'], 'Name must be at least 2 characters.');
+      hasError = true;
+    } else if (nameVal.length > 80) {
+      setError(form.elements['name'], 'Name must be under 80 characters.');
+      hasError = true;
+    } else if (containsInjection(nameVal)) {
+      setError(form.elements['name'], 'Invalid characters in name.');
+      hasError = true;
+    }
+
+    // Email
+    if (!emailVal) {
+      setError(form.elements['email'], 'Email is required.');
+      hasError = true;
+    } else if (!isValidEmail(emailVal)) {
+      setError(form.elements['email'], 'Please enter a valid email address.');
+      hasError = true;
+    } else if (containsInjection(emailVal)) {
+      setError(form.elements['email'], 'Invalid characters in email.');
+      hasError = true;
+    }
+
+    // Company (optional)
+    if (companyVal && containsInjection(companyVal)) {
+      setError(form.elements['company'], 'Invalid characters in company name.');
+      hasError = true;
+    }
+
+    // Message
+    if (!messageVal) {
+      setError(form.elements['message'], 'Message is required.');
+      hasError = true;
+    } else if (messageVal.length < 10) {
+      setError(form.elements['message'], 'Message must be at least 10 characters.');
+      hasError = true;
+    } else if (messageVal.length > 2000) {
+      setError(form.elements['message'], 'Message must be under 2000 characters.');
+      hasError = true;
+    } else if (containsInjection(messageVal)) {
+      setError(form.elements['message'], 'Message contains invalid content.');
+      hasError = true;
+    }
+
+    if (hasError) return;
+
+    // Sanitize all fields before sending
+    const cleanName      = sanitize(nameVal);
+    const cleanEmail     = emailVal.toLowerCase();
+    const cleanCompany   = sanitize(companyVal);
+    const cleanChallenge = sanitize(challengeVal);
+    const cleanMessage   = sanitize(messageVal);
 
     btn.innerHTML = '<span class="mono">Sending...</span>';
     btn.disabled = true;
 
-    const data = new FormData(form);
-    data.append('access_key', WEB3FORMS_ACCESS_KEY);
-    data.append('subject', 'New Rewire Consulting Enquiry');
-    data.append('from_name', 'Rewire Consulting Website');
+    const data = new FormData();
+    data.append('access_key',  WEB3FORMS_ACCESS_KEY);
+    data.append('subject',     'New Rewire Consulting Enquiry — ' + cleanName);
+    data.append('from_name',   'Rewire Consulting Website');
+    data.append('replyto',     cleanEmail);
+    data.append('name',        cleanName);
+    data.append('email',       cleanEmail);
+    data.append('company',     cleanCompany || '—');
+    data.append('challenge',   cleanChallenge || '—');
+    data.append('message',     cleanMessage);
+    data.append('botcheck',    ''); // honeypot — bots fill this, humans leave it blank
 
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
