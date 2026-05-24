@@ -6,7 +6,7 @@
 (function () {
   const canvas = document.getElementById('bg-canvas');
   const ctx = canvas.getContext('2d');
-  let W, H, particles = [], connections = [];
+  let W, H, particles = [];
   const PARTICLE_COUNT = 80;
   const CONNECT_DIST = 140;
   const BLUE = '14, 165, 233';
@@ -96,11 +96,13 @@
   burger.addEventListener('click', () => {
     open = !open;
     menu.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
     document.body.style.overflow = open ? 'hidden' : '';
   });
   menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
     open = false;
     menu.classList.remove('open');
+    burger.setAttribute('aria-expanded', false);
     document.body.style.overflow = '';
   }));
 })();
@@ -172,13 +174,13 @@
 })();
 
 
-// ── Contact form (Web3Forms) ──────────────────────────────────
+// ── Contact form → Cloudflare Worker ─────────────────────────
 (function () {
   const form = document.getElementById('contact-form');
   if (!form) return;
 
-  // ✅ Replace with your key from https://web3forms.com
-  const WEB3FORMS_ACCESS_KEY = 'YOUR_ACCESS_KEY_HERE';
+  // ✅ Replace this URL after you deploy your Worker (Step 3 in instructions)
+  const WORKER_URL = 'https://rewire-form.YOUR_SUBDOMAIN.workers.dev';
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -188,19 +190,22 @@
     btn.innerHTML = '<span class="mono">Sending...</span>';
     btn.disabled = true;
 
-    const data = new FormData(form);
-    data.append('access_key', WEB3FORMS_ACCESS_KEY);
-    data.append('subject', 'New Rewire Consulting Enquiry');
-    data.append('from_name', 'Rewire Consulting Website');
+    const payload = {
+      name:      form.name.value,
+      company:   form.company.value,
+      email:     form.email.value,
+      challenge: form.challenge.value,
+      message:   form.message.value,
+    };
 
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
+      const res = await fetch(WORKER_URL, {
         method: 'POST',
-        body: data
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       });
-      const json = await res.json();
 
-      if (json.success) {
+      if (res.ok) {
         btn.innerHTML = '<span class="mono">✓ Message sent!</span>';
         btn.style.background = '#16a34a';
         form.reset();
@@ -210,7 +215,7 @@
           btn.disabled = false;
         }, 4000);
       } else {
-        throw new Error(json.message || 'Submission failed');
+        throw new Error('Worker returned error');
       }
     } catch (err) {
       btn.innerHTML = '<span class="mono">✗ Error — try again</span>';
