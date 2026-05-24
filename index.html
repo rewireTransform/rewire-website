@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rewire Consulting — Process Optimization & Business Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Background canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Nav -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <img src="Rewire.png" alt="Rewire Consulting" class="logo-img" />
+      </div>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact" class="nav-cta">Get Started</a></li>
+      </ul>
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Get Started</a></li>
+    </ul>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <div class="hero-tag mono">// Rewire your operations</div>
+      <h1 class="hero-title">
+        <span class="line" data-text="Business">Business</span>
+        <span class="line accent-word" data-text="Intelligence">Intelligence</span>
+        <span class="line" data-text="Redefined">Redefined</span>
+      </h1>
+      <p class="hero-sub">
+        We engineer smarter systems — fusing process optimization, automation, and analytics 
+        to transform how your organization thinks, moves, and grows.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Start the Rewire</a>
+        <a href="#services" class="btn-ghost">Our Services <span class="arrow">→</span></a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num" data-target="87">0</span><span class="stat-unit">%</span>
+          <span class="stat-label">Avg. Efficiency Gain</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-target="3">0</span><span class="stat-unit">x</span>
+          <span class="stat-label">Faster Decision Cycles</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-target="150">0</span><span class="stat-unit">+</span>
+          <span class="stat-label">Processes Automated</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="circuit-diagram">
+        <svg viewBox="0 0 500 400" class="circuit-svg" id="circuit-svg">
+          <!-- Animated circuit paths -->
+          <defs>
+            <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:0" />
+              <stop offset="50%" style="stop-color:#0ea5e9;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#0ea5e9;stop-opacity:0" />
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <!-- Grid lines -->
+          <g class="grid-lines" opacity="0.08">
+            <line x1="0" y1="80" x2="500" y2="80" stroke="white" stroke-width="0.5"/>
+            <line x1="0" y1="160" x2="500" y2="160" stroke="white" stroke-width="0.5"/>
+            <line x1="0" y1="240" x2="500" y2="240" stroke="white" stroke-width="0.5"/>
+            <line x1="0" y1="320" x2="500" y2="320" stroke="white" stroke-width="0.5"/>
+            <line x1="80" y1="0" x2="80" y2="400" stroke="white" stroke-width="0.5"/>
+            <line x1="160" y1="0" x2="160" y2="400" stroke="white" stroke-width="0.5"/>
+            <line x1="240" y1="0" x2="240" y2="400" stroke="white" stroke-width="0.5"/>
+            <line x1="320" y1="0" x2="320" y2="400" stroke="white" stroke-width="0.5"/>
+            <line x1="400" y1="0" x2="400" y2="400" stroke="white" stroke-width="0.5"/>
+          </g>
+          <!-- Circuit paths -->
+          <path class="c-path" d="M 60 200 L 160 200 L 160 120 L 340 120 L 340 200 L 440 200" stroke="#1e3a4a" stroke-width="2" fill="none"/>
+          <path class="c-path" d="M 60 200 L 160 200 L 160 280 L 340 280 L 340 200 L 440 200" stroke="#1e3a4a" stroke-width="2" fill="none"/>
+          <path class="c-path" d="M 250 80 L 250 120" stroke="#1e3a4a" stroke-width="2" fill="none"/>
+          <path class="c-path" d="M 250 280 L 250 320" stroke="#1e3a4a" stroke-width="2" fill="none"/>
+          <path class="c-path" d="M 160 160 L 80 160 L 80 240 L 160 240" stroke="#1e3a4a" stroke-width="2" fill="none"/>
+          <path class="c-path" d="M 340 160 L 420 160 L 420 240 L 340 240" stroke="#1e3a4a" stroke-width="2" fill="none"/>
+          <!-- Animated pulses -->
+          <circle class="pulse-dot" r="3" fill="#0ea5e9" filter="url(#glow)">
+            <animateMotion dur="3s" repeatCount="indefinite" path="M 60 200 L 160 200 L 160 120 L 340 120 L 340 200 L 440 200"/>
+          </circle>
+          <circle class="pulse-dot" r="3" fill="#38bdf8" filter="url(#glow)">
+            <animateMotion dur="4s" repeatCount="indefinite" begin="1s" path="M 60 200 L 160 200 L 160 280 L 340 280 L 340 200 L 440 200"/>
+          </circle>
+          <circle class="pulse-dot" r="2" fill="#7dd3fc" filter="url(#glow)">
+            <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.5s" path="M 160 160 L 80 160 L 80 240 L 160 240"/>
+          </circle>
+          <circle class="pulse-dot" r="2" fill="#0ea5e9" filter="url(#glow)">
+            <animateMotion dur="2.5s" repeatCount="indefinite" begin="1.5s" path="M 340 160 L 420 160 L 420 240 L 340 240"/>
+          </circle>
+          <!-- Nodes -->
+          <g class="nodes">
+            <circle cx="250" cy="200" r="18" fill="#0d1117" stroke="#0ea5e9" stroke-width="2" filter="url(#glow)"/>
+            <circle cx="250" cy="200" r="8" fill="#0ea5e9" opacity="0.6">
+              <animate attributeName="r" values="8;12;8" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="160" cy="200" r="6" fill="#0d1117" stroke="#0ea5e9" stroke-width="1.5"/>
+            <circle cx="340" cy="200" r="6" fill="#0d1117" stroke="#0ea5e9" stroke-width="1.5"/>
+            <circle cx="250" cy="120" r="5" fill="#0ea5e9" opacity="0.7"/>
+            <circle cx="250" cy="280" r="5" fill="#0ea5e9" opacity="0.7"/>
+            <circle cx="80" cy="200" r="5" fill="#38bdf8" opacity="0.5"/>
+            <circle cx="420" cy="200" r="5" fill="#38bdf8" opacity="0.5"/>
+          </g>
+          <!-- Labels -->
+          <text x="250" y="196" text-anchor="middle" fill="#0ea5e9" font-size="8" font-family="DM Mono" class="node-label">CORE</text>
+          <text x="250" y="204" text-anchor="middle" fill="#0ea5e9" font-size="6" font-family="DM Mono" class="node-label">SYS</text>
+        </svg>
+        <!-- Floating metric cards -->
+        <div class="metric-card" style="top:5%;left:0%;">
+          <div class="metric-dot"></div>
+          <span class="mono">Process Score</span>
+          <strong>98.4%</strong>
+        </div>
+        <div class="metric-card" style="bottom:10%;right:0%;">
+          <div class="metric-dot" style="background:#22d3ee;"></div>
+          <span class="mono">Automation Rate</span>
+          <strong>94.1%</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ticker -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span>Process Optimization</span><span class="sep">◆</span>
+      <span>Workflow Automation</span><span class="sep">◆</span>
+      <span>Business Intelligence</span><span class="sep">◆</span>
+      <span>Technology Consulting</span><span class="sep">◆</span>
+      <span>Data Analytics</span><span class="sep">◆</span>
+      <span>Systems Integration</span><span class="sep">◆</span>
+      <span>Digital Transformation</span><span class="sep">◆</span>
+      <span>Process Optimization</span><span class="sep">◆</span>
+      <span>Workflow Automation</span><span class="sep">◆</span>
+      <span>Business Intelligence</span><span class="sep">◆</span>
+      <span>Technology Consulting</span><span class="sep">◆</span>
+      <span>Data Analytics</span><span class="sep">◆</span>
+      <span>Systems Integration</span><span class="sep">◆</span>
+      <span>Digital Transformation</span><span class="sep">◆</span>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <div class="mono section-tag">// What we do</div>
+        <h2 class="section-title">Four pillars.<br />One rewired business.</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card" data-index="01">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 24 L20 12 L32 24 L20 36 Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M28 20 L40 12 L40 36 L28 28" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <circle cx="20" cy="24" r="3" fill="currentColor"/>
+            </svg>
+          </div>
+          <span class="service-num mono">01</span>
+          <h3>Process Optimization</h3>
+          <p>We map, analyze, and redesign your core workflows — eliminating friction, reducing cycle times, and unlocking latent capacity across your organization.</p>
+          <ul class="service-tags">
+            <li>Value Stream Mapping</li>
+            <li>Lean Six Sigma</li>
+            <li>KPI Architecture</li>
+          </ul>
+          <a href="#contact" class="service-link mono">Explore →</a>
+        </div>
+        <div class="service-card featured" data-index="02">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="8" y="28" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="22" y="18" width="10" height="22" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="36" y="8" width="10" height="32" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M13 28 L27 18 L41 8" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/>
+            </svg>
+          </div>
+          <span class="service-num mono">02</span>
+          <h3>Business Intelligence</h3>
+          <p>Turn raw data into strategic advantage. We build BI ecosystems — dashboards, data pipelines, and predictive models — that make decisions obvious.</p>
+          <ul class="service-tags">
+            <li>Dashboard Design</li>
+            <li>Data Warehousing</li>
+            <li>Predictive Analytics</li>
+          </ul>
+          <a href="#contact" class="service-link mono">Explore →</a>
+        </div>
+        <div class="service-card" data-index="03">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="24" r="5" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="36" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="36" cy="36" r="5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M17 24 L31 13.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M17 24 L31 34.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M36 17 L36 31" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2"/>
+            </svg>
+          </div>
+          <span class="service-num mono">03</span>
+          <h3>Automation Engineering</h3>
+          <p>We design and deploy intelligent automation — RPA, workflow orchestration, and AI-assisted processes — that handle the repetitive so your team can focus on what matters.</p>
+          <ul class="service-tags">
+            <li>RPA Implementation</li>
+            <li>API Integration</li>
+            <li>AI Workflows</li>
+          </ul>
+          <a href="#contact" class="service-link mono">Explore →</a>
+        </div>
+        <div class="service-card" data-index="04">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="8" y="8" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="26" y="8" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="8" y="26" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="26" y="26" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <span class="service-num mono">04</span>
+          <h3>Technology Consulting</h3>
+          <p>From tech stack audits to full digital transformations — we align your technology investments with your strategic goals, ensuring every tool earns its place.</p>
+          <ul class="service-tags">
+            <li>Tech Stack Audit</li>
+            <li>Systems Architecture</li>
+            <li>Change Management</li>
+          </ul>
+          <a href="#contact" class="service-link mono">Explore →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section class="process" id="process">
+    <div class="container">
+      <div class="section-header">
+        <div class="mono section-tag">// How we work</div>
+        <h2 class="section-title">A precision-engineered<br />engagement model.</h2>
+      </div>
+      <div class="process-track">
+        <div class="process-line"></div>
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="step-node">
+              <span class="mono">01</span>
+            </div>
+            <div class="step-content">
+              <h3>Diagnose</h3>
+              <p>We embed with your team to understand your systems, pain points, and strategic objectives — no templates, no assumptions.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-node">
+              <span class="mono">02</span>
+            </div>
+            <div class="step-content">
+              <h3>Design</h3>
+              <p>We architect a bespoke roadmap — mapping improvements, automation opportunities, and data infrastructure to measurable outcomes.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-node">
+              <span class="mono">03</span>
+            </div>
+            <div class="step-content">
+              <h3>Deploy</h3>
+              <p>We implement with precision — building, testing, and launching solutions with minimal disruption and maximum adoption.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-node">
+              <span class="mono">04</span>
+            </div>
+            <div class="step-content">
+              <h3>Optimize</h3>
+              <p>We monitor, iterate, and refine — ensuring every solution compounds in value long after the engagement concludes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about" id="about">
+    <div class="container about-inner">
+      <div class="about-left">
+        <div class="mono section-tag">// About Rewire</div>
+        <h2>We don't consult.<br />We rewire.</h2>
+        <p>Rewire Consulting was built on a simple belief: most organizations aren't held back by a lack of effort — they're held back by outdated systems, disconnected data, and manual processes that quietly drain capacity every day.</p>
+        <p>We're operators and engineers first. Every recommendation we make, we've implemented ourselves. We measure success in your results, not our deliverables.</p>
+        <div class="about-values">
+          <div class="value-item">
+            <span class="value-icon mono">⚡</span>
+            <div>
+              <strong>Embedded Approach</strong>
+              <span>We work inside your organization, not at arm's length.</span>
+            </div>
+          </div>
+          <div class="value-item">
+            <span class="value-icon mono">◎</span>
+            <div>
+              <strong>Outcome-Driven</strong>
+              <span>We're measured by what changes, not what we deliver.</span>
+            </div>
+          </div>
+          <div class="value-item">
+            <span class="value-icon mono">▸</span>
+            <div>
+              <strong>Built to Last</strong>
+              <span>We build systems your team can own and evolve.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-right">
+        <div class="about-visual">
+          <div class="orbit-container">
+            <div class="orbit-center">
+              <img src="Rewire.png" alt="Rewire" class="orbit-logo"/>
+            </div>
+            <div class="orbit orbit-1">
+              <div class="orbit-item" style="--angle:0deg">
+                <span>Process</span>
+              </div>
+              <div class="orbit-item" style="--angle:90deg">
+                <span>Data</span>
+              </div>
+              <div class="orbit-item" style="--angle:180deg">
+                <span>Automation</span>
+              </div>
+              <div class="orbit-item" style="--angle:270deg">
+                <span>Technology</span>
+              </div>
+            </div>
+            <div class="orbit orbit-2">
+              <div class="orbit-item small" style="--angle:45deg">
+                <span>BI</span>
+              </div>
+              <div class="orbit-item small" style="--angle:135deg">
+                <span>RPA</span>
+              </div>
+              <div class="orbit-item small" style="--angle:225deg">
+                <span>AI</span>
+              </div>
+              <div class="orbit-item small" style="--angle:315deg">
+                <span>API</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="contact-left">
+          <div class="mono section-tag">// Let's talk</div>
+          <h2>Ready to start<br />your rewire?</h2>
+          <p>Tell us about your challenges. We'll tell you what's possible.</p>
+          <div class="contact-info">
+            <a href="mailto:hello@rewireconsulting.com" class="mono contact-link">hello@rewireconsulting.com</a>
+          </div>
+        </div>
+        <form class="contact-form" id="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="mono" for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <label class="mono" for="company">Company</label>
+              <input type="text" id="company" name="company" placeholder="Your company" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="mono" for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label class="mono" for="challenge">Primary challenge</label>
+            <select id="challenge" name="challenge">
+              <option value="">Select a focus area</option>
+              <option>Process Optimization</option>
+              <option>Business Intelligence</option>
+              <option>Automation Engineering</option>
+              <option>Technology Consulting</option>
+              <option>Multiple / Unsure</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="mono" for="message">Tell us more</label>
+            <textarea id="message" name="message" rows="4" placeholder="Describe your challenge or what you're trying to achieve..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary full-width">Send Message <span class="mono">→</span></button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">
+        <img src="Rewire.png" alt="Rewire Consulting" />
+        <span class="mono footer-tagline">// Rewiring operations since 2020</span>
+      </div>
+      <nav class="footer-nav">
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="footer-copy mono">
+        © 2025 Rewire Consulting. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
