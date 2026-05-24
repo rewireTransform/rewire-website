@@ -179,8 +179,7 @@
   const form = document.getElementById('contact-form');
   if (!form) return;
 
-  // ✅ Replace this URL after you deploy your Worker (Step 3 in instructions)
-  const WORKER_URL = 'https://rewire-form.andres-f72.workers.dev';
+  const WEB3FORMS_ACCESS_KEY = 'dbbc517d-3d56-4812-9c20-81b9ea7d9534';
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -190,22 +189,19 @@
     btn.innerHTML = '<span class="mono">Sending...</span>';
     btn.disabled = true;
 
-    const payload = {
-      name:      form.name.value,
-      company:   form.company.value,
-      email:     form.email.value,
-      challenge: form.challenge.value,
-      message:   form.message.value,
-    };
+    const data = new FormData(form);
+    data.append('access_key', WEB3FORMS_ACCESS_KEY);
+    data.append('subject', 'New Rewire Consulting Enquiry');
+    data.append('from_name', 'Rewire Consulting Website');
 
     try {
-      const res = await fetch(WORKER_URL, {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: data
       });
+      const json = await res.json();
 
-      if (res.ok) {
+      if (json.success) {
         btn.innerHTML = '<span class="mono">✓ Message sent!</span>';
         btn.style.background = '#16a34a';
         form.reset();
@@ -215,7 +211,7 @@
           btn.disabled = false;
         }, 4000);
       } else {
-        throw new Error('Worker returned error');
+        throw new Error(json.message || 'Submission failed');
       }
     } catch (err) {
       btn.innerHTML = '<span class="mono">✗ Error — try again</span>';
