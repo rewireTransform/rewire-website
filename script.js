@@ -180,7 +180,7 @@
   if (!form) return;
 
   // ✅ Replace this URL after you deploy your Worker (Step 3 in instructions)
-  const WORKER_URL = 'https://rewire-form.YOUR_SUBDOMAIN.workers.dev';
+  const WORKER_URL = 'https://rewire-form.andres-f72.workers.dev';
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
