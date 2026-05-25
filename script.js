@@ -195,7 +195,7 @@
 
   // RFC 5322 email validation
   function isValidEmail(email) {
-    const re = /^[a-zA-Z0-9.!#$%&*+/=?^_{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z]{2,})+$/;
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     return re.test(email) && email.length <= 254;
   }
 
