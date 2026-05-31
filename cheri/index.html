@@ -311,23 +311,124 @@ h1.hero-title strong{font-weight:600;color:var(--teal-l);}
 
 /* ─── STORY ───────────────────────────── */
 .story{
-  position:relative;background:var(--teal-d);color:#fff;
+  position:relative;background:var(--ink);color:#fff;
   padding:clamp(5rem,10vw,9rem) clamp(1.2rem,5vw,4rem);
-  text-align:center;overflow:hidden;
+  overflow:hidden;
 }
 .story-blob{position:absolute;border-radius:50%;filter:blur(65px);animation:blob 10s ease-in-out infinite;}
-.story-blob-1{width:500px;height:500px;background:var(--sky);top:-120px;left:-100px;opacity:.12;}
-.story-blob-2{width:420px;height:420px;background:var(--rose);bottom:-80px;right:-80px;opacity:.12;animation-delay:-5s;}
+.story-blob-1{width:500px;height:500px;background:var(--sky);top:-120px;left:-100px;opacity:.1;}
+.story-blob-2{width:420px;height:420px;background:var(--rose);bottom:-80px;right:-80px;opacity:.1;animation-delay:-5s;}
 @keyframes blob{0%,100%{transform:scale(1) translate(0,0)}50%{transform:scale(1.1) translate(14px,-14px)}}
-.story-inner{position:relative;z-index:1;}
-.story .eyebrow{color:rgba(191,227,230,.6);}
-.story h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,6vw,4.5rem);font-weight:300;margin-bottom:1.2rem;}
-.story h2 em{font-style:italic;color:var(--rose);}
-.story-body{max-width:42rem;margin:0 auto 3rem;font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-style:italic;color:rgba(253,250,244,.75);line-height:1.68;}
-.story-body .hi{font-style:normal;font-weight:600;color:var(--rose);}
-.stats{display:flex;justify-content:center;gap:clamp(2rem,6vw,5rem);flex-wrap:wrap;}
+.story-inner{position:relative;z-index:1;max-width:780px;margin:0 auto;}
+
+/* Header */
+.story-header{text-align:center;margin-bottom:2.8rem;}
+.story .eyebrow{color:rgba(191,227,230,.5);text-align:center;display:block;}
+.story-header h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.4rem,5.5vw,4rem);font-weight:300;
+  margin-top:.5rem;line-height:1.05;
+}
+.story-header h2 em{font-style:italic;color:var(--rose);}
+
+/* Language toggle */
+.story-lang{display:flex;gap:.5rem;justify-content:center;margin-bottom:3rem;}
+.lang-btn{
+  background:transparent;border:1.5px solid rgba(255,255,255,.18);
+  color:rgba(255,255,255,.45);padding:.4rem 1.2rem;border-radius:50px;
+  cursor:pointer;font-family:'Outfit';font-size:.8rem;font-weight:500;
+  letter-spacing:1px;text-transform:uppercase;transition:all .25s;
+}
+.lang-btn.active{background:var(--rose);border-color:var(--rose);color:var(--ink);font-weight:700;}
+
+/* Content panels */
+.story-content{display:none;}
+.story-content.active{display:block;}
+
+/* Lead quote */
+.story-lead{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(1.4rem,2.8vw,2rem);color:rgba(255,255,255,.92);
+  line-height:1.5;text-align:center;
+  margin-bottom:2.8rem;padding-bottom:2.4rem;
+  border-bottom:1px solid rgba(255,255,255,.09);
+}
+
+/* Body paragraphs */
+.story-para{
+  font-size:1rem;color:rgba(253,250,244,.65);
+  line-height:1.82;margin-bottom:1.4rem;
+}
+
+/* Pull quote */
+.story-pull{
+  border-left:3px solid var(--rose);
+  padding:.9rem 1.4rem;margin:2.2rem 0;
+  font-family:'Cormorant Garamond',serif;font-size:clamp(1.25rem,2.4vw,1.55rem);
+  font-style:italic;color:rgba(255,255,255,.88);line-height:1.55;
+}
+
+/* Chéri name card */
+.story-name-card{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(232,167,160,.25);
+  border-radius:20px;padding:2rem 1.8rem;
+  margin:2.4rem 0;text-align:center;
+}
+.story-name-card .french{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(2.4rem,5vw,3.4rem);font-weight:300;
+  color:var(--rose);line-height:1;
+}
+.story-name-card .meaning{
+  font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(253,250,244,.38);margin-top:.4rem;
+}
+.story-name-card .desc{
+  color:rgba(253,250,244,.65);line-height:1.72;
+  margin-top:1.1rem;font-size:.96rem;
+}
+
+/* Gift list */
+.story-for{
+  list-style:none;margin:1.4rem 0 2rem;
+  display:flex;flex-direction:column;gap:.55rem;
+}
+.story-for li{
+  display:flex;align-items:center;gap:.75rem;
+  color:rgba(253,250,244,.68);font-size:.96rem;
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;
+}
+.story-for li::before{content:'';width:22px;height:1.5px;background:var(--rose);flex-shrink:0;}
+
+/* Making section */
+.story-making{
+  background:rgba(58,141,140,.1);border-radius:16px;
+  padding:1.6rem;margin:2rem 0;
+}
+.story-making p{
+  color:rgba(253,250,244,.65);line-height:1.78;font-size:.97rem;
+}
+.story-making p+p{margin-top:.7rem;}
+
+/* Closing */
+.story-close{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(1.4rem,3vw,2rem);color:rgba(255,255,255,.9);
+  text-align:center;margin-top:3rem;padding-top:2.8rem;
+  border-top:1px solid rgba(255,255,255,.09);line-height:1.5;
+}
+.story-sign{
+  display:block;margin-top:1.2rem;
+  font-family:'Cormorant Garamond',serif;font-style:normal;
+  font-size:1.1rem;font-weight:600;
+  color:var(--rose);letter-spacing:.5px;
+}
+
+/* Stats */
+.stats{display:flex;justify-content:center;gap:clamp(2rem,6vw,5rem);flex-wrap:wrap;margin-top:3.5rem;padding-top:3rem;border-top:1px solid rgba(255,255,255,.07);}
 .stat .num{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:600;color:var(--rose);}
-.stat .label{font-size:.74rem;letter-spacing:2px;text-transform:uppercase;color:rgba(253,250,244,.45);}
+.stat .label{font-size:.74rem;letter-spacing:2px;text-transform:uppercase;color:rgba(253,250,244,.38);}
 
 /* ─── CONTACT ─────────────────────────── */
 .contact{background:var(--cream);padding:clamp(4.5rem,9vw,8rem) clamp(1.2rem,5vw,4rem);text-align:center;}
@@ -513,18 +614,167 @@ footer .fine{color:rgba(253,250,244,.22);font-size:.73rem;margin-top:.5rem;}
   <div class="story-blob story-blob-1"></div>
   <div class="story-blob story-blob-2"></div>
   <div class="story-inner">
-    <div class="eyebrow">Our Story</div>
-    <h2 class="reveal">A little <em>sweetness</em>,<br>Orlando-made</h2>
-    <p class="story-body reveal">
-      Chéri began with one idea: an alfajor so good you'd want to share it.
-      Every order is <span class="hi">baked fresh</span>, by hand, in small batches —
-      because the best things are never rushed. <em>Un vuelo de sabor.</em>
-    </p>
-    <div class="stats">
-      <div class="stat reveal"><div class="num">38+</div><div class="label">Batches Shared</div></div>
-      <div class="stat reveal"><div class="num">160+</div><div class="label">Sweet Tooths</div></div>
-      <div class="stat reveal"><div class="num">100%</div><div class="label">Made With Love</div></div>
+
+    <div class="story-header reveal">
+      <span class="eyebrow">La historia · Our Story</span>
+      <h2>La historia de <em>Chéri</em></h2>
     </div>
+
+    <!-- Language toggle -->
+    <div class="story-lang">
+      <button class="lang-btn active" data-lang="es">Español</button>
+      <button class="lang-btn" data-lang="en">English</button>
+      <button class="lang-btn" data-lang="pt">Português</button>
+    </div>
+
+    <!-- ── SPANISH ── -->
+    <div class="story-content active" data-lang="es">
+
+      <p class="story-lead">
+        Todo empezó en la cocina de casa, un domingo cualquiera, de esos donde el tiempo parece ir más lento y los recuerdos se mezclan con el aroma del dulce de leche tibio.
+      </p>
+
+      <p class="story-para">Siempre creí que los alfajores no eran solo un postre. Eran una pausa. Un abrazo. Un <em>"te quiero"</em> dicho sin palabras.</p>
+
+      <div class="story-pull">
+        "Cuando los compartí, vi sonrisas. Escuché silencios felices. Me pidieron 'uno más'. Y entendí que no estaba entregando solo alfajores… estaba compartiendo momentos."
+      </div>
+
+      <p class="story-para">Recuerdo la primera vez que los hice. No buscaba crear una marca, ni vender. Solo quería replicar esa sensación de hogar que sentía cuando era pequeña, cuando alguien me ofrecía algo dulce hecho con amor. Así nació la idea.</p>
+
+      <p class="story-para">Quería que el nombre transmitiera exactamente eso que sentía cada vez que horneaba: cariño, cercanía, ternura. Y encontré una palabra en francés que lo decía todo.</p>
+
+      <div class="story-name-card">
+        <div class="french">Chéri</div>
+        <div class="meaning">Del francés — "querido · amor · persona especial"</div>
+        <p class="desc">Es una palabra que se usa para alguien a quien se quiere profundamente. Es íntima, es cálida, es dulce… como cada uno de nuestros alfajores.</p>
+      </div>
+
+      <p class="story-para">Elegí ese nombre porque cada alfajor está pensado para alguien especial.</p>
+      <ul class="story-for">
+        <li>Para regalar.</li>
+        <li>Para agradecer.</li>
+        <li>Para celebrar.</li>
+        <li>Para decir <em>"estoy contigo"</em>.</li>
+      </ul>
+
+      <p class="story-para">Chéri no es solo una marca. Es una forma de demostrar cariño.</p>
+
+      <div class="story-making">
+        <p>Cada tapa horneada con paciencia.</p>
+        <p>Cada relleno preparado con dedicación.</p>
+        <p>Cada detalle pensado para que cuando alguien abra la caja, sienta que fue hecho especialmente para él.</p>
+      </div>
+
+      <p class="story-para">Porque al final, eso es lo que somos. Un pequeño recordatorio de que lo más importante en la vida… son los momentos compartidos.</p>
+
+      <div class="story-close">
+        Y si estás leyendo esto, quizás tu próxima pausa dulce también sea con nosotros.
+        <span class="story-sign">Chéri — Hecho con amor, para quien más quieres. 💕</span>
+      </div>
+    </div>
+
+    <!-- ── ENGLISH ── -->
+    <div class="story-content" data-lang="en">
+
+      <p class="story-lead">
+        It all began in a home kitchen, on an ordinary Sunday — the kind where time seems to slow down and memories blend with the warm scent of dulce de leche.
+      </p>
+
+      <p class="story-para">I always believed alfajores were more than just a dessert. They were a pause. A hug. An <em>"I love you"</em> spoken without words.</p>
+
+      <div class="story-pull">
+        "When I shared them, I saw smiles. I heard happy silences. People asked for 'just one more.' And I understood — I wasn't just handing out alfajores… I was sharing moments."
+      </div>
+
+      <p class="story-para">I remember the first time I made them. I wasn't trying to build a brand or sell anything. I just wanted to recreate that feeling of home I had as a child, when someone offered me something sweet made with love. That's how the idea was born.</p>
+
+      <p class="story-para">I wanted the name to capture exactly what I felt every time I baked: warmth, closeness, tenderness. And I found a word in French that said it all.</p>
+
+      <div class="story-name-card">
+        <div class="french">Chéri</div>
+        <div class="meaning">From French — "dear · beloved · someone special"</div>
+        <p class="desc">It's a word used for someone you love deeply. It's intimate, it's warm, it's sweet… just like every one of our alfajores.</p>
+      </div>
+
+      <p class="story-para">I chose that name because every alfajor is made for someone special.</p>
+      <ul class="story-for">
+        <li>To give as a gift.</li>
+        <li>To say thank you.</li>
+        <li>To celebrate.</li>
+        <li>To say <em>"I'm here for you."</em></li>
+      </ul>
+
+      <p class="story-para">Chéri is not just a brand. It's a way of showing love.</p>
+
+      <div class="story-making">
+        <p>Every cookie baked with patience.</p>
+        <p>Every filling prepared with care.</p>
+        <p>Every detail thought through so that when someone opens the box, they feel it was made just for them.</p>
+      </div>
+
+      <p class="story-para">Because in the end, that's who we are. A small reminder that the most important thing in life… are the moments we share.</p>
+
+      <div class="story-close">
+        And if you're reading this, perhaps your next sweet pause will be with us.
+        <span class="story-sign">Chéri — Made with love, for those you love most. 💕</span>
+      </div>
+    </div>
+
+    <!-- ── PORTUGUESE ── -->
+    <div class="story-content" data-lang="pt">
+
+      <p class="story-lead">
+        Tudo começou na cozinha de casa, em um domingo qualquer — daqueles em que o tempo parece passar mais devagar e as memórias se misturam com o aroma do doce de leite morno.
+      </p>
+
+      <p class="story-para">Sempre acreditei que os alfajores não eram apenas uma sobremesa. Eram uma pausa. Um abraço. Um <em>"eu te amo"</em> dito sem palavras.</p>
+
+      <div class="story-pull">
+        "Quando os compartilhei, vi sorrisos. Ouvi silêncios felizes. Me pediram 'mais um'. E entendi que não estava entregando apenas alfajores… estava compartilhando momentos."
+      </div>
+
+      <p class="story-para">Lembro da primeira vez que os fiz. Não estava tentando criar uma marca, nem vender. Só queria replicar aquela sensação de lar que sentia quando era pequena, quando alguém me oferecia algo doce feito com amor. Foi assim que a ideia nasceu.</p>
+
+      <p class="story-para">Queria que o nome transmitisse exatamente o que eu sentia cada vez que assava: carinho, proximidade, ternura. E encontrei uma palavra em francês que dizia tudo.</p>
+
+      <div class="story-name-card">
+        <div class="french">Chéri</div>
+        <div class="meaning">Do francês — "querido · amor · pessoa especial"</div>
+        <p class="desc">É uma palavra usada para alguém que se ama profundamente. É íntima, é calorosa, é doce… como cada um dos nossos alfajores.</p>
+      </div>
+
+      <p class="story-para">Escolhi esse nome porque cada alfajor é feito para alguém especial.</p>
+      <ul class="story-for">
+        <li>Para presentear.</li>
+        <li>Para agradecer.</li>
+        <li>Para celebrar.</li>
+        <li>Para dizer <em>"estou aqui por você"</em>.</li>
+      </ul>
+
+      <p class="story-para">Chéri não é apenas uma marca. É uma forma de demonstrar carinho.</p>
+
+      <div class="story-making">
+        <p>Cada biscoito assado com paciência.</p>
+        <p>Cada recheio preparado com dedicação.</p>
+        <p>Cada detalhe pensado para que, quando alguém abrir a caixa, sinta que foi feito especialmente para ela.</p>
+      </div>
+
+      <p class="story-para">Porque no fim, é isso que somos. Um pequeno lembrete de que o mais importante na vida… são os momentos compartilhados.</p>
+
+      <div class="story-close">
+        E se você está lendo isso, talvez sua próxima pausa doce também seja com a gente.
+        <span class="story-sign">Chéri — Feito com amor, para quem você mais ama. 💕</span>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat"><div class="num">100%</div><div class="label">Baked to Order</div></div>
+      <div class="stat"><div class="num">Small</div><div class="label">Batch Always</div></div>
+      <div class="stat"><div class="num">∞</div><div class="label">Made With Love</div></div>
+    </div>
+
   </div>
 </section>
 
@@ -812,6 +1062,17 @@ function showToast(msg) {
 }
 
 renderFilters(); renderProducts();
+
+/* ── STORY LANGUAGE TOGGLE ── */
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const lang = btn.dataset.lang;
+    document.querySelectorAll('.lang-btn').forEach(b =>
+      b.classList.toggle('active', b.dataset.lang === lang));
+    document.querySelectorAll('.story-content').forEach(c =>
+      c.classList.toggle('active', c.dataset.lang === lang));
+  });
+});
 </script>
 </body>
 </html>
