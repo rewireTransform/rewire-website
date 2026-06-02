@@ -1,14 +1,506 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/jcq/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>jcq-suites</title>
-    <script type="module" crossorigin src="/jcq/assets/index-wUtj1GqX.js"></script>
-    <link rel="stylesheet" crossorigin href="/jcq/assets/index-x1XGuNl0.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>JCQ Suite Reservations — Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#007B7F;--teal-light:#00a3a8;--teal-faint:rgba(0,123,127,0.12);
+  --dark:#0a0a0a;--surface:#111111;--card:#161616;--border:#1e1e1e;
+  --border-mid:#2a2a2a;--text:#f0ece4;--muted:#b0ada8;--dim:#707070;
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);color:var(--text);font-family:'Barlow',sans-serif;cursor:none}
+
+.cursor{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--teal);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen}
+.cursor-ring{position:fixed;width:32px;height:32px;border-radius:50%;border:1px solid rgba(0,123,127,.4);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .12s ease}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:200;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")}
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--teal);z-index:100;transition:width .6s cubic-bezier(.4,0,.2,1)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 80px;z-index:50;background:linear-gradient(to bottom,rgba(10,10,10,.95),transparent)}
+.nav-brand{display:flex;align-items:center;gap:12px}
+.nav-name{font-size:11px;font-weight:600;letter-spacing:2px;color:var(--teal);text-transform:uppercase}
+.nav-right{display:flex;align-items:center;gap:20px}
+.slide-counter{font-size:10px;letter-spacing:2px;color:#aaa}
+.nav-hint{font-size:9px;letter-spacing:1.5px;color:#888;text-transform:uppercase}
+
+/* NAV ARROWS */
+.nav-arrow{position:fixed;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:1px solid var(--border-mid);background:rgba(10,10,10,.8);display:flex;align-items:center;justify-content:center;z-index:60;transition:all .2s;backdrop-filter:blur(8px);cursor:none}
+.nav-arrow:hover{border-color:var(--teal);background:rgba(0,123,127,.15)}
+.nav-arrow svg{width:18px;height:18px;stroke:var(--muted);transition:stroke .2s}
+.nav-arrow:hover svg{stroke:var(--teal)}
+.nav-arrow.hidden{opacity:0;pointer-events:none}
+#arrowLeft{left:16px}
+#arrowRight{right:16px}
+
+/* SLIDES */
+.slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s ease}
+.slide.active{opacity:1;pointer-events:all}
+
+/* TITLE */
+.title-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(0,123,127,.08) 0%,transparent 70%)}
+.title-line{width:1px;height:80px;background:linear-gradient(to bottom,transparent,var(--teal),transparent);margin:0 auto 32px}
+.title-eyebrow{font-size:10px;letter-spacing:4px;color:#00a3a8;text-transform:uppercase;text-align:center;margin-bottom:20px;opacity:0;animation:fadeUp .8s .3s forwards}
+.title-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,6vw,80px);font-weight:300;text-align:center;line-height:1.05;margin-bottom:16px;opacity:0;animation:fadeUp .8s .5s forwards}
+.title-h1 em{color:var(--teal);font-style:normal}
+.title-sub{font-size:14px;color:#b0ada8;text-align:center;letter-spacing:.5px;font-weight:300;opacity:0;animation:fadeUp .8s .7s forwards}
+.title-divider{width:40px;height:1px;background:var(--teal);margin:28px auto;opacity:0;animation:fadeIn .8s .9s forwards}
+.title-meta{font-size:11px;color:#888;text-align:center;letter-spacing:1px;opacity:0;animation:fadeUp .8s 1.1s forwards}
+
+/* SCENE SPLIT */
+.scene-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 50%,rgba(0,123,127,.06) 0%,transparent 70%)}
+.scene-wrap{position:relative;z-index:2;width:100%;height:100%;display:grid;grid-template-columns:1fr 1fr}
+.scene-left{display:flex;flex-direction:column;justify-content:center;padding:80px 56px 80px 80px;border-right:1px solid var(--border)}
+.scene-number{font-size:10px;letter-spacing:3px;color:var(--teal);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.scene-number::after{content:'';flex:1;height:1px;background:var(--border-mid)}
+.scene-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,48px);font-weight:300;line-height:1.1;margin-bottom:24px;color:#f0ece4}
+.scene-title em{color:var(--teal);font-style:normal}
+.scene-body{font-size:15px;color:#b0ada8;line-height:1.8;font-weight:400;max-width:380px}
+.scene-body strong{color:#ffffff;font-weight:600}
+.scene-tag{display:inline-flex;align-items:center;gap:6px;margin-top:28px;padding:6px 14px;border:1px solid var(--border-mid);border-radius:20px;font-size:10px;letter-spacing:1.5px;color:#a0a09c;text-transform:uppercase}
+.scene-tag-dot{width:5px;height:5px;border-radius:50%;background:var(--teal)}
+.scene-right{display:flex;align-items:center;justify-content:center;padding:60px 80px 60px 56px;position:relative;overflow:hidden}
+.slide.active .scene-left{animation:slideInLeft .6s cubic-bezier(.4,0,.2,1) forwards}
+.slide.active .scene-right{animation:slideInRight .6s .1s cubic-bezier(.4,0,.2,1) both}
+
+/* MOCKUP */
+.mockup{width:100%;max-width:460px;background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.03)}
+.mockup-bar{height:32px;background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 14px;gap:6px}
+.mockup-dot{width:8px;height:8px;border-radius:50%}
+.mockup-url{flex:1;margin:0 12px;height:16px;background:var(--border);border-radius:8px;font-size:9px;display:flex;align-items:center;padding:0 10px;color:var(--dim);letter-spacing:.5px}
+
+/* UI COMPONENTS */
+.ui-nav{background:#1a1a1a;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #2a2a2a}
+.ui-nav-logo{font-size:9px;font-weight:700;color:white;letter-spacing:.5px}
+.ui-nav-btn{padding:4px 8px;background:#007B7F;font-size:7px;font-weight:700;color:white;letter-spacing:.5px;border-radius:1px}
+.ui-hero{background:#141414;padding:16px 14px;border-bottom:1px solid #1e1e1e}
+.ui-hero-h{font-size:13px;font-weight:700;color:white;margin-bottom:4px;line-height:1.2}
+.ui-hero-h em{color:#00a3a8;font-style:normal}
+.ui-hero-sub{font-size:8px;color:#666;line-height:1.5}
+.ui-content{padding:14px}
+.ui-tabs{display:flex;margin-bottom:12px;border-bottom:1px solid #1e1e1e}
+.ui-tab{padding:7px 10px;font-size:8px;font-weight:600;letter-spacing:.5px;color:#444;border-bottom:2px solid transparent;margin-bottom:-1px;text-transform:uppercase}
+.ui-tab.on{color:#007B7F;border-bottom-color:#007B7F}
+.ui-venue-tabs{display:flex;margin-bottom:10px}
+.ui-vtab{flex:1;padding:7px;font-size:7px;font-weight:700;text-align:center;letter-spacing:.5px;text-transform:uppercase;border:1.5px solid #2a2a2a;color:#444}
+.ui-vtab.on{background:#007B7F;border-color:#007B7F;color:white}
+.ui-date-card{background:#141414;border:1px solid #1e1e1e;border-radius:2px;padding:10px;margin-bottom:10px}
+.ui-date-label{font-size:7px;font-weight:700;letter-spacing:1px;color:#444;text-transform:uppercase;margin-bottom:6px}
+.ui-presets{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
+.ui-preset{padding:3px 7px;border:1px solid #2a2a2a;font-size:7px;font-weight:600;color:#444;border-radius:1px}
+.ui-preset.on{border-color:#007B7F;color:#007B7F;background:rgba(0,123,127,.08)}
+.ui-date-row{display:grid;grid-template-columns:1fr 1fr auto;gap:5px;align-items:end}
+.ui-date-field-wrap{display:flex;flex-direction:column;gap:2px}
+.ui-date-field-label{font-size:6px;color:#444;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.ui-date-field{background:#0a0a0a;border:1px solid #222;padding:5px 7px;font-size:7px;color:#777;border-radius:1px}
+.ui-search-btn{padding:6px 9px;background:#007B7F;font-size:7px;font-weight:700;color:white;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;border-radius:1px;text-align:center}
+.ui-event-row{display:grid;grid-template-columns:40px 1fr auto;gap:8px;align-items:center;padding:8px;border:1px solid #1e1e1e;border-radius:2px;margin-bottom:5px;background:#141414}
+.ui-event-date{text-align:center;background:rgba(0,123,127,.08);border:1px solid rgba(0,123,127,.2);border-radius:1px;padding:4px 3px}
+.ui-event-month{font-size:6px;font-weight:700;letter-spacing:1px;color:#007B7F}
+.ui-event-num{font-size:16px;font-weight:800;color:#007B7F;line-height:1}
+.ui-event-day{font-size:6px;color:#444;font-weight:600}
+.ui-event-name{font-size:9px;font-weight:700;color:#ede9e1;margin-bottom:1px;line-height:1.2}
+.ui-event-meta{font-size:7px;color:#444}
+.ui-pill{display:inline-block;padding:2px 5px;border-radius:10px;font-size:6px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px}
+.ui-pill-soccer{background:rgba(22,101,52,.2);border:1px solid rgba(22,101,52,.4);color:#22c55e}
+.ui-pill-private{background:rgba(0,123,127,.15);border:1px solid rgba(0,123,127,.3);color:#007B7F}
+.ui-arrow{font-size:10px;font-weight:700;color:#007B7F}
+.ui-suite-card{border:1.5px solid #222;border-radius:2px;padding:8px;margin-bottom:5px}
+.ui-suite-card.sel{border-color:#007B7F;background:rgba(0,123,127,.06)}
+.ui-suite-name{font-size:9px;font-weight:700;color:#ede9e1;margin-bottom:1px}
+.ui-suite-meta{font-size:7px;color:#444;margin-bottom:5px}
+.ui-amenities{display:flex;gap:3px;flex-wrap:wrap}
+.ui-amenity{padding:2px 5px;border:1px solid #2a2a2a;font-size:6px;color:#444;border-radius:1px}
+.ui-amenity.sel{border-color:rgba(0,123,127,.3);color:#007B7F}
+.ui-form-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px}
+.ui-field{display:flex;flex-direction:column;gap:2px}
+.ui-field-label{font-size:6px;font-weight:700;letter-spacing:1px;color:#444;text-transform:uppercase}
+.ui-field-input{background:#0a0a0a;border:1px solid #222;padding:5px 7px;font-size:7px;color:#555;border-radius:1px}
+.ui-field-input.filled{color:#ede9e1}
+.ui-submit-btn{width:100%;padding:9px;background:#007B7F;font-size:8px;font-weight:700;color:white;letter-spacing:.5px;text-transform:uppercase;text-align:center;border-radius:1px;margin-top:7px}
+.ui-confirm{text-align:center;padding:18px 14px}
+.ui-confirm-icon{width:36px;height:36px;border-radius:50%;border:2px solid #007B7F;background:rgba(0,123,127,.08);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:14px;color:#007B7F}
+.ui-confirm-h{font-size:11px;font-weight:800;color:#ede9e1;margin-bottom:4px}
+.ui-confirm-sub{font-size:7px;color:#444;line-height:1.6}
+.ui-admin-layout{display:flex;min-height:240px}
+.ui-admin-sidebar{width:80px;background:#111;border-right:1px solid #1e1e1e;padding:8px 0;flex-shrink:0}
+.ui-admin-navitem{padding:7px 10px;font-size:6px;font-weight:600;letter-spacing:.5px;color:#444;text-transform:uppercase;border-left:2px solid transparent;display:flex;align-items:center;gap:5px}
+.ui-admin-navitem.on{color:#007B7F;border-left-color:#007B7F;background:rgba(0,123,127,.06)}
+.ui-admin-main{flex:1;padding:10px;background:#0f0f0f;overflow:hidden}
+.ui-admin-h{font-size:9px;font-weight:800;color:#ede9e1;margin-bottom:1px}
+.ui-admin-sub{font-size:6px;color:#444;margin-bottom:8px}
+.ui-pending-label{font-size:6px;font-weight:700;letter-spacing:1px;color:#d4890a;text-transform:uppercase;margin-bottom:5px}
+.ui-req-card{background:#161616;border:1px solid #1e1e1e;border-radius:2px;padding:7px;margin-bottom:5px}
+.ui-req-card.pending{border-left:2px solid #d4890a}
+.ui-req-name{font-size:8px;font-weight:700;color:#ede9e1;margin-bottom:1px}
+.ui-req-meta{font-size:6px;color:#444;margin-bottom:5px;line-height:1.5}
+.ui-req-actions{display:flex;gap:4px;align-items:center}
+.ui-approve-btn{padding:4px 8px;background:#1a7a4a;font-size:6px;font-weight:700;color:white;letter-spacing:.5px;border-radius:1px}
+.ui-decline-btn{padding:4px 7px;background:transparent;border:1px solid #2a2a2a;font-size:6px;font-weight:700;color:#444;border-radius:1px}
+.ui-req-row{display:grid;grid-template-columns:1fr 56px 52px;gap:5px;align-items:center;padding:5px 6px;border-bottom:1px solid #1a1a1a}
+.ui-req-row:last-child{border-bottom:none}
+.ui-status-pill{padding:2px 5px;border-radius:10px;font-size:6px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;display:inline-block}
+.ui-status-approved{background:rgba(26,122,74,.15);border:1px solid rgba(26,122,74,.3);color:#22c55e}
+.ui-status-pending{background:rgba(212,137,10,.15);border:1px solid rgba(212,137,10,.3);color:#d4890a}
+.ui-hs-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 5px;border-radius:10px;background:rgba(255,122,89,.1);border:1px solid rgba(255,122,89,.2);font-size:6px;color:#ff7a59;font-weight:600}
+.ui-hs-dot{width:3px;height:3px;border-radius:50%;background:#ff7a59}
+.ui-private-event{background:rgba(0,123,127,.06);border:1px solid rgba(0,123,127,.2);border-radius:2px;padding:5px 7px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center}
+.ui-private-name{font-size:8px;font-weight:700;color:#ede9e1}
+.ui-private-meta{font-size:6px;color:#444}
+.ui-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:7px}
+.ui-stat-card{background:#161616;border:1px solid #1e1e1e;border-radius:2px;padding:7px}
+.ui-stat-label{font-size:6px;font-weight:700;letter-spacing:1px;color:#444;text-transform:uppercase;margin-bottom:3px}
+.ui-stat-val{font-size:18px;font-weight:800;color:#ede9e1}
+
+@keyframes highlight{0%{box-shadow:0 0 0 0 rgba(0,123,127,.7)}70%{box-shadow:0 0 0 8px rgba(0,123,127,0)}100%{box-shadow:0 0 0 0 rgba(0,123,127,0)}}
+.highlight{animation:highlight 1.5s ease infinite}
+
+/* END */
+.end-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(0,123,127,.1) 0%,transparent 70%)}
+.end-content{position:relative;z-index:2;text-align:center;padding:40px}
+.end-icon{width:64px;height:64px;border-radius:50%;border:1px solid var(--teal);display:flex;align-items:center;justify-content:center;margin:0 auto 32px;font-size:24px;color:var(--teal)}
+.end-h{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,64px);font-weight:300;margin-bottom:16px;line-height:1.1;color:#f0ece4}
+.end-h em{color:var(--teal);font-style:normal}
+.end-sub{font-size:15px;color:#b0ada8;font-weight:300;margin-bottom:32px;line-height:1.7;max-width:480px;margin-left:auto;margin-right:auto}
+.end-cta{display:inline-flex;align-items:center;gap:12px;padding:14px 32px;background:var(--teal);font-size:11px;font-weight:600;letter-spacing:2px;color:white;text-transform:uppercase;border-radius:2px}
+.slide.active .end-content>*{opacity:0}
+.slide.active .end-icon{animation:fadeUp .6s .2s forwards}
+.slide.active .end-h{animation:fadeUp .6s .4s forwards}
+.slide.active .end-sub{animation:fadeUp .6s .6s forwards}
+.slide.active .end-cta{animation:fadeUp .6s .8s forwards}
+.slide.active .end-restart{animation:fadeUp .6s 1s forwards}
+
+/* FOOTER */
+.footer{position:fixed;bottom:0;left:0;right:0;padding:18px 80px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to top,rgba(10,10,10,.95),transparent)}
+.footer-dots{display:flex;gap:6px}
+.dot{width:4px;height:4px;border-radius:50%;background:var(--border-mid);cursor:none;transition:all .3s}
+.dot.on{background:var(--teal);width:18px;border-radius:2px}
+.footer-keys{font-size:9px;color:#888;letter-spacing:1px}
+.footer-keys span{color:#bbb}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:none}}
+@keyframes slideInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:none}}
+.slide.active .scene-left{animation:slideInLeft .6s cubic-bezier(.4,0,.2,1) forwards}
+.slide.active .scene-right{animation:slideInRight .6s .1s cubic-bezier(.4,0,.2,1) both}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="grain"></div>
+<div class="progress-bar" id="progress"></div>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="nav-name">JCQ &nbsp;·&nbsp; Suite Reservations</span>
+  </div>
+  <div class="nav-right">
+    <span class="nav-hint">Click or ← → to navigate</span>
+    <span class="slide-counter" id="counter">01 / 09</span>
+  </div>
+</nav>
+
+<!-- ARROWS -->
+<div class="nav-arrow hidden" id="arrowLeft" onclick="event.stopPropagation();goTo(current-1)">
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+</div>
+<div class="nav-arrow" id="arrowRight" onclick="event.stopPropagation();goTo(current+1===TOTAL?0:current+1)">
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+</div>
+
+<!-- ═══ S0: TITLE ═══ -->
+<div class="slide active" id="s0">
+  <div class="title-bg"></div>
+  <div style="position:relative;z-index:2;text-align:center;padding:40px">
+    <div class="title-line"></div>
+    <div class="title-eyebrow">Rewire Business Transformation · Built for JCQ Companies</div>
+    <h1 class="title-h1">JCQ Suite<br/><em>Reservations</em></h1>
+    <p class="title-sub">A complete suite management platform for Kia Center &amp; Inter&amp;Co Stadium</p>
+    <div class="title-divider"></div>
+    <p class="title-meta">Juan &nbsp;·&nbsp; Javi &nbsp;·&nbsp; Exclusive Preview &nbsp;·&nbsp; 2026</p>
+  </div>
+</div>
+
+
+<!-- VIDEO SLIDE -->
+<div class="slide" id="s1">
+  <div class="scene-bg"></div>
+  <div style="position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 80px 80px">
+    <div style="font-size:10px;letter-spacing:3px;color:var(--teal);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:16px;width:100%;max-width:900px">
+      <span>Scene 01</span>
+      <span style="flex:1;height:1px;background:var(--border-mid);display:inline-block"></span>
+      <span>App Walkthrough — JCQ Suite Reservations</span>
+    </div>
+    <div style="width:100%;max-width:900px;background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.03)">
+      <div style="height:32px;background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 14px;gap:6px">
+        <div style="width:8px;height:8px;border-radius:50%;background:#ff5f57"></div>
+        <div style="width:8px;height:8px;border-radius:50%;background:#febc2e"></div>
+        <div style="width:8px;height:8px;border-radius:50%;background:#28c840"></div>
+        <div style="flex:1;margin:0 12px;height:16px;background:var(--border);border-radius:8px;font-size:9px;display:flex;align-items:center;padding:0 10px;color:var(--dim);letter-spacing:.5px">rewiretransform.com/jcq</div>
+      </div>
+      <video
+        src="./demo.mp4"
+        style="width:100%;display:block;max-height:68vh;object-fit:contain;background:#000"
+        controls
+        preload="metadata"
+        onclick="event.stopPropagation()"
+      ></video>
+    </div>
+    <div style="margin-top:14px;font-size:10px;color:#888;letter-spacing:1px">Click outside the video · or use → to advance</div>
+  </div>
+</div>
+
+<!-- ═══ S2: CLIENT PORTAL OVERVIEW ═══ -->
+<div class="slide" id="s2">
+  <div class="scene-bg"></div>
+  <div class="scene-wrap">
+    <div class="scene-left">
+      <div class="scene-number">Scene 02 &nbsp; Client Portal</div>
+      <h2 class="scene-title">Your clients see <em>this.</em></h2>
+      <p class="scene-body">A clean, branded portal where JCQ clients browse upcoming events at <strong>Kia Center</strong> and <strong>Inter&amp;Co Stadium</strong> — or request a suite for any date they choose.<br/><br/>No phone calls. No emails back and forth. They pick, they request, you approve.</p>
+      <div class="scene-tag"><div class="scene-tag-dot"></div>Live Ticketmaster integration</div>
+    </div>
+    <div class="scene-right">
+      <div class="mockup">
+        <div class="mockup-bar"><div class="mockup-dot" style="background:#ff5f57"></div><div class="mockup-dot" style="background:#febc2e"></div><div class="mockup-dot" style="background:#28c840"></div><div class="mockup-url">rewiretransform.com/jcq</div></div>
+        <div class="mockup-body">
+          <div class="ui-nav"><div class="ui-nav-logo">JCQ SERVICES · SUITE RESERVATIONS</div><div class="ui-nav-btn">Client Portal</div></div>
+          <div class="ui-hero"><div class="ui-hero-h">Complimentary Suite Access<br/><em>for JCQ Clients</em></div><div class="ui-hero-sub">Select your venue and dates to browse available events and reserve your suite.</div></div>
+          <div class="ui-content">
+            <div class="ui-tabs"><div class="ui-tab on">Browse Events</div><div class="ui-tab">Request a Specific Date</div></div>
+            <div class="ui-venue-tabs"><div class="ui-vtab">🏀 Kia Center</div><div class="ui-vtab on">⚽ Inter&amp;Co Stadium</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ S3: BROWSE EVENTS ═══ -->
+<div class="slide" id="s3">
+  <div class="scene-bg"></div>
+  <div class="scene-wrap">
+    <div class="scene-left">
+      <div class="scene-number">Scene 03 &nbsp; Live Events</div>
+      <h2 class="scene-title">Real events.<br/><em>Real-time.</em></h2>
+      <p class="scene-body">The client picks a date range — or uses a quick preset. One click and the portal pulls <strong>live events</strong> directly from Ticketmaster.<br/><br/>MLS matches, Leagues Cup, concerts — whatever is scheduled. No manual updates from your team. Ever.</p>
+      <div class="scene-tag"><div class="scene-tag-dot"></div>Updates automatically from Ticketmaster</div>
+    </div>
+    <div class="scene-right">
+      <div class="mockup">
+        <div class="mockup-bar"><div class="mockup-dot" style="background:#ff5f57"></div><div class="mockup-dot" style="background:#febc2e"></div><div class="mockup-dot" style="background:#28c840"></div><div class="mockup-url">rewiretransform.com/jcq</div></div>
+        <div class="mockup-body">
+          <div class="ui-content">
+            <div class="ui-date-card">
+              <div class="ui-date-label">Select Date Range</div>
+              <div class="ui-presets"><div class="ui-preset">Next 30 days</div><div class="ui-preset on">Next 3 months</div><div class="ui-preset">Next 6 months</div></div>
+              <div class="ui-date-row">
+                <div class="ui-date-field-wrap"><div class="ui-date-field-label">From</div><div class="ui-date-field">06/01/2026</div></div>
+                <div class="ui-date-field-wrap"><div class="ui-date-field-label">To</div><div class="ui-date-field">08/27/2026</div></div>
+                <div class="ui-search-btn highlight">Search →</div>
+              </div>
+            </div>
+            <div style="font-size:8px;font-weight:700;color:#ede9e1;margin-bottom:7px">3 Events Found <span style="color:#444;font-weight:400">— Inter&amp;Co Stadium</span></div>
+            <div class="ui-event-row"><div class="ui-event-date"><div class="ui-event-month">JUL</div><div class="ui-event-num">25</div><div class="ui-event-day">SAT</div></div><div><div class="ui-pill ui-pill-soccer">MLS</div><div class="ui-event-name">Orlando City SC v Nashville SC</div><div class="ui-event-meta">7:30 PM · 2 suites available</div></div><div class="ui-arrow">›</div></div>
+            <div class="ui-event-row"><div class="ui-event-date"><div class="ui-event-month">AUG</div><div class="ui-event-num">05</div><div class="ui-event-day">WED</div></div><div><div class="ui-pill ui-pill-soccer">Leagues Cup</div><div class="ui-event-name">Orlando City v CF Monterrey</div><div class="ui-event-meta">7:30 PM · 3 suites available</div></div><div class="ui-arrow">›</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ S4: SUITE SELECTION ═══ -->
+<div class="slide" id="s4">
+  <div class="scene-bg"></div>
+  <div class="scene-wrap">
+    <div class="scene-left">
+      <div class="scene-number">Scene 04 &nbsp; Suite Selection</div>
+      <h2 class="scene-title">Pick an event.<br/>Pick a <em>suite.</em></h2>
+      <p class="scene-body">The client selects their event and sees exactly which suites are available — floor, view, capacity, and what's included.<br/><br/>They select, fill in their details, and submit. The request lands in your admin queue <strong>instantly.</strong></p>
+      <div class="scene-tag"><div class="scene-tag-dot"></div>All IP transfers to JCQ on final payment</div>
+    </div>
+    <div class="scene-right">
+      <div class="mockup">
+        <div class="mockup-bar"><div class="mockup-dot" style="background:#ff5f57"></div><div class="mockup-dot" style="background:#febc2e"></div><div class="mockup-dot" style="background:#28c840"></div><div class="mockup-url">rewiretransform.com/jcq</div></div>
+        <div class="mockup-body">
+          <div class="ui-content">
+            <div style="margin-bottom:8px"><div class="ui-pill ui-pill-soccer">MLS</div><div style="font-size:10px;font-weight:800;color:#ede9e1;margin-top:3px;margin-bottom:1px">Orlando City SC v Nashville SC</div><div style="font-size:7px;color:#444">Saturday, July 25, 2026 · 7:30 PM · Inter&amp;Co Stadium</div></div>
+            <div style="font-size:7px;font-weight:700;letter-spacing:1px;color:#444;text-transform:uppercase;margin-bottom:6px">Select Your Suite</div>
+            <div class="ui-suite-card sel highlight"><div class="ui-suite-name">Founders Suite ✓</div><div class="ui-suite-meta">Pitch Level · Center Pitch · Up to 14 guests</div><div class="ui-amenities"><div class="ui-amenity sel">Premium Bar</div><div class="ui-amenity sel">Butler Service</div><div class="ui-amenity sel">4 VIP Passes</div><div class="ui-amenity sel">Pitch Access</div></div></div>
+            <div class="ui-suite-card"><div class="ui-suite-name">East Club Suite</div><div class="ui-suite-meta">Club Level · East Goal End · Up to 12 guests</div></div>
+            <div class="ui-search-btn" style="margin-top:8px">Reserve This Suite →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ S5: CUSTOM DATE ═══ -->
+<div class="slide" id="s5">
+  <div class="scene-bg"></div>
+  <div class="scene-wrap">
+    <div class="scene-left">
+      <div class="scene-number">Scene 05 &nbsp; Custom Requests</div>
+      <h2 class="scene-title">No event listed?<br/><em>No problem.</em></h2>
+      <p class="scene-body">Clients can request a suite for <strong>any date</strong> — even without a ticketed event.<br/><br/>They describe their occasion, pick their suite preference, and submit. Flows into the same admin queue. Your team handles it identically.</p>
+      <div class="scene-tag"><div class="scene-tag-dot"></div>Corporate nights, private events, any occasion</div>
+    </div>
+    <div class="scene-right">
+      <div class="mockup">
+        <div class="mockup-bar"><div class="mockup-dot" style="background:#ff5f57"></div><div class="mockup-dot" style="background:#febc2e"></div><div class="mockup-dot" style="background:#28c840"></div><div class="mockup-url">rewiretransform.com/jcq</div></div>
+        <div class="mockup-body">
+          <div class="ui-content">
+            <div class="ui-tabs"><div class="ui-tab">Browse Events</div><div class="ui-tab on">Request a Specific Date</div></div>
+            <div style="font-size:9px;font-weight:800;color:#ede9e1;margin-bottom:3px">Request a Suite for Your Date</div>
+            <div style="font-size:7px;color:#444;margin-bottom:10px;line-height:1.6">Don't see your date? Tell us when you'd like a suite and we'll confirm within 24 hours.</div>
+            <div class="ui-form-row"><div class="ui-field"><div class="ui-field-label">Venue</div><div class="ui-field-input filled">Inter&amp;Co Stadium</div></div><div class="ui-field"><div class="ui-field-label">Preferred Date</div><div class="ui-field-input filled">09/15/2026</div></div></div>
+            <div class="ui-field" style="margin-bottom:7px"><div class="ui-field-label">Describe Your Event</div><div class="ui-field-input filled highlight">Client Appreciation Night</div></div>
+            <div class="ui-form-row"><div class="ui-field"><div class="ui-field-label">Full Name</div><div class="ui-field-input filled">Carlos Menéndez</div></div><div class="ui-field"><div class="ui-field-label">Company</div><div class="ui-field-input filled">Menéndez Construction</div></div></div>
+            <div class="ui-submit-btn">Submit Request</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ S6: ADMIN APPROVALS ═══ -->
+<div class="slide" id="s6">
+  <div class="scene-bg"></div>
+  <div class="scene-wrap">
+    <div class="scene-left">
+      <div class="scene-number">Scene 06 &nbsp; Admin Panel</div>
+      <h2 class="scene-title">Your team.<br/><em>In control.</em></h2>
+      <p class="scene-body">Every request lands here. Pending approvals highlighted at the top — client, suite, tier, date. <strong>One click to approve. One click to decline.</strong><br/><br/>On approval, the reservation logs automatically to that client's <strong>HubSpot record.</strong> Your sales team always knows who attended.</p>
+      <div class="scene-tag"><div class="scene-tag-dot"></div>Auto-syncs to HubSpot on approval</div>
+    </div>
+    <div class="scene-right">
+      <div class="mockup">
+        <div class="mockup-bar"><div class="mockup-dot" style="background:#ff5f57"></div><div class="mockup-dot" style="background:#febc2e"></div><div class="mockup-dot" style="background:#28c840"></div><div class="mockup-url">rewiretransform.com/jcq — Admin</div></div>
+        <div class="mockup-body">
+          <div class="ui-admin-layout">
+            <div class="ui-admin-sidebar"><div class="ui-admin-navitem on">📋 Requests</div><div class="ui-admin-navitem">📅 Calendar</div><div class="ui-admin-navitem">📊 Analytics</div><div class="ui-admin-navitem">⚙ HubSpot</div></div>
+            <div class="ui-admin-main">
+              <div class="ui-admin-h">Reservation Requests</div>
+              <div class="ui-admin-sub">Auto-sync to HubSpot on approval ✓</div>
+              <div class="ui-pending-label">Pending Approval (2)</div>
+              <div class="ui-req-card pending"><div class="ui-req-name">Carlos Menéndez</div><div class="ui-req-meta">Menéndez Construction · Founders Suite · Inter&amp;Co</div><div class="ui-req-actions"><div class="ui-approve-btn highlight">✓ Approve</div><div class="ui-decline-btn">✕</div><div class="ui-hs-badge"><div class="ui-hs-dot"></div>HubSpot</div></div></div>
+              <div class="ui-req-card pending"><div class="ui-req-name">Mike Torres</div><div class="ui-req-meta">Torres Development · Suite 114 · Kia Center</div><div class="ui-req-actions"><div class="ui-approve-btn">✓ Approve</div><div class="ui-decline-btn">✕</div></div></div>
+              <div style="font-size:6px;font-weight:700;letter-spacing:1px;color:#444;text-transform:uppercase;margin:8px 0 4px">All Requests</div>
+              <div class="ui-req-row"><div><div class="ui-req-name" style="font-size:7px">Sandra Lee</div><div class="ui-req-meta">Founders Suite</div></div><div><div class="ui-status-pill ui-status-approved">Approved</div></div><div><div class="ui-hs-badge"><div class="ui-hs-dot"></div>Synced</div></div></div>
+              <div class="ui-req-row"><div><div class="ui-req-name" style="font-size:7px">Jennifer Walsh</div><div class="ui-req-meta">Suite 118</div></div><div><div class="ui-status-pill ui-status-approved">Approved</div></div><div><div class="ui-hs-badge"><div class="ui-hs-dot"></div>Synced</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ S7: PRIVATE EVENTS ═══ -->
+<div class="slide" id="s7">
+  <div class="scene-bg"></div>
+  <div class="scene-wrap">
+    <div class="scene-left">
+      <div class="scene-number">Scene 07 &nbsp; Private Events</div>
+      <h2 class="scene-title">Your events.<br/><em>Your control.</em></h2>
+      <p class="scene-body">Add any private event — corporate nights, client dinners, pre-season games — directly in the Calendar tab.<br/><br/>Name it, pick the venue, set the date, choose suites. It appears <strong>instantly</strong> in the client portal alongside live Ticketmaster events.</p>
+      <div class="scene-tag"><div class="scene-tag-dot"></div>Unlimited private events · No Ticketmaster required</div>
+    </div>
+    <div class="scene-right">
+      <div class="mockup">
+        <div class="mockup-bar"><div class="mockup-dot" style="background:#ff5f57"></div><div class="mockup-dot" style="background:#febc2e"></div><div class="mockup-dot" style="background:#28c840"></div><div class="mockup-url">rewiretransform.com/jcq — Admin</div></div>
+        <div class="mockup-body">
+          <div class="ui-admin-layout">
+            <div class="ui-admin-sidebar"><div class="ui-admin-navitem">📋 Requests</div><div class="ui-admin-navitem on">📅 Calendar</div><div class="ui-admin-navitem">📊 Analytics</div><div class="ui-admin-navitem">⚙ HubSpot</div></div>
+            <div class="ui-admin-main">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+                <div><div class="ui-admin-h">Event Calendar</div><div class="ui-admin-sub">Events not on Ticketmaster</div></div>
+                <div class="ui-approve-btn highlight" style="background:#007B7F">+ Add Private Event</div>
+              </div>
+              <div style="font-size:6px;font-weight:700;letter-spacing:1px;color:#007B7F;text-transform:uppercase;margin-bottom:5px">Private Events (2)</div>
+              <div class="ui-private-event"><div><div class="ui-private-name">JCQ Corporate Night</div><div class="ui-private-meta">Kia Center · Sep 15, 2026 · 7:00 PM</div></div><div class="ui-pill ui-pill-private">Private</div></div>
+              <div class="ui-private-event"><div><div class="ui-private-name">Client Appreciation Dinner</div><div class="ui-private-meta">Inter&amp;Co Stadium · Oct 3, 2026</div></div><div class="ui-pill ui-pill-private">Private</div></div>
+              <div style="font-size:6px;font-weight:700;letter-spacing:1px;color:#444;text-transform:uppercase;margin:7px 0 4px">Upcoming Reservations</div>
+              <div class="ui-req-row"><div><div class="ui-req-name" style="font-size:7px">Carlos Menéndez</div><div class="ui-req-meta">Founders Suite</div></div><div><div class="ui-status-pill ui-status-approved">Approved</div></div></div>
+              <div class="ui-req-row"><div><div class="ui-req-name" style="font-size:7px">Sandra Lee</div><div class="ui-req-meta">Suite 122</div></div><div><div class="ui-status-pill ui-status-pending">Pending</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ S13: END ═══ -->
+<div class="slide" id="s8">
+  <div class="end-bg"></div>
+  <div class="end-content">
+    <div class="end-icon">✓</div>
+    <h2 class="end-h">Built for <em>JCQ.</em><br/>Ready for Phase One.</h2>
+    <p class="end-sub">Live Ticketmaster events. Custom date requests. One-click approvals.<br/>Automatic HubSpot logging. Full admin control.<br/>Everything in one place — branded for JCQ, owned by JCQ.</p>
+    <div class="end-cta">Rewire Business Transformation &nbsp;·&nbsp; rewiretransform.com</div>
+    <div class="end-restart" style="margin-top:24px;display:flex;align-items:center;justify-content:center;gap:16px">
+      <button onclick="event.stopPropagation();goTo(0)" style="padding:10px 24px;background:transparent;border:1px solid var(--border-mid);color:var(--muted);font-family:'Barlow',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:none;border-radius:2px;transition:all .2s" onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal)'" onmouseout="this.style.borderColor='var(--border-mid)';this.style.color='var(--muted)'">↺ &nbsp;Restart Demo</button>
+      <span style="font-size:9px;color:var(--dim);letter-spacing:1px">or press → to loop</span>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-dots" id="dots"></div>
+  <div class="footer-keys"><span>←  →</span> &nbsp; Arrow keys &nbsp;·&nbsp; <span>Click</span> to advance</div>
+</footer>
+
+<script>
+const TOTAL = 9;
+let current = 0;
+
+// Cursor
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px';
+  ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px';
+});
+
+// Dots
+const dotsEl = document.getElementById('dots');
+for(let i=0;i<TOTAL;i++){
+  const d = document.createElement('div');
+  d.className = 'dot'+(i===0?' on':'');
+  d.onclick = e => { e.stopPropagation(); goTo(i); };
+  dotsEl.appendChild(d);
+}
+
+function goTo(n) {
+  if(n < 0 || n >= TOTAL) return;
+  document.getElementById('s'+current).classList.remove('active');
+  current = n;
+  document.getElementById('s'+current).classList.add('active');
+  document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('on', i===current));
+  document.getElementById('counter').textContent = String(current+1).padStart(2,'0')+' / '+String(TOTAL).padStart(2,'0');
+  document.getElementById('progress').style.width = ((current+1)/TOTAL*100)+'%';
+  document.getElementById('arrowLeft').classList.toggle('hidden', current===0);
+  document.getElementById('arrowRight').classList.toggle('hidden', false);
+}
+
+document.addEventListener('click', () => goTo(current===TOTAL-1 ? 0 : current+1));
+document.addEventListener('keydown', e => {
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='Enter') goTo(current===TOTAL-1 ? 0 : current+1);
+  if(e.key==='ArrowLeft') goTo(current-1);
+});
+
+document.getElementById('progress').style.width = (1/TOTAL*100)+'%';
+</script>
+</body>
 </html>
