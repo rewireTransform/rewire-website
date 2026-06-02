@@ -218,6 +218,65 @@ html,body{width:100%;height:100%;overflow:hidden;background:#ffffff;color:#11111
   0%,100%{opacity:.2;transform:translateX(-4px)}
   50%{opacity:1;transform:translateX(4px)}
 }
+
+@media(max-width:768px){
+  /* Last slide — stack vertically, full scroll */
+  .end-wrap{
+    flex-direction:column!important;
+    height:auto!important;
+    overflow-y:auto!important;
+  }
+  .end-left-panel{
+    flex:none!important;
+    width:100%!important;
+    min-height:auto!important;
+    padding:28px 20px 24px!important;
+    border-right:none!important;
+    border-bottom:2px solid #f0f0f0!important;
+  }
+  .end-right-panel{
+    flex:none!important;
+    width:100%!important;
+    padding:24px 20px 48px!important;
+    justify-content:flex-start!important;
+  }
+  .video-card{
+    padding:36px 20px!important;
+    min-height:220px!important;
+  }
+  #s7{
+    overflow-y:auto!important;
+    align-items:flex-start!important;
+    display:block!important;
+  }
+}
+  .end-wrap{
+    flex-direction:column!important;
+    align-items:stretch!important;
+    height:auto!important;
+    min-height:100%!important;
+    width:100%!important;
+  }
+  .end-left-panel{
+    flex:none!important;
+    width:100%!important;
+    padding:28px 20px 20px!important;
+    border-right:none!important;
+    border-bottom:2px solid #f0f0f0!important;
+  }
+  .end-right-panel{
+    flex:none!important;
+    width:100%!important;
+    padding:20px 20px 48px!important;
+    align-items:center!important;
+  }
+  /* Video card full width on mobile */
+  .end-right-panel a{
+    max-width:100%!important;
+    min-height:200px!important;
+    padding:32px 20px!important;
+  }
+}
 </style>
 </head>
 <body>
@@ -449,17 +508,17 @@ html,body{width:100%;height:100%;overflow:hidden;background:#ffffff;color:#11111
 
 <!-- ═══ S7: VIDEO + END ═══ -->
 <div class="slide" id="s7">
-  <div class="end-bg"></div>
-  <div style="position:relative;z-index:2;width:100%;height:100%;display:flex;align-items:stretch;overflow:hidden">
+  <div style="position:absolute;inset:0;background:#ffffff;z-index:0"></div>
+  <div style="position:relative;z-index:2;width:100%;height:100%;display:flex;overflow:hidden" class="end-wrap">
 
-    <!-- LEFT PANEL: closing copy -->
-    <div style="flex:0 0 380px;display:flex;flex-direction:column;justify-content:center;padding:56px 48px 56px 64px;border-right:2px solid #f0f0f0;background:#ffffff">
+    <!-- LEFT: closing copy -->
+    <div class="end-left-panel" style="flex:0 0 380px;display:flex;flex-direction:column;justify-content:center;padding:56px 48px 56px 64px;border-right:2px solid #f0f0f0;background:#ffffff;overflow-y:auto">
       <div style="font-size:11px;letter-spacing:3px;color:var(--teal);text-transform:uppercase;margin-bottom:20px;font-weight:600;display:flex;align-items:center;gap:8px">
         <div style="width:5px;height:5px;border-radius:50%;background:var(--teal)"></div>
         Built for JCQ
       </div>
       <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3vw,46px);font-weight:400;color:#111;line-height:1.1;margin-bottom:20px">Ready for<br/><em style="color:var(--teal);font-style:normal">Phase One.</em></h2>
-      <div style="font-size:16px;color:#555;line-height:2;margin-bottom:32px;font-weight:400">
+      <div style="font-size:16px;color:#555;line-height:2;margin-bottom:32px">
         Live Ticketmaster events.<br/>
         One-click approvals.<br/>
         HubSpot auto-sync.<br/>
@@ -474,31 +533,27 @@ html,body{width:100%;height:100%;overflow:hidden;background:#ffffff;color:#11111
       </div>
     </div>
 
-    <!-- RIGHT PANEL: video -->
-    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 56px;background:#fafafa;gap:16px">
+    <!-- RIGHT: video -->
+    <div class="end-right-panel" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 56px;background:#fafafa;gap:20px;overflow-y:auto">
       <div style="font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;font-weight:600;align-self:flex-start">Watch the full demo</div>
-
       <a
         href="https://1drv.ms/v/c/330353e34933b54f/IQCTHG1Q3w_YQpsKkckW8oRPAU7dSYfVzWRVS_crC3iwAVM?e=Ohmpjs"
         target="_blank"
         onclick="event.stopPropagation()"
-        style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;max-width:520px;background:linear-gradient(135deg,#0d1a1a 0%,#0a2020 100%);border-radius:6px;text-decoration:none;border:1.5px solid #d0d0d0;transition:all .25s;position:relative;overflow:hidden;flex-shrink:0;padding:40px 24px"
+        class="video-card"
+        style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;background:linear-gradient(135deg,#0d1a1a 0%,#0a2020 100%);border-radius:6px;text-decoration:none;border:1.5px solid #d0d0d0;transition:all .25s;position:relative;overflow:hidden;padding:48px 24px;min-height:200px"
         onmouseover="this.style.borderColor='#007B7F';this.style.boxShadow='0 8px 32px rgba(0,123,127,.25)';this.querySelector('.play-ring').style.transform='scale(1.08)'"
         onmouseout="this.style.borderColor='#d0d0d0';this.style.boxShadow='none';this.querySelector('.play-ring').style.transform='scale(1)'"
       >
-        <!-- grid texture -->
         <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(0,123,127,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(0,123,127,.07) 1px,transparent 1px);background-size:28px 28px;pointer-events:none"></div>
-        <!-- corner tag -->
         <div style="position:absolute;top:12px;right:14px;font-size:10px;color:rgba(255,255,255,.3);letter-spacing:1px;font-weight:500">Opens in new tab</div>
-        <!-- play button -->
         <div class="play-ring" style="width:72px;height:72px;border-radius:50%;background:rgba(0,123,127,.9);border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;transition:transform .25s;box-shadow:0 0 0 12px rgba(0,123,127,.12),0 0 0 24px rgba(0,123,127,.06)">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="white" style="margin-left:4px"><path d="M8 5v14l11-7z"/></svg>
         </div>
         <div style="font-family:'Barlow',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.8);text-transform:uppercase">Watch Demo Video</div>
         <div style="font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.5px">JCQ Suite Reservations · Full Walkthrough</div>
       </a>
-
-      <div style="font-size:13px;color:#aaa;text-align:center;line-height:1.6">Click to watch &nbsp;·&nbsp; opens in a new tab<br/>Come back with any questions</div>
+      <div style="font-size:13px;color:#aaa;text-align:center;line-height:1.6">Click to watch · opens in a new tab</div>
     </div>
 
   </div>
