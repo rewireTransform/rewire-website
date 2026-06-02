@@ -447,66 +447,60 @@ html,body{width:100%;height:100%;overflow:hidden;background:#ffffff;color:#11111
   </div>
 </div>
 
-<!-- VIDEO SLIDE -->
+<!-- ═══ S7: VIDEO + END ═══ -->
 <div class="slide" id="s7">
-  <div class="scene-bg"></div>
-  <div style="position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 80px 24px;text-align:center">
-
-    <div style="font-size:12px;letter-spacing:3px;color:var(--teal);text-transform:uppercase;margin-bottom:16px;font-weight:600">Scene 01 &nbsp;·&nbsp; App Walkthrough</div>
-
-    <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:400;color:#111;line-height:1.1;margin-bottom:14px">
-      See it in <em style="color:var(--teal);font-style:normal">action.</em>
-    </div>
-
-    <div style="font-size:18px;color:#555;max-width:520px;line-height:1.6;margin-bottom:32px;font-weight:400">
-      Full walkthrough — client booking, admin approvals, HubSpot sync.
-    </div>
-
-    <!-- Play button card -->
-    <a
-      href="https://1drv.ms/v/c/330353e34933b54f/IQCTHG1Q3w_YQpsKkckW8oRPAU7dSYfVzWRVS_crC3iwAVM?e=Ohmpjs"
-      target="_blank"
-      onclick="event.stopPropagation()"
-      style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;width:100%;max-width:680px;aspect-ratio:16/9;background:linear-gradient(135deg,#0a0a0a 0%,#1a2a2a 100%);border-radius:8px;box-shadow:0 12px 48px rgba(0,0,0,.2);text-decoration:none;border:2px solid #e0e0e0;transition:all .25s;position:relative;overflow:hidden;margin-bottom:24px"
-      onmouseover="this.style.boxShadow='0 16px 56px rgba(0,123,127,.3)';this.style.borderColor='#007B7F';this.querySelector('.play-ring').style.transform='scale(1.1)'"
-      onmouseout="this.style.boxShadow='0 12px 48px rgba(0,0,0,.2)';this.style.borderColor='#e0e0e0';this.querySelector('.play-ring').style.transform='scale(1)'"
-    >
-      <!-- Subtle grid bg -->
-      <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(0,123,127,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(0,123,127,.06) 1px,transparent 1px);background-size:32px 32px;pointer-events:none"></div>
-      <!-- Play ring -->
-      <div class="play-ring" style="width:80px;height:80px;border-radius:50%;border:2px solid rgba(255,255,255,.3);background:rgba(0,123,127,.85);display:flex;align-items:center;justify-content:center;transition:transform .25s;box-shadow:0 0 0 12px rgba(0,123,127,.15)">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="white" style="margin-left:4px"><path d="M8 5v14l11-7z"/></svg>
-      </div>
-      <div style="font-family:'Barlow',sans-serif;font-size:15px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,.8);text-transform:uppercase">Watch Demo Video</div>
-      <!-- Corner label -->
-      <div style="position:absolute;top:14px;right:16px;font-size:11px;color:rgba(255,255,255,.4);letter-spacing:1px;font-weight:500">Opens in new tab</div>
-    </a>
-
-    <!-- NEXT CUE -->
-    <div onclick="event.stopPropagation();goTo(8)" style="display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;opacity:.8;transition:opacity .2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.8">
-      <div style="font-size:13px;font-weight:700;letter-spacing:2px;color:var(--teal);text-transform:uppercase">See closing &amp; next steps</div>
-      <div style="display:flex;gap:4px">
-        <div class="chevron-pulse">&#8250;</div>
-        <div class="chevron-pulse" style="animation-delay:.15s">&#8250;</div>
-        <div class="chevron-pulse" style="animation-delay:.3s">&#8250;</div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ═══ S8: END ═══ -->
-<div class="slide" id="s8">
   <div class="end-bg"></div>
-  <div class="end-content">
-    <div class="end-icon">✓</div>
-    <h2 class="end-h">Built for <em>JCQ.</em><br/>Ready for Phase One.</h2>
-    <p class="end-sub">Live Ticketmaster events. Custom date requests. One-click approvals.<br/>Automatic HubSpot logging. Full admin control.<br/>Everything in one place — branded for JCQ, owned by JCQ.</p>
-    <div class="end-cta">Rewire Business Transformation &nbsp;·&nbsp; rewiretransform.com</div>
-    <div class="end-restart" style="margin-top:24px;display:flex;align-items:center;justify-content:center;gap:16px">
-      <button onclick="event.stopPropagation();goTo(0)" style="padding:10px 24px;background:transparent;border:1px solid var(--border-mid);color:var(--muted);font-family:'Barlow',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:none;border-radius:2px;transition:all .2s" onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal)'" onmouseout="this.style.borderColor='var(--border-mid)';this.style.color='var(--muted)'">↺ &nbsp;Restart Demo</button>
-      <span style="font-size:9px;color:var(--dim);letter-spacing:1px">or press → to loop</span>
+  <div style="position:relative;z-index:2;width:100%;height:100%;display:flex;align-items:stretch;overflow:hidden">
+
+    <!-- LEFT PANEL: closing copy -->
+    <div style="flex:0 0 380px;display:flex;flex-direction:column;justify-content:center;padding:56px 48px 56px 64px;border-right:2px solid #f0f0f0;background:#ffffff">
+      <div style="font-size:11px;letter-spacing:3px;color:var(--teal);text-transform:uppercase;margin-bottom:20px;font-weight:600;display:flex;align-items:center;gap:8px">
+        <div style="width:5px;height:5px;border-radius:50%;background:var(--teal)"></div>
+        Built for JCQ
+      </div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3vw,46px);font-weight:400;color:#111;line-height:1.1;margin-bottom:20px">Ready for<br/><em style="color:var(--teal);font-style:normal">Phase One.</em></h2>
+      <div style="font-size:16px;color:#555;line-height:2;margin-bottom:32px;font-weight:400">
+        Live Ticketmaster events.<br/>
+        One-click approvals.<br/>
+        HubSpot auto-sync.<br/>
+        Full admin control.<br/>
+        <strong style="color:#111;font-weight:600">Owned entirely by JCQ.</strong>
+      </div>
+      <div style="padding:14px 20px;background:var(--teal);display:inline-block;margin-bottom:16px">
+        <span style="font-size:12px;font-weight:700;letter-spacing:1.5px;color:white;text-transform:uppercase">Rewire Business Transformation</span>
+      </div>
+      <div>
+        <button onclick="event.stopPropagation();goTo(0)" style="padding:9px 20px;background:transparent;border:1.5px solid #d0d0d0;color:#999;font-family:'Barlow',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .2s" onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal)'" onmouseout="this.style.borderColor='#d0d0d0';this.style.color='#999'">↺ &nbsp;Restart</button>
+      </div>
     </div>
+
+    <!-- RIGHT PANEL: video -->
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 56px;background:#fafafa;gap:16px">
+      <div style="font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;font-weight:600;align-self:flex-start">Watch the full demo</div>
+
+      <a
+        href="https://1drv.ms/v/c/330353e34933b54f/IQCTHG1Q3w_YQpsKkckW8oRPAU7dSYfVzWRVS_crC3iwAVM?e=Ohmpjs"
+        target="_blank"
+        onclick="event.stopPropagation()"
+        style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;max-width:520px;background:linear-gradient(135deg,#0d1a1a 0%,#0a2020 100%);border-radius:6px;text-decoration:none;border:1.5px solid #d0d0d0;transition:all .25s;position:relative;overflow:hidden;flex-shrink:0;padding:40px 24px"
+        onmouseover="this.style.borderColor='#007B7F';this.style.boxShadow='0 8px 32px rgba(0,123,127,.25)';this.querySelector('.play-ring').style.transform='scale(1.08)'"
+        onmouseout="this.style.borderColor='#d0d0d0';this.style.boxShadow='none';this.querySelector('.play-ring').style.transform='scale(1)'"
+      >
+        <!-- grid texture -->
+        <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(0,123,127,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(0,123,127,.07) 1px,transparent 1px);background-size:28px 28px;pointer-events:none"></div>
+        <!-- corner tag -->
+        <div style="position:absolute;top:12px;right:14px;font-size:10px;color:rgba(255,255,255,.3);letter-spacing:1px;font-weight:500">Opens in new tab</div>
+        <!-- play button -->
+        <div class="play-ring" style="width:72px;height:72px;border-radius:50%;background:rgba(0,123,127,.9);border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;transition:transform .25s;box-shadow:0 0 0 12px rgba(0,123,127,.12),0 0 0 24px rgba(0,123,127,.06)">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="white" style="margin-left:4px"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div style="font-family:'Barlow',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.8);text-transform:uppercase">Watch Demo Video</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.5px">JCQ Suite Reservations · Full Walkthrough</div>
+      </a>
+
+      <div style="font-size:13px;color:#aaa;text-align:center;line-height:1.6">Click to watch &nbsp;·&nbsp; opens in a new tab<br/>Come back with any questions</div>
+    </div>
+
   </div>
 </div>
 
@@ -517,7 +511,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#ffffff;color:#11111
 </footer>
 
 <script>
-const TOTAL = 9;
+const TOTAL = 8;
 let current = 0;
 
 // Cursor
