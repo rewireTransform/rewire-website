@@ -1,576 +1,600 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>JCQ Suite Reservations — Demo</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --teal:#007B7F;--teal-light:#00a3a8;--teal-faint:rgba(0,123,127,0.08);
-  --dark:#ffffff;--surface:#f8f8f8;--card:#f0f0f0;--border:#e0e0e0;
-  --border-mid:#d0d0d0;--text:#111111;--muted:#444444;--dim:#888888;
-}
-html,body{width:100%;height:100%;overflow:hidden;background:#ffffff;color:#111111;font-family:'Barlow',sans-serif;cursor:default}
-@media(max-width:768px){html,body{overflow:auto}}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-.cursor{display:none}
-.cursor-ring{display:none}
-.grain{display:none}
-.progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--teal);z-index:100;transition:width .6s cubic-bezier(.4,0,.2,1)}
+  <!-- ═══ PRIMARY SEO ═══ -->
+  <title>Rewire Business Transformation | Business Intelligence, Process Optimization & Automation</title>
+  <meta name="description" content="Rewire Consulting helps SMBs eliminate operational drag and unlock data-driven growth through process optimization, workflow automation, business intelligence dashboards, and AI technology consulting." />
+  <meta name="keywords" content="business intelligence consulting, process optimization, workflow automation, RPA consulting, data analytics, dashboard design, AI automation, technology consulting, SMB consulting, operational efficiency" />
+  <meta name="author" content="Rewire Consulting" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://www.rewiretransform.com/" />
 
-/* NAV */
-.nav{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;z-index:50;background:#ffffff;border-bottom:1px solid #e8e8e8;box-shadow:0 1px 12px rgba(0,0,0,.06)}
-.nav-brand{display:flex;align-items:center;gap:12px}
-.nav-name{font-size:14px;font-weight:700;letter-spacing:2px;color:var(--teal);text-transform:uppercase}
-.nav-right{display:flex;align-items:center;gap:20px}
-.slide-counter{font-size:13px;letter-spacing:2px;color:#888;font-weight:500}
-.nav-hint{font-size:12px;letter-spacing:1px;color:#aaa;text-transform:uppercase}
+  <!-- ═══ OPEN GRAPH (Facebook, LinkedIn) ═══ -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.rewiretransform.com/" />
+  <meta property="og:title" content="Rewire Consulting | Business Intelligence & Process Automation" />
+  <meta property="og:description" content="We find where your business is leaking time and money, then fix it with automation, dashboards, and intelligent systems. SMB specialists." />
+  <meta property="og:image" content="https://www.rewiretransform.com/Rewire.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="Rewire Consulting" />
+  <meta property="og:locale" content="en_US" />
 
-/* NAV ARROWS */
-.nav-arrow{position:fixed;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:1.5px solid #e0e0e0;background:#ffffff;display:flex;align-items:center;justify-content:center;z-index:60;transition:all .2s;box-shadow:0 2px 12px rgba(0,0,0,.1);cursor:pointer}
-.nav-arrow:hover{border-color:var(--teal);background:rgba(0,123,127,.06)}
-.nav-arrow svg{width:18px;height:18px;stroke:#666;transition:stroke .2s}
-.nav-arrow:hover svg{stroke:var(--teal)}
-.nav-arrow.hidden{opacity:0;pointer-events:none}
-#arrowLeft{left:16px}
-#arrowRight{right:16px}
+  <!-- ═══ TWITTER CARD ═══ -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://www.rewiretransform.com/" />
+  <meta name="twitter:title" content="Rewire Consulting | Business Intelligence & Process Automation" />
+  <meta name="twitter:description" content="We find where your business is leaking time and money, then fix it with automation, dashboards, and intelligent systems." />
+  <meta name="twitter:image" content="https://www.rewiretransform.com/Rewire.png" />
 
-/* SLIDES */
-.slide{position:absolute;inset:0;top:56px;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s ease;background:#ffffff;overflow-y:auto}
-.slide.active{opacity:1;pointer-events:all}
-
-/* TITLE */
-.title-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(0,123,127,.06) 0%,transparent 70%)}
-.title-line{width:1px;height:80px;background:linear-gradient(to bottom,transparent,var(--teal),transparent);margin:0 auto 32px}
-.title-eyebrow{font-size:14px;letter-spacing:3px;color:var(--teal);text-transform:uppercase;text-align:center;margin-bottom:20px;opacity:0;animation:fadeUp .8s .3s forwards}
-.title-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,6vw,80px);font-weight:400;text-align:center;line-height:1.05;margin-bottom:16px;color:#111;opacity:0;animation:fadeUp .8s .5s forwards}
-.title-h1 em{color:var(--teal);font-style:normal}
-.title-sub{font-size:19px;color:#555;text-align:center;letter-spacing:.3px;font-weight:400;opacity:0;animation:fadeUp .8s .7s forwards}
-.title-divider{width:40px;height:1px;background:var(--teal);margin:28px auto;opacity:0;animation:fadeIn .8s .9s forwards}
-.title-meta{font-size:15px;color:#999;text-align:center;letter-spacing:1px;opacity:0;animation:fadeUp .8s 1.1s forwards}
-
-/* SCENE SPLIT */
-.scene-bg{position:absolute;inset:0;background:#ffffff}
-.scene-wrap{position:relative;z-index:2;width:100%;height:100%;display:grid;grid-template-columns:360px 1fr}
-.scene-left{display:flex;flex-direction:column;justify-content:center;padding:60px 40px 60px 56px;border-right:2px solid #f0f0f0;max-width:380px}
-.scene-number{font-size:13px;letter-spacing:3px;color:var(--teal);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:12px;font-weight:600}
-.scene-number::after{content:'';flex:1;height:1px;background:#e0e0e0}
-.scene-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,3.8vw,52px);font-weight:400;line-height:1.1;margin-bottom:20px;color:#111111}
-.scene-title em{color:var(--teal);font-style:normal}
-.scene-body{font-size:19px;color:#444444;line-height:1.8;font-weight:400;max-width:400px}
-.scene-body strong{color:#111111;font-weight:600}
-.scene-tag{display:inline-flex;align-items:center;gap:6px;margin-top:24px;padding:7px 16px;border:1.5px solid #e0e0e0;border-radius:20px;font-size:13px;letter-spacing:1px;color:#777;text-transform:uppercase;font-weight:500}
-.scene-tag-dot{width:5px;height:5px;border-radius:50%;background:var(--teal)}
-.scene-right{display:flex;align-items:center;justify-content:center;padding:32px 56px 32px 40px;position:relative;overflow:hidden;background:#fafafa}
-.slide.active .scene-left{animation:slideInLeft .6s cubic-bezier(.4,0,.2,1) forwards}
-.slide.active .scene-right{animation:slideInRight .6s .1s cubic-bezier(.4,0,.2,1) both}
-
-/* MOCKUP */
-.mockup{width:100%;max-width:680px;background:#ffffff;border:1px solid #ddd;border-radius:6px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.12)}
-.mockup-bar{height:32px;background:#f5f5f5;border-bottom:1px solid #e8e8e8;display:flex;align-items:center;padding:0 14px;gap:6px}
-.mockup-dot{width:8px;height:8px;border-radius:50%}
-.mockup-url{flex:1;margin:0 12px;height:16px;background:#e8e8e8;border-radius:8px;font-size:9px;display:flex;align-items:center;padding:0 10px;color:#888;letter-spacing:.5px}
-
-/* UI COMPONENTS */
-.ui-nav{background:#1a1a1a;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #2a2a2a}
-.ui-nav-logo{font-size:13px;font-weight:700;color:white;letter-spacing:.5px}
-.ui-nav-btn{padding:6px 12px;background:#007B7F;font-size:10px;font-weight:700;color:white;letter-spacing:.5px;border-radius:1px}
-.ui-hero{background:#141414;padding:20px 18px;border-bottom:1px solid #1e1e1e}
-.ui-hero-h{font-size:18px;font-weight:700;color:white;margin-bottom:4px;line-height:1.2}
-.ui-hero-h em{color:#00a3a8;font-style:normal}
-.ui-hero-sub{font-size:11px;color:#666;line-height:1.5}
-.ui-content{padding:18px}
-.ui-tabs{display:flex;margin-bottom:14px;border-bottom:1px solid #1e1e1e}
-.ui-tab{padding:10px 14px;font-size:11px;font-weight:600;letter-spacing:.5px;color:#444;border-bottom:2px solid transparent;margin-bottom:-1px;text-transform:uppercase}
-.ui-tab.on{color:#007B7F;border-bottom-color:#007B7F}
-.ui-venue-tabs{display:flex;margin-bottom:12px}
-.ui-vtab{flex:1;padding:10px;font-size:10px;font-weight:700;text-align:center;letter-spacing:.5px;text-transform:uppercase;border:1.5px solid #2a2a2a;color:#444}
-.ui-vtab.on{background:#007B7F;border-color:#007B7F;color:white}
-.ui-date-card{background:#141414;border:1px solid #1e1e1e;border-radius:2px;padding:14px;margin-bottom:12px}
-.ui-date-label{font-size:10px;font-weight:700;letter-spacing:1px;color:#444;text-transform:uppercase;margin-bottom:6px}
-.ui-presets{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
-.ui-preset{padding:5px 10px;border:1px solid #2a2a2a;font-size:10px;font-weight:600;color:#444;border-radius:1px}
-.ui-preset.on{border-color:#007B7F;color:#007B7F;background:rgba(0,123,127,.08)}
-.ui-date-row{display:grid;grid-template-columns:1fr 1fr auto;gap:5px;align-items:end}
-.ui-date-field-wrap{display:flex;flex-direction:column;gap:2px}
-.ui-date-field-label{font-size:9px;color:#444;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
-.ui-date-field{background:#0a0a0a;border:1px solid #222;padding:7px 10px;font-size:10px;color:#777;border-radius:1px}
-.ui-search-btn{padding:9px 13px;background:#007B7F;font-size:10px;font-weight:700;color:white;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;border-radius:1px;text-align:center}
-.ui-event-row{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;padding:12px;border:1px solid #1e1e1e;border-radius:2px;margin-bottom:5px;background:#141414}
-.ui-event-date{text-align:center;background:rgba(0,123,127,.08);border:1px solid rgba(0,123,127,.2);border-radius:1px;padding:6px 4px}
-.ui-event-month{font-size:9px;font-weight:700;letter-spacing:1px;color:#007B7F}
-.ui-event-num{font-size:22px;font-weight:800;color:#007B7F;line-height:1}
-.ui-event-day{font-size:9px;color:#444;font-weight:600}
-.ui-event-name{font-size:13px;font-weight:700;color:#ede9e1;margin-bottom:1px;line-height:1.2}
-.ui-event-meta{font-size:10px;color:#444}
-.ui-pill{display:inline-block;padding:3px 8px;border-radius:10px;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px}
-.ui-pill-soccer{background:rgba(22,101,52,.2);border:1px solid rgba(22,101,52,.4);color:#22c55e}
-.ui-pill-private{background:rgba(0,123,127,.15);border:1px solid rgba(0,123,127,.3);color:#007B7F}
-.ui-arrow{font-size:14px;font-weight:700;color:#007B7F}
-.ui-suite-card{border:1.5px solid #222;border-radius:2px;padding:12px;margin-bottom:8px}
-.ui-suite-card.sel{border-color:#007B7F;background:rgba(0,123,127,.06)}
-.ui-suite-name{font-size:13px;font-weight:700;color:#ede9e1;margin-bottom:1px}
-.ui-suite-meta{font-size:10px;color:#444;margin-bottom:5px}
-.ui-amenities{display:flex;gap:3px;flex-wrap:wrap}
-.ui-amenity{padding:3px 8px;border:1px solid #2a2a2a;font-size:9px;color:#444;border-radius:1px}
-.ui-amenity.sel{border-color:rgba(0,123,127,.3);color:#007B7F}
-.ui-form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-.ui-field{display:flex;flex-direction:column;gap:2px}
-.ui-field-label{font-size:9px;font-weight:700;letter-spacing:1px;color:#444;text-transform:uppercase}
-.ui-field-input{background:#0a0a0a;border:1px solid #222;padding:7px 10px;font-size:10px;color:#555;border-radius:1px}
-.ui-field-input.filled{color:#ede9e1}
-.ui-submit-btn{width:100%;padding:12px;background:#007B7F;font-size:11px;font-weight:700;color:white;letter-spacing:.5px;text-transform:uppercase;text-align:center;border-radius:1px;margin-top:7px}
-.ui-confirm{text-align:center;padding:24px 18px}
-.ui-confirm-icon{width:52px;height:52px;border-radius:50%;border:2px solid #007B7F;background:rgba(0,123,127,.08);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:20px;color:#007B7F}
-.ui-confirm-h{font-size:16px;font-weight:800;color:#ede9e1;margin-bottom:4px}
-.ui-confirm-sub{font-size:10px;color:#444;line-height:1.6}
-.ui-admin-layout{display:flex;min-height:240px}
-.ui-admin-sidebar{width:110px;background:#111;border-right:1px solid #1e1e1e;padding:8px 0;flex-shrink:0}
-.ui-admin-navitem{padding:10px 14px;font-size:9px;font-weight:600;letter-spacing:.5px;color:#444;text-transform:uppercase;border-left:2px solid transparent;display:flex;align-items:center;gap:5px}
-.ui-admin-navitem.on{color:#007B7F;border-left-color:#007B7F;background:rgba(0,123,127,.06)}
-.ui-admin-main{flex:1;padding:14px;background:#0f0f0f;overflow:hidden}
-.ui-admin-h{font-size:13px;font-weight:800;color:#ede9e1;margin-bottom:1px}
-.ui-admin-sub{font-size:9px;color:#444;margin-bottom:8px}
-.ui-pending-label{font-size:9px;font-weight:700;letter-spacing:1px;color:#d4890a;text-transform:uppercase;margin-bottom:5px}
-.ui-req-card{background:#161616;border:1px solid #1e1e1e;border-radius:2px;padding:10px;margin-bottom:8px}
-.ui-req-card.pending{border-left:2px solid #d4890a}
-.ui-req-name{font-size:12px;font-weight:700;color:#ede9e1;margin-bottom:1px}
-.ui-req-meta{font-size:9px;color:#444;margin-bottom:5px;line-height:1.5}
-.ui-req-actions{display:flex;gap:6px;align-items:center;margin-top:6px}
-.ui-approve-btn{padding:6px 12px;background:#1a7a4a;font-size:9px;font-weight:700;color:white;letter-spacing:.5px;border-radius:1px}
-.ui-decline-btn{padding:6px 10px;background:transparent;border:1px solid #2a2a2a;font-size:9px;font-weight:700;color:#444;border-radius:1px}
-.ui-req-row{display:grid;grid-template-columns:1fr 72px 64px;gap:8px;align-items:center;padding:8px 10px;border-bottom:1px solid #1a1a1a}
-.ui-req-row:last-child{border-bottom:none}
-.ui-status-pill{padding:3px 8px;border-radius:10px;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;display:inline-block}
-.ui-status-approved{background:rgba(26,122,74,.15);border:1px solid rgba(26,122,74,.3);color:#22c55e}
-.ui-status-pending{background:rgba(212,137,10,.15);border:1px solid rgba(212,137,10,.3);color:#d4890a}
-.ui-hs-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:10px;background:rgba(255,122,89,.1);border:1px solid rgba(255,122,89,.2);font-size:9px;color:#ff7a59;font-weight:600}
-.ui-hs-dot{width:3px;height:3px;border-radius:50%;background:#ff7a59}
-.ui-private-event{background:rgba(0,123,127,.06);border:1px solid rgba(0,123,127,.2);border-radius:2px;padding:8px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
-.ui-private-name{font-size:12px;font-weight:700;color:#ede9e1}
-.ui-private-meta{font-size:9px;color:#444}
-.ui-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:7px}
-.ui-stat-card{background:#161616;border:1px solid #1e1e1e;border-radius:2px;padding:7px}
-.ui-stat-label{font-size:9px;font-weight:700;letter-spacing:1px;color:#444;text-transform:uppercase;margin-bottom:3px}
-.ui-stat-val{font-size:26px;font-weight:800;color:#ede9e1}
-
-@keyframes highlight{0%{box-shadow:0 0 0 0 rgba(0,123,127,.7)}70%{box-shadow:0 0 0 8px rgba(0,123,127,0)}100%{box-shadow:0 0 0 0 rgba(0,123,127,0)}}
-.highlight{animation:highlight 1.5s ease infinite}
-
-/* END */
-.end-bg{position:absolute;inset:0;background:#ffffff}
-.end-content{position:relative;z-index:2;text-align:center;padding:40px}
-.end-icon{width:64px;height:64px;border-radius:50%;border:2px solid var(--teal);background:rgba(0,123,127,.06);display:flex;align-items:center;justify-content:center;margin:0 auto 32px;font-size:24px;color:var(--teal)}
-.end-h{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,64px);font-weight:400;margin-bottom:16px;line-height:1.1;color:#111}
-.end-h em{color:var(--teal);font-style:normal}
-.end-sub{font-size:19px;color:#555;font-weight:400;margin-bottom:32px;line-height:1.7;max-width:480px;margin-left:auto;margin-right:auto}
-.end-cta{display:inline-flex;align-items:center;gap:12px;padding:14px 32px;background:var(--teal);font-size:14px;font-weight:600;letter-spacing:2px;color:white;text-transform:uppercase;border-radius:2px}
-.slide.active .end-content>*{opacity:0}
-.slide.active .end-icon{animation:fadeUp .6s .2s forwards}
-.slide.active .end-h{animation:fadeUp .6s .4s forwards}
-.slide.active .end-sub{animation:fadeUp .6s .6s forwards}
-.slide.active .end-cta{animation:fadeUp .6s .8s forwards}
-.slide.active .end-restart{animation:fadeUp .6s 1s forwards}
-
-/* FOOTER */
-.footer{position:fixed;bottom:0;left:0;right:0;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;background:#ffffff;border-top:1px solid #eeeeee}
-.footer-dots{display:flex;gap:6px}
-.dot{width:5px;height:5px;border-radius:50%;background:#d0d0d0;cursor:pointer;transition:all .3s}
-.dot.on{background:var(--teal);width:20px;border-radius:3px}
-.footer-keys{font-size:13px;color:#aaa;letter-spacing:.5px}
-.footer-keys span{color:#666;font-weight:600}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes slideInLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:none}}
-@keyframes slideInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:none}}
-.slide.active .scene-left{animation:slideInLeft .6s cubic-bezier(.4,0,.2,1) forwards}
-.slide.active .scene-right{animation:slideInRight .6s .1s cubic-bezier(.4,0,.2,1) both}
-
-@media(max-width:768px){
-  .nav{padding:0 16px;height:52px}
-  .nav-hint{display:none}
-  .nav-arrow{width:36px;height:36px;top:auto;bottom:64px;transform:none}
-  #arrowLeft{left:12px}
-  #arrowRight{right:12px}
-  .slide{top:52px;overflow-y:auto;align-items:flex-start}
-  .scene-wrap{grid-template-columns:1fr;height:auto;min-height:100%}
-  .scene-left{padding:28px 24px 20px;border-right:none;border-bottom:2px solid #f0f0f0}
-  .scene-right{padding:20px 24px 28px;background:#fafafa}
-  .scene-title{font-size:28px}
-  .scene-body{font-size:15px;max-width:100%}
-  .mockup{max-width:100%}
-  .footer{padding:10px 16px}
-  .end-content{padding:40px 24px}
-  .end-h{font-size:32px}
-  .end-sub{font-size:14px}
-}
-
-.chevron-pulse{
-  font-size:28px;
-  color:var(--teal);
-  animation:chevPulse 1.2s ease-in-out infinite;
-  line-height:1;
-}
-@keyframes chevPulse{
-  0%,100%{opacity:.2;transform:translateX(-4px)}
-  50%{opacity:1;transform:translateX(4px)}
-}
-
-@media(max-width:768px){
-  /* Last slide — stack vertically */
-  .end-wrap{
-    flex-direction:column!important;
-    overflow-y:auto!important;
-    align-items:stretch!important;
+  <!-- ═══ STRUCTURED DATA — Organization ═══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Rewire Consulting",
+    "url": "https://www.rewiretransform.com",
+    "logo": "https://www.rewiretransform.com/Rewire.png",
+    "image": "https://www.rewiretransform.com/Rewire.png",
+    "description": "Rewire Consulting helps businesses eliminate operational inefficiency through process optimization, workflow automation, business intelligence dashboards, and AI technology consulting.",
+    "email": "info@rewiretransform.com",
+    "areaServed": "US",
+    "priceRange": "$$",
+    "knowsAbout": [
+      "Business Intelligence",
+      "Process Optimization",
+      "Workflow Automation",
+      "RPA Implementation",
+      "Data Analytics",
+      "Dashboard Design",
+      "AI Workflow Integration",
+      "Technology Consulting"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Transformation Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Process Optimization",
+            "description": "We map, analyze, and redesign your core workflows — eliminating friction, reducing cycle times, and unlocking latent capacity across your organization."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Business Intelligence",
+            "description": "We build BI ecosystems — dashboards, data pipelines, and predictive models — that make decisions obvious."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Automation Engineering",
+            "description": "We design and deploy intelligent automation — RPA, workflow orchestration, and AI-assisted processes."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Technology Transformation",
+            "description": "We align your technology investments with your strategic goals, ensuring every tool earns its place."
+          }
+        }
+      ]
+    },
+    "sameAs": []
   }
-  .end-left-panel{
-    flex:none!important;
-    width:100%!important;
-    padding:32px 24px 24px!important;
-    border-right:none!important;
-    border-bottom:2px solid #f0f0f0!important;
+  </script>
+
+  <!-- ═══ STRUCTURED DATA — FAQ ═══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What does Rewire Business Transformation do?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Rewire Consulting helps small and mid-sized businesses eliminate operational drag and make smarter decisions through process optimization, workflow automation, business intelligence dashboards, and AI technology consulting."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What industries does Rewire Busines Transformation serve?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We work with professional services, e-commerce operators, real estate teams, and SMBs with 10 to 100 employees who need better systems and data visibility to grow."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Rewire Busines Transformation charge for its services?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We offer fixed-scope project engagements starting with a Business Diagnostic, through to full Rewire engagements covering automation, dashboards, and AI workflows. Monthly retainers are available for ongoing optimization."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What tools and technologies does Rewire Busines Transformation use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We use Make.com, n8n, Python, OpenAI APIs for automation; Power BI, Looker Studio, and Google Sheets for dashboards; and QuickBooks, Xero, and various CRMs for financial intelligence integrations."
+        }
+      }
+    ]
   }
-  .end-right-panel{
-    flex:none!important;
-    width:100%!important;
-    padding:24px 24px 40px!important;
-  }
-}
-</style>
+  </script>
+
+  <!-- ═══ PERFORMANCE ═══ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Preload hero image for LCP -->
+  <link rel="preload" as="image" href="Rewire.png" />
 </head>
 <body>
+  <!-- Background canvas -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-<div class="grain"></div>
-<div class="progress-bar" id="progress"></div>
-
-<nav class="nav">
-  <div class="nav-brand">
-    <span class="nav-name">JCQ &nbsp;·&nbsp; Suite Reservations</span>
-  </div>
-  <div class="nav-right">
-    <span class="nav-hint">Click or ← → to navigate</span>
-    <span class="slide-counter" id="counter">01 / 09</span>
-  </div>
-</nav>
-
-<!-- ARROWS -->
-<div class="nav-arrow hidden" id="arrowLeft" onclick="event.stopPropagation();goTo(current-1)">
-  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-</div>
-<div class="nav-arrow" id="arrowRight" onclick="event.stopPropagation();goTo(current+1===TOTAL?0:current+1)">
-  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-</div>
-
-<!-- ═══ S0: TITLE ═══ -->
-<div class="slide active" id="s0">
-  <div class="title-bg"></div>
-  <div style="position:relative;z-index:2;text-align:center;padding:40px">
-    <div class="title-line"></div>
-    <div class="title-eyebrow">Rewire Business Transformation · Built for JCQ Companies</div>
-    <h1 class="title-h1">JCQ Suite<br/><em>Reservations</em></h1>
-    <p class="title-sub">A complete suite management platform for Kia Center &amp; Inter&amp;Co Stadium</p>
-    <div class="title-divider"></div>
-    <p class="title-meta">Juan &nbsp;·&nbsp; Javi &nbsp;·&nbsp; Exclusive Preview &nbsp;·&nbsp; 2026</p>
-    <div style="margin-top:32px;display:inline-flex;align-items:center;gap:10px;padding:10px 20px;background:rgba(0,123,127,.07);border:1.5px solid rgba(0,123,127,.2);border-radius:3px;opacity:0;animation:fadeUp .8s 1.4s forwards">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="#007B7F"><path d="M8 5v14l11-7z"/></svg>
-      <span style="font-size:13px;color:#007B7F;font-weight:600;letter-spacing:.5px">Full demo video plays at the end</span>
+  <!-- Nav -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <a href="/" aria-label="Rewire Consulting home">
+          <img src="Rewire.png" alt="Rewire Consulting logo" class="logo-img" width="160" height="160" />
+        </a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact" class="nav-cta">Get Started</a></li>
+      </ul>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Mobile navigation" aria-modal="true">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Get Started</a></li>
+    </ul>
   </div>
-</div>
 
-
-<!-- ═══ S2: CLIENT PORTAL OVERVIEW ═══ -->
-<div class="slide" id="s1">
-  <div class="scene-bg"></div>
-  <div class="scene-wrap">
-    <div class="scene-left">
-      <div class="scene-number">Scene 02 &nbsp; Client Portal</div>
-      <h2 class="scene-title">Your clients see <em>this.</em></h2>
-      <p class="scene-body">A clean, branded portal where JCQ clients browse upcoming events at <strong>Kia Center</strong> and <strong>Inter&amp;Co Stadium</strong> — or request a suite for any date they choose.<br/><br/>No phone calls. No emails back and forth. They pick, they request, you approve.</p>
-      <div class="scene-tag"><div class="scene-tag-dot"></div>Live Ticketmaster integration</div>
-    </div>
-    <div class="scene-right">
-      <div class="mockup">
-        <div class="mockup-bar"><div class="mockup-dot" style="background:#ff5f57"></div><div class="mockup-dot" style="background:#febc2e"></div><div class="mockup-dot" style="background:#28c840"></div><div class="mockup-url">rewiretransform.com/jcq</div></div>
-        <div class="mockup-body">
-          <div class="ui-nav"><div class="ui-nav-logo">JCQ SERVICES · SUITE RESERVATIONS</div><div class="ui-nav-btn">Client Portal</div></div>
-          <div class="ui-hero"><div class="ui-hero-h">Complimentary Suite Access<br/><em>for JCQ Clients</em></div><div class="ui-hero-sub">Select your venue and dates to browse available events and reserve your suite.</div></div>
-          <div class="ui-content">
-            <div class="ui-tabs"><div class="ui-tab on">Browse Events</div><div class="ui-tab">Request a Specific Date</div></div>
-            <div class="ui-venue-tabs"><div class="ui-vtab">🏀 Kia Center</div><div class="ui-vtab on">⚽ Inter&amp;Co Stadium</div></div>
-          </div>
+  <!-- Hero -->
+  <section class="hero" id="hero" aria-labelledby="hero-heading">
+    <div class="hero-content">
+      <div class="hero-tag mono">// Rewire your operations</div>
+      <h1 class="hero-title" id="hero-heading">
+        <span class="line">Business</span>
+        <span class="line accent-word">Intelligence</span>
+        <span class="line">Redefined</span>
+      </h1>
+      <p class="hero-sub">
+        We engineer smarter systems — fusing process optimization, automation, and analytics 
+        to transform how your organization thinks, moves, and grows.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Start the Rewire</a>
+        <a href="#services" class="btn-ghost">Our Services <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <div class="hero-stats" aria-label="Key results">
+        <div class="stat">
+          <span class="stat-num" data-target="87">0</span><span class="stat-unit" aria-hidden="true">%</span>
+          <span class="stat-label">Avg. Efficiency Gain</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat">
+          <span class="stat-num" data-target="3">0</span><span class="stat-unit" aria-hidden="true">x</span>
+          <span class="stat-label">Faster Decision Cycles</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat">
+          <span class="stat-num" data-target="150">0</span><span class="stat-unit" aria-hidden="true">+</span>
+          <span class="stat-label">Processes Automated</span>
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- ═══ S3: BROWSE EVENTS ═══ -->
-<div class="slide" id="s2">
-  <div class="scene-bg"></div>
-  <div class="scene-wrap">
-    <div class="scene-left">
-      <div class="scene-number">Scene 03 &nbsp; Live Events</div>
-      <h2 class="scene-title">Real events.<br/><em>Real-time.</em></h2>
-      <p class="scene-body">The client picks a date range — or uses a quick preset. One click and the portal pulls <strong>live events</strong> directly from Ticketmaster.<br/><br/>MLS matches, Leagues Cup, concerts — whatever is scheduled. No manual updates from your team. Ever.</p>
-      <div class="scene-tag"><div class="scene-tag-dot"></div>Updates automatically from Ticketmaster</div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="circuit-diagram">
+        <svg viewBox="0 0 500 400" class="circuit-svg" id="circuit-svg" role="img" aria-label="Animated circuit diagram representing business process automation">
+          <defs>
+            <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:0" />
+              <stop offset="50%" style="stop-color:#0ea5e9;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#0ea5e9;stop-opacity:0" />
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <g class="grid-lines" opacity="0.08">
+            <line x1="0" y1="80" x2="500" y2="80" stroke="white" stroke-width="0.5"/>
+            <line x1="0" y1="160" x2="500" y2="160" stroke="white" stroke-width="0.5"/>
+            <line x1="0" y1="240" x2="500" y2="240" stroke="white" stroke-width="0.5"/>
+            <line x1="0" y1="320" x2="500" y2="320" stroke="white" stroke-width="0.5"/>
+            <line x1="80" y1="0" x2="80" y2="400" stroke="white" stroke-width="0.5"/>
+            <line x1="160" y1="0" x2="160" y2="400" stroke="white" stroke-width="0.5"/>
+            <line x1="240" y1="0" x2="240" y2="400" stroke="white" stroke-width="0.5"/>
+            <line x1="320" y1="0" x2="320" y2="400" stroke="white" stroke-width="0.5"/>
+            <line x1="400" y1="0" x2="400" y2="400" stroke="white" stroke-width="0.5"/>
+          </g>
+          <path class="c-path" d="M 60 200 L 160 200 L 160 120 L 340 120 L 340 200 L 440 200" stroke="#1e3a4a" stroke-width="2" fill="none"/>
+          <path class="c-path" d="M 60 200 L 160 200 L 160 280 L 340 280 L 340 200 L 440 200" stroke="#1e3a4a" stroke-width="2" fill="none"/>
+          <path class="c-path" d="M 250 80 L 250 120" stroke="#1e3a4a" stroke-width="2" fill="none"/>
+          <path class="c-path" d="M 250 280 L 250 320" stroke="#1e3a4a" stroke-width="2" fill="none"/>
+          <path class="c-path" d="M 160 160 L 80 160 L 80 240 L 160 240" stroke="#1e3a4a" stroke-width="2" fill="none"/>
+          <path class="c-path" d="M 340 160 L 420 160 L 420 240 L 340 240" stroke="#1e3a4a" stroke-width="2" fill="none"/>
+          <circle class="pulse-dot" r="3" fill="#0ea5e9" filter="url(#glow)">
+            <animateMotion dur="3s" repeatCount="indefinite" path="M 60 200 L 160 200 L 160 120 L 340 120 L 340 200 L 440 200"/>
+          </circle>
+          <circle class="pulse-dot" r="3" fill="#38bdf8" filter="url(#glow)">
+            <animateMotion dur="4s" repeatCount="indefinite" begin="1s" path="M 60 200 L 160 200 L 160 280 L 340 280 L 340 200 L 440 200"/>
+          </circle>
+          <circle class="pulse-dot" r="2" fill="#7dd3fc" filter="url(#glow)">
+            <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.5s" path="M 160 160 L 80 160 L 80 240 L 160 240"/>
+          </circle>
+          <circle class="pulse-dot" r="2" fill="#0ea5e9" filter="url(#glow)">
+            <animateMotion dur="2.5s" repeatCount="indefinite" begin="1.5s" path="M 340 160 L 420 160 L 420 240 L 340 240"/>
+          </circle>
+          <g class="nodes">
+            <circle cx="250" cy="200" r="18" fill="#0d1117" stroke="#0ea5e9" stroke-width="2" filter="url(#glow)"/>
+            <circle cx="250" cy="200" r="8" fill="#0ea5e9" opacity="0.6">
+              <animate attributeName="r" values="8;12;8" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="160" cy="200" r="6" fill="#0d1117" stroke="#0ea5e9" stroke-width="1.5"/>
+            <circle cx="340" cy="200" r="6" fill="#0d1117" stroke="#0ea5e9" stroke-width="1.5"/>
+            <circle cx="250" cy="120" r="5" fill="#0ea5e9" opacity="0.7"/>
+            <circle cx="250" cy="280" r="5" fill="#0ea5e9" opacity="0.7"/>
+            <circle cx="80" cy="200" r="5" fill="#38bdf8" opacity="0.5"/>
+            <circle cx="420" cy="200" r="5" fill="#38bdf8" opacity="0.5"/>
+          </g>
+          <text x="250" y="196" text-anchor="middle" fill="#0ea5e9" font-size="8" font-family="DM Mono" class="node-label">CORE</text>
+          <text x="250" y="204" text-anchor="middle" fill="#0ea5e9" font-size="6" font-family="DM Mono" class="node-label">SYS</text>
+        </svg>
+        <div class="metric-card" style="top:5%;left:0%;">
+          <div class="metric-dot"></div>
+          <span class="mono">Process Score</span>
+          <strong>98.4%</strong>
+        </div>
+        <div class="metric-card" style="bottom:10%;right:0%;">
+          <div class="metric-dot" style="background:#22d3ee;"></div>
+          <span class="mono">Automation Rate</span>
+          <strong>94.1%</strong>
+        </div>
+      </div>
     </div>
-    <div class="scene-right">
-      <div class="mockup">
-        <div class="mockup-bar"><div class="mockup-dot" style="background:#ff5f57"></div><div class="mockup-dot" style="background:#febc2e"></div><div class="mockup-dot" style="background:#28c840"></div><div class="mockup-url">rewiretransform.com/jcq</div></div>
-        <div class="mockup-body">
-          <div class="ui-content">
-            <div class="ui-date-card">
-              <div class="ui-date-label">Select Date Range</div>
-              <div class="ui-presets"><div class="ui-preset">Next 30 days</div><div class="ui-preset on">Next 3 months</div><div class="ui-preset">Next 6 months</div></div>
-              <div class="ui-date-row">
-                <div class="ui-date-field-wrap"><div class="ui-date-field-label">From</div><div class="ui-date-field">06/01/2026</div></div>
-                <div class="ui-date-field-wrap"><div class="ui-date-field-label">To</div><div class="ui-date-field">08/27/2026</div></div>
-                <div class="ui-search-btn highlight">Search →</div>
-              </div>
+  </section>
+
+  <!-- Ticker -->
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker-track">
+      <span>Process Optimization</span><span class="sep">◆</span>
+      <span>Workflow Automation</span><span class="sep">◆</span>
+      <span>Business Intelligence</span><span class="sep">◆</span>
+      <span>Technology Consulting</span><span class="sep">◆</span>
+      <span>Data Analytics</span><span class="sep">◆</span>
+      <span>Systems Integration</span><span class="sep">◆</span>
+      <span>Digital Transformation</span><span class="sep">◆</span>
+      <span>Process Optimization</span><span class="sep">◆</span>
+      <span>Workflow Automation</span><span class="sep">◆</span>
+      <span>Business Intelligence</span><span class="sep">◆</span>
+      <span>Technology Consulting</span><span class="sep">◆</span>
+      <span>Data Analytics</span><span class="sep">◆</span>
+      <span>Systems Integration</span><span class="sep">◆</span>
+      <span>Digital Transformation</span><span class="sep">◆</span>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <section class="services" id="services" aria-labelledby="services-heading">
+    <div class="container">
+      <div class="section-header">
+        <div class="mono section-tag">// What we do</div>
+        <h2 class="section-title" id="services-heading">Four pillars.<br />One rewired business.</h2>
+      </div>
+      <div class="services-grid">
+
+        <article class="service-card" data-index="01">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 24 L20 12 L32 24 L20 36 Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M28 20 L40 12 L40 36 L28 28" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <circle cx="20" cy="24" r="3" fill="currentColor"/>
+            </svg>
+          </div>
+          <span class="service-num mono" aria-hidden="true">01</span>
+          <h3>Process Optimization</h3>
+          <p>We map, analyze, and redesign your core workflows — eliminating friction, reducing cycle times, and unlocking latent capacity across your organization.</p>
+          <ul class="service-tags">
+            <li>Value Stream Mapping</li>
+            <li>Lean Six Sigma</li>
+            <li>KPI Architecture</li>
+          </ul>
+          <a href="#contact" class="service-link mono">Explore →</a>
+        </article>
+
+        <article class="service-card featured" data-index="02">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="8" y="28" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="22" y="18" width="10" height="22" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="36" y="8" width="10" height="32" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M13 28 L27 18 L41 8" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/>
+            </svg>
+          </div>
+          <span class="service-num mono" aria-hidden="true">02</span>
+          <h3>Business Intelligence</h3>
+          <p>Turn raw data into strategic advantage. We build BI ecosystems — dashboards, data pipelines, and predictive models — that make decisions obvious.</p>
+          <ul class="service-tags">
+            <li>Dashboard Design</li>
+            <li>Data Warehousing</li>
+            <li>Predictive Analytics</li>
+          </ul>
+          <a href="#contact" class="service-link mono">Explore →</a>
+        </article>
+
+        <article class="service-card" data-index="03">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="24" r="5" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="36" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="36" cy="36" r="5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M17 24 L31 13.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M17 24 L31 34.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M36 17 L36 31" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2"/>
+            </svg>
+          </div>
+          <span class="service-num mono" aria-hidden="true">03</span>
+          <h3>Automation Engineering</h3>
+          <p>We design and deploy intelligent automation — RPA, workflow orchestration, and AI-assisted processes — that handle the repetitive so your team can focus on what matters.</p>
+          <ul class="service-tags">
+            <li>RPA Implementation</li>
+            <li>API Integration</li>
+            <li>AI Workflows</li>
+          </ul>
+          <a href="#contact" class="service-link mono">Explore →</a>
+        </article>
+
+        <article class="service-card" data-index="04">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="8" y="8" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="26" y="8" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="8" y="26" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="26" y="26" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <span class="service-num mono" aria-hidden="true">04</span>
+          <h3>Technology Transformation</h3>
+          <p>From tech stack audits to full digital transformations — we align your technology investments with your strategic goals, ensuring every tool earns its place.</p>
+          <ul class="service-tags">
+            <li>Tech Stack Audit</li>
+            <li>Systems Architecture</li>
+            <li>Change Management</li>
+          </ul>
+          <a href="#contact" class="service-link mono">Explore →</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section class="process" id="process" aria-labelledby="process-heading">
+    <div class="container">
+      <div class="section-header">
+        <div class="mono section-tag">// How we work</div>
+        <h2 class="section-title" id="process-heading">A precision-engineered<br />engagement model.</h2>
+      </div>
+      <div class="process-track">
+        <div class="process-line" aria-hidden="true"></div>
+        <ol class="process-steps">
+          <li class="process-step">
+            <div class="step-node" aria-hidden="true"><span class="mono">01</span></div>
+            <div class="step-content">
+              <h3>Diagnose</h3>
+              <p>We embed with your team to understand your systems, pain points, and strategic objectives — no templates, no assumptions.</p>
             </div>
-            <div style="font-size:8px;font-weight:700;color:#ede9e1;margin-bottom:7px">3 Events Found <span style="color:#444;font-weight:400">— Inter&amp;Co Stadium</span></div>
-            <div class="ui-event-row"><div class="ui-event-date"><div class="ui-event-month">JUL</div><div class="ui-event-num">25</div><div class="ui-event-day">SAT</div></div><div><div class="ui-pill ui-pill-soccer">MLS</div><div class="ui-event-name">Orlando City SC v Nashville SC</div><div class="ui-event-meta">7:30 PM · 2 suites available</div></div><div class="ui-arrow">›</div></div>
-            <div class="ui-event-row"><div class="ui-event-date"><div class="ui-event-month">AUG</div><div class="ui-event-num">05</div><div class="ui-event-day">WED</div></div><div><div class="ui-pill ui-pill-soccer">Leagues Cup</div><div class="ui-event-name">Orlando City v CF Monterrey</div><div class="ui-event-meta">7:30 PM · 3 suites available</div></div><div class="ui-arrow">›</div></div>
+          </li>
+          <li class="process-step">
+            <div class="step-node" aria-hidden="true"><span class="mono">02</span></div>
+            <div class="step-content">
+              <h3>Design</h3>
+              <p>We architect a bespoke roadmap — mapping improvements, automation opportunities, and data infrastructure to measurable outcomes.</p>
+            </div>
+          </li>
+          <li class="process-step">
+            <div class="step-node" aria-hidden="true"><span class="mono">03</span></div>
+            <div class="step-content">
+              <h3>Deploy</h3>
+              <p>We implement with precision — building, testing, and launching solutions with minimal disruption and maximum adoption.</p>
+            </div>
+          </li>
+          <li class="process-step">
+            <div class="step-node" aria-hidden="true"><span class="mono">04</span></div>
+            <div class="step-content">
+              <h3>Optimize</h3>
+              <p>We monitor, iterate, and refine — ensuring every solution compounds in value long after the engagement concludes.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about" id="about" aria-labelledby="about-heading">
+    <div class="container about-inner">
+      <div class="about-left">
+        <div class="mono section-tag">// About Rewire</div>
+        <h2 id="about-heading">We don't consult.<br />We rewire.</h2>
+        <p>Rewire Busines Transformation was built on a simple belief: most organizations aren't held back by a lack of effort — they're held back by outdated systems, disconnected data, and manual processes that quietly drain capacity every day.</p>
+        <p>We're operators and engineers first. Every recommendation we make, we've implemented ourselves. We measure success in your results, not our deliverables.</p>
+        <div class="about-values">
+          <div class="value-item">
+            <span class="value-icon mono" aria-hidden="true">⚡</span>
+            <div>
+              <strong>Embedded Approach</strong>
+              <span>We work inside your organization, not at arm's length.</span>
+            </div>
+          </div>
+          <div class="value-item">
+            <span class="value-icon mono" aria-hidden="true">◎</span>
+            <div>
+              <strong>Outcome-Driven</strong>
+              <span>We're measured by what changes, not what we deliver.</span>
+            </div>
+          </div>
+          <div class="value-item">
+            <span class="value-icon mono" aria-hidden="true">▸</span>
+            <div>
+              <strong>Built to Last</strong>
+              <span>We build systems your team can own and evolve.</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ S4: SUITE SELECTION ═══ -->
-<div class="slide" id="s3">
-  <div class="scene-bg"></div>
-  <div class="scene-wrap">
-    <div class="scene-left">
-      <div class="scene-number">Scene 04 &nbsp; Suite Selection</div>
-      <h2 class="scene-title">Pick an event.<br/>Pick a <em>suite.</em></h2>
-      <p class="scene-body">The client selects their event and sees exactly which suites are available — floor, view, capacity, and what's included.<br/><br/>They select, fill in their details, and submit. The request lands in your admin queue <strong>instantly.</strong></p>
-      <div class="scene-tag"><div class="scene-tag-dot"></div>All IP transfers to JCQ on final payment</div>
-    </div>
-    <div class="scene-right">
-      <div class="mockup">
-        <div class="mockup-bar"><div class="mockup-dot" style="background:#ff5f57"></div><div class="mockup-dot" style="background:#febc2e"></div><div class="mockup-dot" style="background:#28c840"></div><div class="mockup-url">rewiretransform.com/jcq</div></div>
-        <div class="mockup-body">
-          <div class="ui-content">
-            <div style="margin-bottom:8px"><div class="ui-pill ui-pill-soccer">MLS</div><div style="font-size:10px;font-weight:800;color:#ede9e1;margin-top:3px;margin-bottom:1px">Orlando City SC v Nashville SC</div><div style="font-size:7px;color:#444">Saturday, July 25, 2026 · 7:30 PM · Inter&amp;Co Stadium</div></div>
-            <div style="font-size:7px;font-weight:700;letter-spacing:1px;color:#444;text-transform:uppercase;margin-bottom:6px">Select Your Suite</div>
-            <div class="ui-suite-card sel highlight"><div class="ui-suite-name">Founders Suite ✓</div><div class="ui-suite-meta">Pitch Level · Center Pitch · Up to 14 guests</div><div class="ui-amenities"><div class="ui-amenity sel">Premium Bar</div><div class="ui-amenity sel">Butler Service</div><div class="ui-amenity sel">4 VIP Passes</div><div class="ui-amenity sel">Pitch Access</div></div></div>
-            <div class="ui-suite-card"><div class="ui-suite-name">East Club Suite</div><div class="ui-suite-meta">Club Level · East Goal End · Up to 12 guests</div></div>
-            <div class="ui-search-btn" style="margin-top:8px">Reserve This Suite →</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ S5: CUSTOM DATE ═══ -->
-<div class="slide" id="s4">
-  <div class="scene-bg"></div>
-  <div class="scene-wrap">
-    <div class="scene-left">
-      <div class="scene-number">Scene 05 &nbsp; Custom Requests</div>
-      <h2 class="scene-title">No event listed?<br/><em>No problem.</em></h2>
-      <p class="scene-body">Clients can request a suite for <strong>any date</strong> — even without a ticketed event.<br/><br/>They describe their occasion, pick their suite preference, and submit. Flows into the same admin queue. Your team handles it identically.</p>
-      <div class="scene-tag"><div class="scene-tag-dot"></div>Corporate nights, private events, any occasion</div>
-    </div>
-    <div class="scene-right">
-      <div class="mockup">
-        <div class="mockup-bar"><div class="mockup-dot" style="background:#ff5f57"></div><div class="mockup-dot" style="background:#febc2e"></div><div class="mockup-dot" style="background:#28c840"></div><div class="mockup-url">rewiretransform.com/jcq</div></div>
-        <div class="mockup-body">
-          <div class="ui-content">
-            <div class="ui-tabs"><div class="ui-tab">Browse Events</div><div class="ui-tab on">Request a Specific Date</div></div>
-            <div style="font-size:9px;font-weight:800;color:#ede9e1;margin-bottom:3px">Request a Suite for Your Date</div>
-            <div style="font-size:7px;color:#444;margin-bottom:10px;line-height:1.6">Don't see your date? Tell us when you'd like a suite and we'll confirm within 24 hours.</div>
-            <div class="ui-form-row"><div class="ui-field"><div class="ui-field-label">Venue</div><div class="ui-field-input filled">Inter&amp;Co Stadium</div></div><div class="ui-field"><div class="ui-field-label">Preferred Date</div><div class="ui-field-input filled">09/15/2026</div></div></div>
-            <div class="ui-field" style="margin-bottom:7px"><div class="ui-field-label">Describe Your Event</div><div class="ui-field-input filled highlight">Client Appreciation Night</div></div>
-            <div class="ui-form-row"><div class="ui-field"><div class="ui-field-label">Full Name</div><div class="ui-field-input filled">Carlos Menéndez</div></div><div class="ui-field"><div class="ui-field-label">Company</div><div class="ui-field-input filled">Menéndez Construction</div></div></div>
-            <div class="ui-submit-btn">Submit Request</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ S6: ADMIN APPROVALS ═══ -->
-<div class="slide" id="s5">
-  <div class="scene-bg"></div>
-  <div class="scene-wrap">
-    <div class="scene-left">
-      <div class="scene-number">Scene 06 &nbsp; Admin Panel</div>
-      <h2 class="scene-title">Your team.<br/><em>In control.</em></h2>
-      <p class="scene-body">Every request lands here. Pending approvals highlighted at the top — client, suite, tier, date. <strong>One click to approve. One click to decline.</strong><br/><br/>On approval, the reservation logs automatically to that client's <strong>HubSpot record.</strong> Your sales team always knows who attended.</p>
-      <div class="scene-tag"><div class="scene-tag-dot"></div>Auto-syncs to HubSpot on approval</div>
-    </div>
-    <div class="scene-right">
-      <div class="mockup">
-        <div class="mockup-bar"><div class="mockup-dot" style="background:#ff5f57"></div><div class="mockup-dot" style="background:#febc2e"></div><div class="mockup-dot" style="background:#28c840"></div><div class="mockup-url">rewiretransform.com/jcq — Admin</div></div>
-        <div class="mockup-body">
-          <div class="ui-admin-layout">
-            <div class="ui-admin-sidebar"><div class="ui-admin-navitem on">📋 Requests</div><div class="ui-admin-navitem">📅 Calendar</div><div class="ui-admin-navitem">📊 Analytics</div><div class="ui-admin-navitem">⚙ HubSpot</div></div>
-            <div class="ui-admin-main">
-              <div class="ui-admin-h">Reservation Requests</div>
-              <div class="ui-admin-sub">Auto-sync to HubSpot on approval ✓</div>
-              <div class="ui-pending-label">Pending Approval (2)</div>
-              <div class="ui-req-card pending"><div class="ui-req-name">Carlos Menéndez</div><div class="ui-req-meta">Menéndez Construction · Founders Suite · Inter&amp;Co</div><div class="ui-req-actions"><div class="ui-approve-btn highlight">✓ Approve</div><div class="ui-decline-btn">✕</div><div class="ui-hs-badge"><div class="ui-hs-dot"></div>HubSpot</div></div></div>
-              <div class="ui-req-card pending"><div class="ui-req-name">Mike Torres</div><div class="ui-req-meta">Torres Development · Suite 114 · Kia Center</div><div class="ui-req-actions"><div class="ui-approve-btn">✓ Approve</div><div class="ui-decline-btn">✕</div></div></div>
-              <div style="font-size:6px;font-weight:700;letter-spacing:1px;color:#444;text-transform:uppercase;margin:8px 0 4px">All Requests</div>
-              <div class="ui-req-row"><div><div class="ui-req-name" style="font-size:7px">Sandra Lee</div><div class="ui-req-meta">Founders Suite</div></div><div><div class="ui-status-pill ui-status-approved">Approved</div></div><div><div class="ui-hs-badge"><div class="ui-hs-dot"></div>Synced</div></div></div>
-              <div class="ui-req-row"><div><div class="ui-req-name" style="font-size:7px">Jennifer Walsh</div><div class="ui-req-meta">Suite 118</div></div><div><div class="ui-status-pill ui-status-approved">Approved</div></div><div><div class="ui-hs-badge"><div class="ui-hs-dot"></div>Synced</div></div></div>
+      <div class="about-right" aria-hidden="true">
+        <div class="about-visual">
+          <div class="orbit-container">
+            <div class="orbit-center">
+              <img src="Rewire.png" alt="Rewire Consulting" class="orbit-logo" width="60" height="60" />
+            </div>
+            <div class="orbit orbit-1">
+              <div class="orbit-item" style="--angle:0deg"><span>Process</span></div>
+              <div class="orbit-item" style="--angle:90deg"><span>Data</span></div>
+              <div class="orbit-item" style="--angle:180deg"><span>Automation</span></div>
+              <div class="orbit-item" style="--angle:270deg"><span>Technology</span></div>
+            </div>
+            <div class="orbit orbit-2">
+              <div class="orbit-item small" style="--angle:45deg"><span>BI</span></div>
+              <div class="orbit-item small" style="--angle:135deg"><span>RPA</span></div>
+              <div class="orbit-item small" style="--angle:225deg"><span>AI</span></div>
+              <div class="orbit-item small" style="--angle:315deg"><span>API</span></div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- ═══ S7: PRIVATE EVENTS ═══ -->
-<div class="slide" id="s6">
-  <div class="scene-bg"></div>
-  <div class="scene-wrap">
-    <div class="scene-left">
-      <div class="scene-number">Scene 07 &nbsp; Private Events</div>
-      <h2 class="scene-title">Your events.<br/><em>Your control.</em></h2>
-      <p class="scene-body">Add any private event — corporate nights, client dinners, pre-season games — directly in the Calendar tab.<br/><br/>Name it, pick the venue, set the date, choose suites. It appears <strong>instantly</strong> in the client portal alongside live Ticketmaster events.</p>
-      <div class="scene-tag"><div class="scene-tag-dot"></div>Unlimited private events · No Ticketmaster required</div>
+  <!-- FAQ — hidden visually but indexed by Google -->
+  <section class="faq-hidden" aria-label="Frequently asked questions">
+    <div class="container">
+      <h2>Frequently Asked Questions</h2>
+      <details>
+        <summary>What does Rewire Busines Transformation do?</summary>
+        <p>Rewire Consulting helps small and mid-sized businesses eliminate operational drag and make smarter decisions through process optimization, workflow automation, business intelligence dashboards, and AI technology consulting.</p>
+      </details>
+      <details>
+        <summary>What industries does Rewire Busines Transformation serve?</summary>
+        <p>We work with professional services, e-commerce operators, real estate teams, and SMBs with 10 to 100 employees who need better systems and data visibility to grow.</p>
+      </details>
+      <details>
+        <summary>What tools and technologies does Rewire Busines Transformation use?</summary>
+        <p>We use Make.com, n8n, Python, and OpenAI APIs for automation; Power BI, Looker Studio, and Google Sheets for dashboards; and QuickBooks, Xero, and various CRMs for financial intelligence integrations.</p>
+      </details>
+      <details>
+        <summary>How does Rewire Busines Transformation charge for its services?</summary>
+        <p>We offer fixed-scope project engagements starting with a Business Diagnostic, through to full Rewire engagements covering automation, dashboards, and AI workflows. Monthly retainers are available for ongoing optimization support.</p>
+      </details>
     </div>
-    <div class="scene-right">
-      <div class="mockup">
-        <div class="mockup-bar"><div class="mockup-dot" style="background:#ff5f57"></div><div class="mockup-dot" style="background:#febc2e"></div><div class="mockup-dot" style="background:#28c840"></div><div class="mockup-url">rewiretransform.com/jcq — Admin</div></div>
-        <div class="mockup-body">
-          <div class="ui-admin-layout">
-            <div class="ui-admin-sidebar"><div class="ui-admin-navitem">📋 Requests</div><div class="ui-admin-navitem on">📅 Calendar</div><div class="ui-admin-navitem">📊 Analytics</div><div class="ui-admin-navitem">⚙ HubSpot</div></div>
-            <div class="ui-admin-main">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-                <div><div class="ui-admin-h">Event Calendar</div><div class="ui-admin-sub">Events not on Ticketmaster</div></div>
-                <div class="ui-approve-btn highlight" style="background:#007B7F">+ Add Private Event</div>
-              </div>
-              <div style="font-size:6px;font-weight:700;letter-spacing:1px;color:#007B7F;text-transform:uppercase;margin-bottom:5px">Private Events (2)</div>
-              <div class="ui-private-event"><div><div class="ui-private-name">JCQ Corporate Night</div><div class="ui-private-meta">Kia Center · Sep 15, 2026 · 7:00 PM</div></div><div class="ui-pill ui-pill-private">Private</div></div>
-              <div class="ui-private-event"><div><div class="ui-private-name">Client Appreciation Dinner</div><div class="ui-private-meta">Inter&amp;Co Stadium · Oct 3, 2026</div></div><div class="ui-pill ui-pill-private">Private</div></div>
-              <div style="font-size:6px;font-weight:700;letter-spacing:1px;color:#444;text-transform:uppercase;margin:7px 0 4px">Upcoming Reservations</div>
-              <div class="ui-req-row"><div><div class="ui-req-name" style="font-size:7px">Carlos Menéndez</div><div class="ui-req-meta">Founders Suite</div></div><div><div class="ui-status-pill ui-status-approved">Approved</div></div></div>
-              <div class="ui-req-row"><div><div class="ui-req-name" style="font-size:7px">Sandra Lee</div><div class="ui-req-meta">Suite 122</div></div><div><div class="ui-status-pill ui-status-pending">Pending</div></div></div>
-            </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contact" aria-labelledby="contact-heading">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="contact-left">
+          <div class="mono section-tag">// Let's talk</div>
+          <h2 id="contact-heading">Ready to start<br />your rewire?</h2>
+          <p>Tell us about your challenges. We'll tell you what's possible.</p>
+          <div class="contact-info">
+            <a href="mailto:info@rewiretransform.com" class="mono contact-link">info@rewiretransform.com</a>
           </div>
         </div>
+        <form class="contact-form" id="contact-form" novalidate aria-label="Contact form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="mono" for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label class="mono" for="company">Company</label>
+              <input type="text" id="company" name="company" placeholder="Your company" autocomplete="organization" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="mono" for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label class="mono" for="challenge">Primary challenge</label>
+            <select id="challenge" name="challenge">
+              <option value="">Select a focus area</option>
+              <option>Process Optimization</option>
+              <option>Business Intelligence</option>
+              <option>Automation Engineering</option>
+              <option>Technology Consulting</option>
+              <option>Multiple / Unsure</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="mono" for="message">Tell us more</label>
+            <textarea id="message" name="message" rows="4" placeholder="Describe your challenge or what you're trying to achieve..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary full-width">Send Message <span class="mono" aria-hidden="true">→</span></button>
+        </form>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- ═══ S7: VIDEO + END ═══ -->
-<div class="slide" id="s7">
-  <div class="end-bg"></div>
-  <div class="end-wrap" style="position:relative;z-index:2;width:100%;height:100%;display:flex;align-items:stretch;overflow:hidden">
-
-    <!-- LEFT PANEL: closing copy -->
-    <div class="end-left-panel" style="flex:0 0 380px;display:flex;flex-direction:column;justify-content:center;padding:56px 48px 56px 64px;border-right:2px solid #f0f0f0;background:#ffffff">
-      <div style="font-size:11px;letter-spacing:3px;color:var(--teal);text-transform:uppercase;margin-bottom:20px;font-weight:600;display:flex;align-items:center;gap:8px">
-        <div style="width:5px;height:5px;border-radius:50%;background:var(--teal)"></div>
-        Built for JCQ
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-logo">
+        <a href="/" aria-label="Rewire Consulting home">
+          <img src="Rewire.png" alt="Rewire Consulting" width="52" height="52" />
+        </a>
+        <span class="mono footer-tagline">// Rewiring operations since 2020</span>
       </div>
-      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3vw,46px);font-weight:400;color:#111;line-height:1.1;margin-bottom:20px">Ready for<br/><em style="color:var(--teal);font-style:normal">Phase One.</em></h2>
-      <div style="font-size:16px;color:#555;line-height:2;margin-bottom:32px;font-weight:400">
-        Live Ticketmaster events.<br/>
-        One-click approvals.<br/>
-        HubSpot auto-sync.<br/>
-        Full admin control.<br/>
-        <strong style="color:#111;font-weight:600">Owned entirely by JCQ.</strong>
-      </div>
-      <div style="padding:14px 20px;background:var(--teal);display:inline-block;margin-bottom:16px">
-        <span style="font-size:12px;font-weight:700;letter-spacing:1.5px;color:white;text-transform:uppercase">Rewire Business Transformation</span>
-      </div>
-      <div>
-        <button onclick="event.stopPropagation();goTo(0)" style="padding:9px 20px;background:transparent;border:1.5px solid #d0d0d0;color:#999;font-family:'Barlow',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .2s" onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal)'" onmouseout="this.style.borderColor='#d0d0d0';this.style.color='#999'">↺ &nbsp;Restart</button>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="footer-copy mono">
+        © 2025 Rewire Busines Transformation . All rights reserved.
       </div>
     </div>
+  </footer>
 
-    <!-- RIGHT PANEL: video -->
-    <div class="end-right-panel" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 56px;background:#fafafa;gap:16px">
-      <div style="font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;font-weight:600;align-self:flex-start">Watch the full demo</div>
-
-      <a
-        href="https://1drv.ms/v/c/330353e34933b54f/IQCTHG1Q3w_YQpsKkckW8oRPAU7dSYfVzWRVS_crC3iwAVM?e=Ohmpjs"
-        target="_blank"
-        onclick="event.stopPropagation()"
-        style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;max-width:520px;background:linear-gradient(135deg,#0d1a1a 0%,#0a2020 100%);border-radius:6px;text-decoration:none;border:1.5px solid #d0d0d0;transition:all .25s;position:relative;overflow:hidden;flex-shrink:0;padding:40px 24px"
-        onmouseover="this.style.borderColor='#007B7F';this.style.boxShadow='0 8px 32px rgba(0,123,127,.25)';this.querySelector('.play-ring').style.transform='scale(1.08)'"
-        onmouseout="this.style.borderColor='#d0d0d0';this.style.boxShadow='none';this.querySelector('.play-ring').style.transform='scale(1)'"
-      >
-        <!-- grid texture -->
-        <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(0,123,127,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(0,123,127,.07) 1px,transparent 1px);background-size:28px 28px;pointer-events:none"></div>
-        <!-- corner tag -->
-        <div style="position:absolute;top:12px;right:14px;font-size:10px;color:rgba(255,255,255,.3);letter-spacing:1px;font-weight:500">Opens in new tab</div>
-        <!-- play button -->
-        <div class="play-ring" style="width:72px;height:72px;border-radius:50%;background:rgba(0,123,127,.9);border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;transition:transform .25s;box-shadow:0 0 0 12px rgba(0,123,127,.12),0 0 0 24px rgba(0,123,127,.06)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="white" style="margin-left:4px"><path d="M8 5v14l11-7z"/></svg>
-        </div>
-        <div style="font-family:'Barlow',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.8);text-transform:uppercase">Watch Demo Video</div>
-        <div style="font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.5px">JCQ Suite Reservations · Full Walkthrough</div>
-      </a>
-
-      <div style="font-size:13px;color:#aaa;text-align:center;line-height:1.6">Click to watch &nbsp;·&nbsp; opens in a new tab<br/>Come back with any questions</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-dots" id="dots"></div>
-  <div class="footer-keys"><span>←  →</span> &nbsp; Arrow keys &nbsp;·&nbsp; <span>Click</span> to advance</div>
-</footer>
-
-<script>
-const TOTAL = 8;
-let current = 0;
-
-// Cursor
-const cur = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-document.addEventListener('mousemove', e => {
-  cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px';
-  ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px';
-});
-
-// Dots
-const dotsEl = document.getElementById('dots');
-for(let i=0;i<TOTAL;i++){
-  const d = document.createElement('div');
-  d.className = 'dot'+(i===0?' on':'');
-  d.onclick = e => { e.stopPropagation(); goTo(i); };
-  dotsEl.appendChild(d);
-}
-
-function goTo(n) {
-  if(n < 0 || n >= TOTAL) return;
-  document.getElementById('s'+current).classList.remove('active');
-  current = n;
-  document.getElementById('s'+current).classList.add('active');
-  document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('on', i===current));
-  document.getElementById('counter').textContent = String(current+1).padStart(2,'0')+' / '+String(TOTAL).padStart(2,'0');
-  document.getElementById('progress').style.width = ((current+1)/TOTAL*100)+'%';
-  document.getElementById('arrowLeft').classList.toggle('hidden', current===0);
-  document.getElementById('arrowRight').classList.toggle('hidden', false);
-}
-
-document.addEventListener('click', () => goTo(current===TOTAL-1 ? 0 : current+1));
-document.addEventListener('keydown', e => {
-  if(e.key==='ArrowRight'||e.key===' '||e.key==='Enter') goTo(current===TOTAL-1 ? 0 : current+1);
-  if(e.key==='ArrowLeft') goTo(current-1);
-});
-
-document.getElementById('progress').style.width = (1/TOTAL*100)+'%';
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
