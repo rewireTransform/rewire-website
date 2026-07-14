@@ -143,7 +143,7 @@ body {
   z-index: 1;
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.85fr 1.15fr;
   align-items: center;
   gap: 4rem;
   max-width: 1200px;
@@ -165,7 +165,7 @@ body {
 }
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
   font-weight: 800;
   color: var(--white);
   line-height: 1.05;
@@ -267,7 +267,9 @@ body {
 }
 .circuit-diagram {
   position: relative;
-  aspect-ratio: 1.2 / 1;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 12px;
 }
 .circuit-svg {
   width: 100%;
