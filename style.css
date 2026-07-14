@@ -264,6 +264,8 @@ body {
   position: relative;
   opacity: 0;
   animation: fadeIn 1.2s ease 0.4s forwards;
+  align-self: center;
+  margin-top: -6rem;
 }
 .circuit-diagram {
   position: relative;
