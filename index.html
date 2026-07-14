@@ -216,66 +216,10 @@
     </div>
     <div class="hero-visual" aria-hidden="true">
       <div class="circuit-diagram">
-        <svg viewBox="0 0 500 400" class="circuit-svg" id="circuit-svg" role="img" aria-label="Animated circuit diagram representing business process automation">
-          <defs>
-            <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:0" />
-              <stop offset="50%" style="stop-color:#0ea5e9;stop-opacity:1" />
-              <stop offset="100%" style="stop-color:#0ea5e9;stop-opacity:0" />
-            </linearGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-          </defs>
-          <g class="grid-lines" opacity="0.08">
-            <line x1="0" y1="80" x2="500" y2="80" stroke="white" stroke-width="0.5"/>
-            <line x1="0" y1="160" x2="500" y2="160" stroke="white" stroke-width="0.5"/>
-            <line x1="0" y1="240" x2="500" y2="240" stroke="white" stroke-width="0.5"/>
-            <line x1="0" y1="320" x2="500" y2="320" stroke="white" stroke-width="0.5"/>
-            <line x1="80" y1="0" x2="80" y2="400" stroke="white" stroke-width="0.5"/>
-            <line x1="160" y1="0" x2="160" y2="400" stroke="white" stroke-width="0.5"/>
-            <line x1="240" y1="0" x2="240" y2="400" stroke="white" stroke-width="0.5"/>
-            <line x1="320" y1="0" x2="320" y2="400" stroke="white" stroke-width="0.5"/>
-            <line x1="400" y1="0" x2="400" y2="400" stroke="white" stroke-width="0.5"/>
-          </g>
-          <path class="c-path" d="M 60 200 L 160 200 L 160 120 L 340 120 L 340 200 L 440 200" stroke="#1e3a4a" stroke-width="2" fill="none"/>
-          <path class="c-path" d="M 60 200 L 160 200 L 160 280 L 340 280 L 340 200 L 440 200" stroke="#1e3a4a" stroke-width="2" fill="none"/>
-          <path class="c-path" d="M 250 80 L 250 120" stroke="#1e3a4a" stroke-width="2" fill="none"/>
-          <path class="c-path" d="M 250 280 L 250 320" stroke="#1e3a4a" stroke-width="2" fill="none"/>
-          <path class="c-path" d="M 160 160 L 80 160 L 80 240 L 160 240" stroke="#1e3a4a" stroke-width="2" fill="none"/>
-          <path class="c-path" d="M 340 160 L 420 160 L 420 240 L 340 240" stroke="#1e3a4a" stroke-width="2" fill="none"/>
-          <circle class="pulse-dot" r="3" fill="#0ea5e9" filter="url(#glow)">
-            <animateMotion dur="3s" repeatCount="indefinite" path="M 60 200 L 160 200 L 160 120 L 340 120 L 340 200 L 440 200"/>
-          </circle>
-          <circle class="pulse-dot" r="3" fill="#38bdf8" filter="url(#glow)">
-            <animateMotion dur="4s" repeatCount="indefinite" begin="1s" path="M 60 200 L 160 200 L 160 280 L 340 280 L 340 200 L 440 200"/>
-          </circle>
-          <circle class="pulse-dot" r="2" fill="#7dd3fc" filter="url(#glow)">
-            <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.5s" path="M 160 160 L 80 160 L 80 240 L 160 240"/>
-          </circle>
-          <circle class="pulse-dot" r="2" fill="#0ea5e9" filter="url(#glow)">
-            <animateMotion dur="2.5s" repeatCount="indefinite" begin="1.5s" path="M 340 160 L 420 160 L 420 240 L 340 240"/>
-          </circle>
-          <g class="nodes">
-            <circle cx="250" cy="200" r="18" fill="#0d1117" stroke="#0ea5e9" stroke-width="2" filter="url(#glow)"/>
-            <circle cx="250" cy="200" r="8" fill="#0ea5e9" opacity="0.6">
-              <animate attributeName="r" values="8;12;8" dur="2s" repeatCount="indefinite"/>
-              <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite"/>
-            </circle>
-            <circle cx="160" cy="200" r="6" fill="#0d1117" stroke="#0ea5e9" stroke-width="1.5"/>
-            <circle cx="340" cy="200" r="6" fill="#0d1117" stroke="#0ea5e9" stroke-width="1.5"/>
-            <circle cx="250" cy="120" r="5" fill="#0ea5e9" opacity="0.7"/>
-            <circle cx="250" cy="280" r="5" fill="#0ea5e9" opacity="0.7"/>
-            <circle cx="80" cy="200" r="5" fill="#38bdf8" opacity="0.5"/>
-            <circle cx="420" cy="200" r="5" fill="#38bdf8" opacity="0.5"/>
-          </g>
-          <text x="250" y="196" text-anchor="middle" fill="#0ea5e9" font-size="8" font-family="DM Mono" class="node-label">CORE</text>
-          <text x="250" y="204" text-anchor="middle" fill="#0ea5e9" font-size="6" font-family="DM Mono" class="node-label">SYS</text>
-        </svg>
+        <video class="hero-video" autoplay muted loop playsinline>
+          <source src="Digital_data_flows_to_grids_202607132219.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-video-overlay"></div>
         <div class="metric-card" style="top:5%;left:0%;">
           <div class="metric-dot"></div>
           <span class="mono">Process Score</span>
