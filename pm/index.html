@@ -88,6 +88,13 @@ const KEY_INFO_FIELDS = [
   { key:"Meeting Link",      label:"Meeting Link",  icon:"📹", placeholder:"Recurring meeting link" },
   { key:"Contract URL",      label:"Contract",      icon:"📜", placeholder:"Direct link to signed contract" },
 ];
+// Ensures a stored link always has a scheme, so <a href> treats it as absolute
+// instead of relative to the current page (e.g. "onedrive.com/x" -> "https://onedrive.com/x").
+const normalizeUrl = url => {
+  if (!url) return url;
+  const trimmed = url.trim();
+  return /^[a-z][a-z0-9+.-]*:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+};
 
 // Accessible color palette — all foreground/background combos meet WCAG AA (4.5:1 min)
 // Background is #18202e, surface is #1f2d42, elevated is #263650
@@ -572,7 +579,7 @@ function ClientForm({ initial, techOptions=[], onSave, onClose }) {
 
 
 function TaskForm({ initial, clients, selectedClientId, onSave, onClose }) {
-  const [f,setF] = useState(initial||{Title:"",Status:"To Do",Assignee:"SC",Priority:"Medium","Due Date":"",Notes:"",Client:selectedClientId?[selectedClientId]:[]});
+  const [f,setF] = useState(initial||{Title:"",Status:"To Do",Assignee:"SC",Priority:"Medium","Due Date":"",Notes:"",Client:selectedClientId?[selectedClientId]:[],Visibility:"Internal"});
   const set  = k => e => setF(p=>({...p,[k]:e.target.value}));
   const setL = k => e => setF(p=>({...p,[k]:e.target.value?[e.target.value]:[]}));
   return (
@@ -593,6 +600,13 @@ function TaskForm({ initial, clients, selectedClientId, onSave, onClose }) {
       <div className="field-row">
         <div className="field"><label htmlFor="tf-priority">Priority</label><select id="tf-priority" value={f.Priority} onChange={set("Priority")}>{PRIORITIES.map(s=><option key={s}>{s}</option>)}</select></div>
         <div className="field"><label htmlFor="tf-due">Due Date</label><input id="tf-due" value={fmtDateInp(f["Due Date"])} onChange={set("Due Date")} type="date" /></div>
+      </div>
+      <div className="field">
+        <label htmlFor="tf-vis">Visibility</label>
+        <select id="tf-vis" value={f.Visibility||"Internal"} onChange={set("Visibility")}>
+          <option value="Internal">Internal (SC / AG only)</option>
+          <option value="Client-Visible">Client-Visible (shows in portal)</option>
+        </select>
       </div>
       <div className="field"><label htmlFor="tf-notes">Notes</label><textarea id="tf-notes" value={f.Notes} onChange={set("Notes")} rows={3} /></div>
     </Modal>
@@ -860,6 +874,11 @@ function TasksView({ tasks, clients, comments, onAddComment, selectedClientId, o
                   {!selectedClientId&&clientName&&<span className="badge" style={{background:"var(--hover)",color:"var(--text-2)",fontSize:11}}>{fmt(clientName).Name}</span>}
                   {f["Due Date"]&&<span style={{fontSize:12,color:overdue?"var(--red)":"var(--text-3)",fontFamily:"var(--mono)"}}>{overdue?"⚠ ":""}{fmtDate(f["Due Date"])}</span>}
                   {commentCount>0&&<span style={{fontSize:12,color:"var(--text-3)"}}>💬 {commentCount}</span>}
+                  <span className="badge" style={f.Visibility==="Client-Visible"
+                    ? {background:"rgba(74,222,154,.15)",color:"var(--green)",fontSize:11}
+                    : {background:"var(--hover)",color:"var(--text-3)",fontSize:11}}>
+                    {f.Visibility==="Client-Visible" ? "👁 Client-visible" : "🔒 Internal"}
+                  </span>
                 </div>
               </div>
               <div className="task-actions" onClick={e=>e.stopPropagation()}>
@@ -961,7 +980,8 @@ function ClientDetail({ client, clients, tasks, comms, comments, onAddComment, o
   const [keyInfo,setKeyInfo]=useState({ "Shared Folder URL":f["Shared Folder URL"]||"", "Meeting Link":f["Meeting Link"]||"", "Contract URL":f["Contract URL"]||"" });
   useEffect(()=>{ setKeyInfo({ "Shared Folder URL":f["Shared Folder URL"]||"", "Meeting Link":f["Meeting Link"]||"", "Contract URL":f["Contract URL"]||"" }); },[client.id]);
   const saveKeyInfo = async (key,value) => {
-    try { await atUpdate("Clients",client.id,{[key]:value||null}); onUpdate(); } catch { notify("Error saving link","error"); }
+    const normalized = normalizeUrl(value);
+    try { await atUpdate("Clients",client.id,{[key]:normalized||null}); setKeyInfo(p=>({...p,[key]:normalized||""})); onUpdate(); } catch { notify("Error saving link","error"); }
   };
   const clientTasks=tasks.filter(t=>fmt(t).Client?.[0]===client.id);
   const doneTasks=clientTasks.filter(t=>fmt(t).Status==="Done").length;
@@ -1009,7 +1029,7 @@ function ClientDetail({ client, clients, tasks, comms, comments, onAddComment, o
               onChange={e=>setKeyInfo(p=>({...p,[k.key]:e.target.value}))}
               onBlur={()=>saveKeyInfo(k.key,keyInfo[k.key])} />
             {keyInfo[k.key]
-              ? <a className="key-info-open" href={keyInfo[k.key]} target="_blank" rel="noopener noreferrer" title={`Open ${k.label}`}>↗</a>
+              ? <a className="key-info-open" href={normalizeUrl(keyInfo[k.key])} target="_blank" rel="noopener noreferrer" title={`Open ${k.label}`}>↗</a>
               : <span className="key-info-open" style={{opacity:.4}} title="Not set — hidden from client portal">🔒</span>}
           </div>
         ))}
@@ -1053,6 +1073,11 @@ function ClientDetail({ client, clients, tasks, comms, comments, onAddComment, o
                     <div className="task-meta">
                       <span className="tag" style={{background:`${STATUS_COLOR[tf.Status]}1a`,color:STATUS_COLOR[tf.Status]}}>{tf.Status}</span>
                       <span style={{fontSize:12,color:"var(--text-3)",fontFamily:"var(--mono)"}}>{fmtDate(a.date)}</span>
+                      <span className="badge" style={tf.Visibility==="Client-Visible"
+                        ? {background:"rgba(74,222,154,.15)",color:"var(--green)",fontSize:11}
+                        : {background:"var(--hover)",color:"var(--text-3)",fontSize:11}}>
+                        {tf.Visibility==="Client-Visible" ? "👁 Client-visible" : "🔒 Internal"}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -1377,7 +1402,7 @@ function ClientPortal() {
         ]);
         const client = clients.find(c => slugify(fmt(c).Name) === slug);
         if (!client) { setNotFound(true); setLoading(false); return; }
-        const clientTasks = tasks.filter(t => fmt(t).Client?.[0] === client.id);
+        const clientTasks = tasks.filter(t => fmt(t).Client?.[0] === client.id && fmt(t).Visibility === "Client-Visible");
         const clientComms = comms.filter(c => fmt(c).Client?.[0] === client.id && fmt(c).Visibility === "Client-Visible");
         setData({ client, tasks: clientTasks, comms: clientComms });
       } catch(e) {
@@ -1439,7 +1464,7 @@ function ClientPortal() {
             <div className="portal-section-title">Key Information</div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
               {KEY_INFO_FIELDS.filter(k=>f[k.key]).map(k=>(
-                <a key={k.key} href={f[k.key]} target="_blank" rel="noopener noreferrer" className="key-info-row">
+                <a key={k.key} href={normalizeUrl(f[k.key])} target="_blank" rel="noopener noreferrer" className="key-info-row">
                   <span className="key-info-icon" aria-hidden="true">{k.icon}</span>
                   <span className="key-info-label">{k.label}</span>
                   <span style={{marginLeft:"auto",color:"var(--text-3)"}}>↗</span>
