@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rewire — Project Ops</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+  <link rel="icon" href="data:image/png;base64,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" type="image/png">
+  <style>body{margin:0;padding:0;background:#1c2535}</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useCallback } = React;
+
+// ─── CONFIG — EDIT THESE TWO LINES ───────────────────────────────────────────
+const AT_TOKEN = "patubf1oRHHECr3MY.a19e3fb088f0411da0f8f80b367bb049066d38e1952588b9dbe9d14c91b9a452";
+const BASE_ID  = "appazDim2fntQrrdY";
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Sanitize fields before sending to Airtable:
+// - empty strings → null for select/date/link fields
+// - number strings → actual numbers for numeric fields
+const clean = fields => {
+  const out = {};
+  for (const [k,v] of Object.entries(fields)) {
+    if (k === "Created") continue; // computed field — Airtable rejects writes to it
+    if (v === "" || (Array.isArray(v) && v.length === 0)) out[k] = null;
+    else out[k] = v;
+  }
+  // Numeric fields must be numbers not strings
+  if (out["Recommended Quote"] !== null && out["Recommended Quote"] !== undefined)
+    out["Recommended Quote"] = Number(out["Recommended Quote"]) || null;
+  if (out["Sort Order"] !== null && out["Sort Order"] !== undefined)
+    out["Sort Order"] = Number(out["Sort Order"]) || 0;
+  return out;
+};
+
+const AT = async (table, opts = {}) => {
+  const { method = "GET", body, filter, sort } = opts;
+  // table may be "TableName" or "TableName/recordId" — encode each path segment separately
+  // so the "/" between them survives (encodeURIComponent on the whole string turns it into %2F).
+  const pathParts = table.split("/").map(encodeURIComponent).join("/");
+  let url = `https://api.airtable.com/v0/${BASE_ID}/${pathParts}`;
+  const p = new URLSearchParams();
+  if (filter) p.set("filterByFormula", filter);
+  if (sort) sort.forEach((s,i) => { p.set(`sort[${i}][field]`,s.field); p.set(`sort[${i}][direction]`,s.dir||"asc"); });
+  if ([...p].length) url += "?" + p.toString();
+  const res = await fetch(url, {
+    method,
+    headers: { Authorization: `Bearer ${AT_TOKEN}`, "Content-Type": "application/json" },
+    // typecast lets writes create new select options on the fly (e.g. a brand-new Tech Stack tag)
+    ...(body ? { body: JSON.stringify({ ...body, ...(method!=="GET"?{typecast:true}:{}) }) } : {}),
+  });
+  if (!res.ok) {
+    let detail = "";
+    try { const errBody = await res.json(); detail = errBody?.error?.message || errBody?.error?.type || JSON.stringify(errBody); } catch {}
+    const err = new Error(`Airtable ${res.status}${detail?`: ${detail}`:""}`);
+    console.error("Airtable request failed", { table, opts, status: res.status, detail });
+    throw err;
+  }
+  return res.json();
+};
+const atList = async (table, opts) => {
+  const all = []; let offset;
+  do {
+    const params = { ...opts }; if (offset) params.offset = offset;
+    const data = await AT(table, params);
+    all.push(...(data.records||[])); offset = data.offset;
+  } while (offset);
+  return all;
+};
+const atCreate = (table, fields) => AT(table, { method:"POST", body:{ fields } });
+const atUpdate = (table, id, fields) => AT(`${table}/${id}`, { method:"PATCH", body:{ fields } });
+const atDelete = (table, id) => AT(`${table}/${id}`, { method:"DELETE" });
+
+const STAGES     = ["Prospect","Pre-Engagement","Active","Sustainment","Closed"];
+const STATUSES   = ["To Do","In Progress","Blocked","Done"];
+const ASSIGNEES  = ["SC","AG","Both"];
+const PRIORITIES = ["High","Medium","Low"];
+const SIZES      = ["S","M","L","XL"];
+const COMM_TYPES = ["Call","Email","Meeting","Text","Other"];
+const VISIBILITY = ["Internal","Client-Visible"];
+const KEY_INFO_FIELDS = [
+  { key:"Shared Folder URL", label:"Shared Files", icon:"📁", placeholder:"OneDrive / shared folder link" },
+  { key:"Meeting Link",      label:"Meeting Link",  icon:"📹", placeholder:"Recurring meeting link" },
+  { key:"Contract URL",      label:"Contract",      icon:"📜", placeholder:"Direct link to signed contract" },
+];
+
+// Accessible color palette — all foreground/background combos meet WCAG AA (4.5:1 min)
+// Background is #18202e, surface is #1f2d42, elevated is #263650
+// All tag/badge text is rendered on a dark semi-transparent tint of the color
+const STAGE_COLOR    = { "Prospect":"#94a3b8","Pre-Engagement":"#1a8fff","Active":"#34d399","Sustainment":"#a78bfa","Closed":"#64748b" };
+const STATUS_COLOR   = { "To Do":"#94a3b8","In Progress":"#1a8fff","Blocked":"#f87171","Done":"#34d399" };
+const PRIORITY_COLOR = { "High":"#f87171","Medium":"#fbbf24","Low":"#94a3b8" };
+const SIZE_COLOR     = { "S":"#34d399","M":"#1a8fff","L":"#fbbf24","XL":"#f87171" };
+
+const CSS = `
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #1c2535;   /* logo background — sidebar, topbar */
+    --surface:   #243044;   /* main content area — slightly lighter */
+    --elevated:  #2d3a50;
+    --hover:     #2d3d58;
+    --border:    #364d6b;
+    --border-hi: #4a6488;
+    --text:      #e8edf4;
+    --text-2:    #b0c4d8;
+    --text-3:    #7a96b0;
+    --blue:      #1a8fff;   /* logo accent blue */
+    --blue-tint: rgba(26,143,255,.14);
+    --green:     #4ade9a;
+    --red:       #f87171;
+    --yellow:    #fcd34d;
+    --font:      'Inter', system-ui, sans-serif;
+    --mono:      'JetBrains Mono', 'Courier New', monospace;
+    --r:         6px;
+    --r-lg:      10px;
+    --shadow:    0 4px 20px rgba(0,0,0,.4);
+  }
+
+  html, body, #root { height: 100%; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 15px; line-height: 1.5; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-hi); border-radius: 3px; }
+
+  .app { display: flex; height: 100vh; overflow: hidden; position: relative; }
+
+  .sidebar {
+    width: 232px; min-width: 232px;
+    background: var(--bg); border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden;
+    transition: transform .25s ease, width .25s ease, min-width .25s ease;
+    z-index: 50;
+  }
+  .sidebar.collapsed { width: 0; min-width: 0; border-right: none; visibility: hidden; }
+
+  @media (max-width: 720px) {
+    .sidebar { position: fixed; top: 0; left: 0; bottom: 0; transform: translateX(0); visibility: visible; box-shadow: var(--shadow); }
+    .sidebar.collapsed { transform: translateX(-100%); width: 232px; min-width: 232px; visibility: visible; }
+    .sidebar-overlay { display: block !important; }
+  }
+
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 40; }
+
+  .sidebar-logo { padding: 20px 16px 16px; border-bottom: 1px solid var(--border); font-weight: 700; font-size: 17px; color: var(--text); letter-spacing: -.3px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; }
+  .sidebar-logo-mark { color: var(--blue); }
+  .sidebar-logo-sub { display: block; font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--text-3); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+  .sidebar-close { background: none; border: none; cursor: pointer; color: var(--text-3); padding: 4px; border-radius: var(--r); display: none; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+  @media (max-width: 720px) { .sidebar-close { display: flex; } }
+  .sidebar-close:hover { color: var(--text); background: var(--hover); }
+
+  .sidebar-section { padding: 16px 14px 6px; font-family: var(--mono); font-size: 12px; letter-spacing: 1.2px; color: var(--text-3); text-transform: uppercase; flex-shrink: 0; }
+
+  .sidebar-item { margin: 1px 8px; padding: 10px 12px; border-radius: var(--r); cursor: pointer; font-size: 14px; font-weight: 500; color: var(--text-2); display: flex; align-items: center; gap: 10px; transition: background .12s, color .12s; border: 1px solid transparent; flex-shrink: 0; white-space: nowrap; overflow: hidden; min-height: 44px; }
+  .sidebar-item:hover { background: var(--hover); color: var(--text); }
+  .sidebar-item.active { background: var(--blue-tint); color: var(--blue); border-color: rgba(26,143,255,.3); }
+  .sidebar-item .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .sidebar-item .count { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--text-3); background: var(--hover); padding: 1px 6px; border-radius: 99px; }
+  .sidebar-footer { margin-top: auto; padding: 14px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-3); font-family: var(--mono); flex-shrink: 0; }
+
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+  .topbar { height: 52px; min-height: 52px; background: var(--bg); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 20px; gap: 12px; }
+  .topbar-menu-btn { background: none; border: none; cursor: pointer; color: var(--text-2); padding: 6px; border-radius: var(--r); display: flex; align-items: center; min-width: 44px; min-height: 44px; justify-content: center; transition: background .12s, color .12s; }
+  .topbar-menu-btn:hover { background: var(--hover); color: var(--text); }
+  .topbar-title { font-weight: 600; font-size: 15px; color: var(--text); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .content { flex: 1; overflow-y: auto; padding: 20px; }
+  @media (max-width: 480px) { .content { padding: 14px; } }
+
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: var(--r); font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: background .12s, color .12s; font-family: var(--font); min-height: 44px; white-space: nowrap; }
+  .btn-primary { background: var(--blue); color: #0f172a; }
+  .btn-primary:hover { background: #66b3ff; }
+  .btn-ghost { background: transparent; color: var(--text-2); border: 1px solid var(--border); }
+  .btn-ghost:hover { background: var(--hover); color: var(--text); border-color: var(--border-hi); }
+  .btn-danger { background: transparent; color: var(--red); border: 1px solid rgba(248,113,113,.35); }
+  .btn-danger:hover { background: rgba(248,113,113,.1); }
+  .btn-sm { padding: 6px 12px; font-size: 13px; min-height: 36px; }
+  .btn-icon { padding: 7px; border-radius: var(--r); background: transparent; border: none; cursor: pointer; color: var(--text-3); transition: background .12s, color .12s; min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+  .btn-icon:hover { background: var(--hover); color: var(--text); }
+
+  .badge { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 99px; font-size: 12px; font-weight: 500; font-family: var(--mono); }
+  .tag { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; font-family: var(--mono); letter-spacing: .3px; text-transform: uppercase; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 18px; margin-bottom: 10px; }
+  .card:hover { border-color: var(--border-hi); }
+
+  .client-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 18px; cursor: pointer; transition: border-color .15s, transform .15s; margin-bottom: 8px; }
+  .client-card:hover { border-color: var(--blue); transform: translateX(2px); }
+  .client-card.selected { border-color: var(--blue); background: rgba(26,143,255,.07); }
+  .client-card-name { font-weight: 600; font-size: 15px; color: var(--text); margin-bottom: 7px; }
+  .client-card-meta { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+  .client-card-stats { display: flex; align-items: center; gap: 14px; margin-top: 9px; flex-wrap: wrap; }
+  .client-card-stat { font-family: var(--mono); font-size: 12px; color: var(--text-3); }
+  .client-card-stat span { color: var(--text-2); font-weight: 500; }
+
+  .task-row { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 12px 14px; margin-bottom: 6px; display: flex; align-items: flex-start; gap: 11px; transition: border-color .12s; cursor: pointer; }
+  .task-row:hover, .task-row:focus-visible { border-color: var(--border-hi); outline: none; box-shadow: 0 0 0 2px var(--blue); }
+  .task-row.done { opacity: .5; }
+  .task-row.dragging { opacity: .35; border-style: dashed; }
+  .task-row.drag-over { border-color: var(--blue); background: var(--blue-tint); }
+  .task-check { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border-hi); cursor: pointer; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; transition: border-color .12s, background .12s; position: relative; }
+  .task-check.done { background: var(--green); border-color: var(--green); }
+  .task-check:hover { border-color: var(--green); }
+
+  .task-check-wrap { position: relative; flex-shrink: 0; }
+  .task-row.celebrating { animation: taskFlash .7s ease-out; }
+  @keyframes taskFlash {
+    0%   { background: rgba(74,222,154,.28); }
+    100% { background: var(--surface); }
+  }
+  .burst-check {
+    position: absolute; top: 50%; left: 50%; width: 26px; height: 26px;
+    transform: translate(-50%,-50%) scale(.4); pointer-events: none;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--green); font-size: 17px; font-weight: 700;
+    animation: burstCheck .8s ease-out forwards;
+  }
+  @keyframes burstCheck {
+    0%   { transform: translate(-50%,-50%) scale(.3); opacity: 0; }
+    25%  { transform: translate(-50%,-50%) scale(1.3); opacity: 1; }
+    55%  { transform: translate(-50%,-50%) scale(1); opacity: 1; }
+    100% { transform: translate(-50%,-50%) scale(1); opacity: 0; }
+  }
+  .burst-dot {
+    position: absolute; top: 50%; left: 50%; width: 4px; height: 4px; border-radius: 50%;
+    background: var(--green); pointer-events: none;
+    animation: burstDot .7s ease-out forwards;
+  }
+  @keyframes burstDot {
+    0%   { transform: translate(-50%,-50%) translate(0,0) scale(1); opacity: 1; }
+    100% { transform: translate(-50%,-50%) var(--burst-t) scale(.3); opacity: 0; }
+  }
+  .task-body { flex: 1; min-width: 0; }
+  .task-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 5px; line-height: 1.4; }
+  .task-title.done { text-decoration: line-through; color: var(--text-3); }
+  .task-meta { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+  .task-actions { display: flex; gap: 3px; opacity: 0; transition: opacity .12s; }
+  .task-row:hover .task-actions, .task-row:focus-within .task-actions { opacity: 1; }
+  .drag-handle { cursor: grab; color: var(--text-3); padding: 2px; font-size: 15px; flex-shrink: 0; margin-top: 2px; user-select: none; }
+  .drag-handle:active { cursor: grabbing; }
+
+  .comm-row { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 13px 15px; margin-bottom: 6px; display: flex; gap: 12px; cursor: pointer; transition: border-color .12s; }
+  .comm-row:hover, .comm-row:focus-visible { border-color: var(--border-hi); outline: none; box-shadow: 0 0 0 2px var(--blue); }
+  .comm-left { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 46px; }
+  .comm-date { font-family: var(--mono); font-size: 12px; color: var(--text-3); text-align: center; line-height: 1.3; }
+  .comm-body { flex: 1; min-width: 0; }
+  .comm-summary { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .comm-notes { font-size: 13px; color: var(--text-2); margin-top: 6px; white-space: pre-wrap; line-height: 1.55; }
+
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 100; display: flex; align-items: flex-start; justify-content: center; padding: 32px 16px 40px; overflow-y: auto; }
+  .modal { background: var(--surface); border: 1px solid var(--border-hi); border-radius: var(--r-lg); width: 100%; max-width: 540px; padding: 24px; box-shadow: var(--shadow); }
+  .modal-title { font-weight: 700; font-size: 17px; color: var(--text); margin-bottom: 22px; }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border); }
+
+  .field { margin-bottom: 15px; }
+  .field label { display: block; font-size: 12px; font-family: var(--mono); letter-spacing: .8px; text-transform: uppercase; color: var(--text-2); margin-bottom: 6px; }
+  .field input, .field textarea, .field select { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); color: var(--text); font-family: var(--font); font-size: 14px; padding: 10px 12px; outline: none; transition: border-color .12s; }
+  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,143,255,.2); }
+  .field textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+  .field select option { background: var(--surface); }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
+
+  .comment { padding: 12px; background: var(--bg); border-radius: var(--r); margin-bottom: 8px; border-left: 3px solid var(--border-hi); }
+  .comment-header { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+  .comment-author { font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--blue); }
+  .comment-time { font-family: var(--mono); font-size: 12px; color: var(--text-3); }
+  .comment-body { font-size: 14px; color: var(--text-2); white-space: pre-wrap; line-height: 1.5; }
+
+  .tabs { display: flex; gap: 2px; margin-bottom: 18px; background: var(--bg); border-radius: var(--r); padding: 3px; width: fit-content; }
+  .tab { padding: 7px 16px; border-radius: 5px; font-size: 13px; font-weight: 500; cursor: pointer; transition: background .12s, color .12s; color: var(--text-3); border: none; background: transparent; font-family: var(--font); min-height: 36px; }
+  .tab.active { background: var(--surface); color: var(--text); }
+  .tab:hover:not(.active) { color: var(--text-2); background: var(--hover); }
+
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+  .section-title { font-weight: 600; font-size: 15px; color: var(--text); }
+  .section-count { font-family: var(--mono); font-size: 13px; color: var(--text-3); margin-left: 7px; }
+
+  .pipeline { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 8px; }
+  .pipeline-col { min-width: 210px; background: var(--bg); border-radius: var(--r-lg); padding: 14px; border: 1px solid var(--border); }
+  .pipeline-col-header { font-weight: 600; font-size: 13px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+  .pipeline-client { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 10px 12px; margin-bottom: 6px; cursor: pointer; transition: border-color .12s; }
+  .pipeline-client:hover { border-color: var(--border-hi); }
+  .pipeline-client-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+
+  .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 22px; }
+  @media (max-width: 720px) { .stats-row { grid-template-columns: repeat(2,1fr); } }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 16px 18px; }
+  .stat-label { font-family: var(--mono); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-3); margin-bottom: 7px; }
+  .stat-value { font-weight: 700; font-size: 26px; color: var(--text); letter-spacing: -.5px; }
+  .stat-sub { font-size: 13px; color: var(--text-3); margin-top: 3px; }
+
+  .empty { text-align: center; padding: 52px 20px; color: var(--text-3); }
+  .empty-icon { font-size: 28px; margin-bottom: 10px; }
+  .empty-text { font-size: 14px; }
+
+  .loading { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 200px; gap: 14px; }
+  .spinner { width: 22px; height: 22px; border: 2px solid var(--border); border-top-color: var(--blue); border-radius: 50%; animation: spin .7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { font-size: 13px; color: var(--text-3); font-family: var(--mono); }
+
+  .search-input { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); color: var(--text); font-family: var(--font); font-size: 14px; padding: 8px 12px; outline: none; width: 190px; transition: border-color .12s, width .2s; }
+  .search-input:focus { border-color: var(--blue); width: 230px; box-shadow: 0 0 0 3px rgba(26,143,255,.2); }
+
+  .detail-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 22px; }
+  .detail-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; gap: 12px; }
+  .detail-name { font-weight: 700; font-size: 20px; color: var(--text); line-height: 1.2; }
+  .detail-meta { display: flex; gap: 7px; margin-top: 7px; flex-wrap: wrap; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+  @media (max-width: 480px) { .detail-grid { grid-template-columns: 1fr; } }
+  .detail-field label { font-family: var(--mono); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-3); display: block; margin-bottom: 3px; }
+  .detail-field span { font-size: 14px; color: var(--text-2); }
+
+  .notif { position: fixed; bottom: 20px; right: 20px; background: var(--elevated); border: 1px solid var(--border-hi); border-radius: var(--r); padding: 11px 15px; font-size: 14px; color: var(--text); z-index: 200; box-shadow: var(--shadow); animation: slideUp .2s ease; max-width: 280px; }
+  .notif.success { border-color: rgba(74,222,154,.45); color: var(--green); }
+  .notif.error   { border-color: rgba(248,113,113,.45); color: var(--red); }
+  @keyframes slideUp { from { transform: translateY(8px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  .warn-banner { background: rgba(252,211,77,.1); border: 1px solid rgba(252,211,77,.4); border-radius: var(--r-lg); padding: 14px 18px; margin-bottom: 18px; font-size: 14px; color: var(--yellow); line-height: 1.5; }
+
+  select { appearance: none; cursor: pointer; }
+  *:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+  .portal { min-height: 100vh; background: var(--bg); }
+  .portal-header { background: var(--bg); border-bottom: 1px solid var(--border); padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .portal-brand { font-weight: 700; font-size: 16px; color: var(--text); }
+  .portal-brand span { color: var(--blue); }
+  .portal-brand sub { display: block; font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--text-3); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 1px; }
+  .portal-client-name { font-weight: 700; font-size: 22px; color: var(--text); }
+  .portal-body { max-width: 860px; margin: 0 auto; padding: 28px 20px; }
+  .portal-section { margin-bottom: 32px; }
+  .portal-section-title { font-weight: 600; font-size: 13px; font-family: var(--mono); letter-spacing: .8px; text-transform: uppercase; color: var(--text-3); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .portal-task { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 12px 16px; margin-bottom: 6px; display: flex; align-items: flex-start; gap: 12px; }
+  .portal-task-check { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border-hi); flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; }
+  .portal-task-check.done { background: var(--green); border-color: var(--green); }
+  .portal-task-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; line-height: 1.4; }
+  .portal-task-title.done { text-decoration: line-through; color: var(--text-3); }
+  .portal-task-meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .portal-comm { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 13px 16px; margin-bottom: 6px; }
+  .portal-comm-header { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; flex-wrap: wrap; }
+  .portal-comm-summary { font-size: 14px; font-weight: 500; color: var(--text); }
+  .portal-comm-notes { font-size: 13px; color: var(--text-2); margin-top: 6px; white-space: pre-wrap; line-height: 1.55; }
+  .portal-stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 28px; }
+  @media (max-width: 500px) { .portal-stat-row { grid-template-columns: 1fr 1fr; } .portal-header { padding: 14px 16px; } .portal-body { padding: 16px 14px; } }
+  .portal-stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 14px 16px; text-align: center; }
+  .portal-stat-val { font-weight: 700; font-size: 24px; color: var(--text); }
+  .portal-stat-lbl { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .8px; color: var(--text-3); margin-top: 3px; }
+  .portal-not-found { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; color: var(--text-3); gap: 10px; }
+  .portal-not-found h2 { font-size: 18px; color: var(--text-2); }
+  .portal-not-found p { font-size: 14px; font-family: var(--mono); }
+
+  .sort-select { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); color: var(--text-2); font-family: var(--font); font-size: 13px; padding: 8px 10px; outline: none; cursor: pointer; }
+  .sort-select:focus { border-color: var(--blue); }
+
+  .stale-flag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-family: var(--mono); color: var(--yellow); background: rgba(252,211,77,.1); border: 1px solid rgba(252,211,77,.3); padding: 2px 7px; border-radius: 4px; }
+
+  .bulk-bar { display: flex; align-items: center; gap: 10px; background: var(--blue-tint); border: 1px solid rgba(26,143,255,.35); border-radius: var(--r); padding: 9px 14px; margin-bottom: 10px; flex-wrap: wrap; }
+  .bulk-bar span { font-size: 13px; color: var(--blue); font-weight: 500; }
+
+  .task-select-box { width: 18px; height: 18px; border-radius: 4px; border: 2px solid var(--border-hi); cursor: pointer; flex-shrink: 0; margin-top: 3px; display: flex; align-items: center; justify-content: center; transition: border-color .12s, background .12s; }
+  .task-select-box.checked { background: var(--blue); border-color: var(--blue); }
+
+  .global-search-wrap { position: relative; flex: 1; max-width: 320px; min-width: 100px; }
+  @media (max-width: 640px) { .global-search-wrap { display: none; } }
+  .global-search-results { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: var(--elevated); border: 1px solid var(--border-hi); border-radius: var(--r-lg); box-shadow: var(--shadow); z-index: 150; max-height: 360px; overflow-y: auto; }
+  .global-search-item { padding: 10px 14px; cursor: pointer; border-bottom: 1px solid var(--border); }
+  .global-search-item:last-child { border-bottom: none; }
+  .global-search-item:hover { background: var(--hover); }
+  .global-search-item-label { font-size: 13px; color: var(--text); font-weight: 500; }
+  .global-search-item-meta { font-size: 11px; color: var(--text-3); font-family: var(--mono); margin-top: 2px; text-transform: uppercase; }
+
+  .stat-card { cursor: pointer; transition: border-color .15s; }
+  .stat-card:hover { border-color: var(--blue); }
+
+  .portal-link-row { display: flex; align-items: center; gap: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); padding: 9px 12px; margin-bottom: 18px; }
+  .portal-link-row code { font-family: var(--mono); font-size: 12px; color: var(--text-2); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .key-info-row { display: flex; align-items: center; gap: 10px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); padding: 9px 12px; margin-bottom: 8px; transition: border-color .12s; }
+  .key-info-row:hover { border-color: var(--border-hi); }
+  .key-info-icon { font-size: 17px; flex-shrink: 0; width: 20px; text-align: center; }
+  .key-info-row input { flex: 1; min-width: 0; background: transparent; border: none; color: var(--text); font-family: var(--font); font-size: 13px; outline: none; }
+  .key-info-open { color: var(--text-3); flex-shrink: 0; font-size: 13px; text-decoration: none; padding: 2px 4px; }
+  .key-info-open:hover { color: var(--blue); }
+  a.key-info-row { text-decoration: none; }
+  a.key-info-row .key-info-label { color: var(--text); font-size: 14px; font-weight: 500; }`;
+
+
+/* ── HELPERS ─────────────────────────────────────────────────────────────── */
+const fmt        = v => v?.fields || {};
+const fmtDate    = d => d ? new Date(d).toLocaleDateString("en-US",{month:"short",day:"numeric"}) : null;
+const fmtDateInp = d => { if (!d) return ""; try { return new Date(d).toISOString().split("T")[0]; } catch { return ""; } };
+const timeAgo    = d => {
+  if (!d) return "";
+  const diff = Date.now()-new Date(d), m=Math.floor(diff/60000);
+  if (m<1) return "just now"; if (m<60) return `${m}m ago`;
+  const h=Math.floor(m/60); if (h<24) return `${h}h ago`;
+  return fmtDate(d);
+};
+const daysSince = d => d ? Math.floor((Date.now()-new Date(d))/86400000) : Infinity;
+// Distinct Tech Stack tags used across all clients, sorted alphabetically.
+const allTechStackOptions = clients => {
+  const set = new Set();
+  clients.forEach(c => (fmt(c)["Tech Stack"]||[]).forEach(t=>set.add(t)));
+  return [...set].sort();
+};
+// Frequency count of each tag across clients, sorted most-used first.
+const techStackFrequency = clients => {
+  const counts = {};
+  clients.forEach(c => (fmt(c)["Tech Stack"]||[]).forEach(t=>{ counts[t]=(counts[t]||0)+1; }));
+  return Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+};
+// Most recent task/comm touch for a client, in days. Used for stale-client flagging.
+const lastActivityDays = (clientId, tasks, comms) => {
+  const dates = [
+    ...tasks.filter(t=>fmt(t).Client?.[0]===clientId).map(t=>fmt(t).Created),
+    ...comms.filter(c=>fmt(c).Client?.[0]===clientId).map(c=>fmt(c).Date||fmt(c).Created),
+  ].filter(Boolean);
+  if (!dates.length) return Infinity;
+  return Math.min(...dates.map(daysSince));
+};
+
+
+/* ── NOTIF ───────────────────────────────────────────────────────────────── */
+function Notif({ msg, type, onDone }) {
+  useEffect(()=>{ const t=setTimeout(onDone,3000); return ()=>clearTimeout(t); },[]);
+  return <div role="status" aria-live="polite" className={`notif ${type}`}>{msg}</div>;
+}
+
+/* ── BURST EFFECT (task completion) ─────────────────────────────────────── */
+function BurstEffect() {
+  const dots = Array.from({length:7}, (_,i)=>{
+    const angle = (i/7)*2*Math.PI + Math.random()*0.4;
+    const dist = 16 + Math.random()*10;
+    const tx = Math.cos(angle)*dist, ty = Math.sin(angle)*dist;
+    return { id:i, style:{ "--burst-t": `${tx}px ${ty}px`, animationDelay: `${i*15}ms` } };
+  });
+  return (
+    <>
+      {dots.map(d=><span key={d.id} className="burst-dot" style={d.style} aria-hidden="true" />)}
+      <span className="burst-check" aria-hidden="true">✓</span>
+    </>
+  );
+}
+
+/* ── UNDO TOAST ──────────────────────────────────────────────────────────── */
+function UndoToast({ msg, onUndo, onExpire }) {
+  useEffect(()=>{ const t=setTimeout(onExpire,5000); return ()=>clearTimeout(t); },[]);
+  return (
+    <div role="status" aria-live="polite" className="notif" style={{display:"flex",alignItems:"center",gap:12}}>
+      <span>{msg}</span>
+      <button className="btn btn-ghost btn-sm" style={{padding:"4px 10px",minHeight:28}} onClick={onUndo}>Undo</button>
+    </div>
+  );
+}
+
+/* ── MODAL ───────────────────────────────────────────────────────────────── */
+function Modal({ title, onClose, children, actions }) {
+  useEffect(()=>{ const fn=e=>e.key==="Escape"&&onClose(); document.addEventListener("keydown",fn); return ()=>document.removeEventListener("keydown",fn); },[]);
+  return (
+    <div className="overlay" role="dialog" aria-modal="true" aria-labelledby={title?"modal-title":undefined} onClick={e=>e.target===e.currentTarget&&onClose()}>
+      <div className="modal">
+        {title && <div id="modal-title" className="modal-title">{title}</div>}
+        {children}
+        {actions && <div className="modal-actions">{actions}</div>}
+      </div>
+    </div>
+  );
+}
+
+/* ── TAG INPUT (Tech Stack) ─────────────────────────────────────────────── */
+function TagInput({ value=[], options=[], onChange, placeholder="Add a tool…" }) {
+  const [input,setInput]=useState("");
+  const [open,setOpen]=useState(false);
+  const q = input.trim().toLowerCase();
+  const filtered = options.filter(o=>!value.includes(o) && o.toLowerCase().includes(q));
+  const exactExists = options.some(o=>o.toLowerCase()===q) || value.some(v=>v.toLowerCase()===q);
+  const addTag = tag => { const t=tag.trim(); if(!t||value.includes(t)) return; onChange([...value,t]); setInput(""); };
+  const removeTag = tag => onChange(value.filter(v=>v!==tag));
+  return (
+    <div>
+      {value.length>0&&(
+        <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:7}}>
+          {value.map(v=>(
+            <span key={v} className="badge" style={{background:"var(--blue-tint)",color:"var(--blue)",display:"inline-flex",alignItems:"center",gap:5}}>
+              {v}
+              <button type="button" onClick={()=>removeTag(v)} aria-label={`Remove ${v}`}
+                style={{background:"none",border:"none",color:"var(--blue)",cursor:"pointer",padding:0,fontSize:12,lineHeight:1}}>✕</button>
+            </span>
+          ))}
+        </div>
+      )}
+      <div style={{position:"relative"}}>
+        <input value={input}
+          onChange={e=>{setInput(e.target.value);setOpen(true);}}
+          onFocus={()=>setOpen(true)}
+          onBlur={()=>setTimeout(()=>setOpen(false),150)}
+          onKeyDown={e=>{ if(e.key==="Enter"){ e.preventDefault(); addTag(input); } }}
+          placeholder={placeholder}
+          style={{width:"100%",background:"var(--bg)",border:"1px solid var(--border)",borderRadius:"var(--r)",color:"var(--text)",fontFamily:"var(--font)",fontSize:14,padding:"10px 12px",outline:"none"}} />
+        {open&&input&&(filtered.length>0||!exactExists)&&(
+          <div className="global-search-results">
+            {filtered.slice(0,8).map(o=>(
+              <div key={o} className="global-search-item" onMouseDown={()=>addTag(o)}>{o}</div>
+            ))}
+            {!exactExists&&(
+              <div className="global-search-item" onMouseDown={()=>addTag(input)} style={{color:"var(--blue)"}}>+ Add "{input.trim()}"</div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ── CONFIRM MODAL ───────────────────────────────────────────────────────── */
+function ConfirmModal({ title="Are you sure?", message, confirmLabel="Delete", onConfirm, onCancel }) {
+  return (
+    <Modal title={title} onClose={onCancel} actions={
+      <>
+        <button className="btn btn-ghost" onClick={onCancel}>Cancel</button>
+        <button className="btn btn-danger" style={{background:"rgba(248,113,113,.15)",borderColor:"var(--red)"}} onClick={onConfirm}>{confirmLabel}</button>
+      </>
+    }>
+      <div style={{fontSize:14,color:"var(--text-2)",lineHeight:1.5}}>{message}</div>
+    </Modal>
+  );
+}
+
+/* ── FORMS ───────────────────────────────────────────────────────────────── */
+function ClientForm({ initial, techOptions=[], onSave, onClose }) {
+  const [f,setF] = useState(initial||{Name:"",Stage:"Prospect",Industry:"","Owner Contact":"",Email:"",Phone:"",Difficulty:"","Recommended Quote":"",Notes:"","Tech Stack":[],"Shared Folder URL":"","Meeting Link":"","Contract URL":""});
+  const set = k => e => setF(p=>({...p,[k]:e.target.value}));
+  return (
+    <Modal title={initial?"Edit Client":"New Client"} onClose={onClose} actions={
+      <><button className="btn btn-ghost" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={()=>onSave(f)}>Save</button></>
+    }>
+      <div className="field"><label htmlFor="cf-name">Client Name</label><input id="cf-name" value={f.Name} onChange={set("Name")} placeholder="Company name" autoFocus /></div>
+      <div className="field-row">
+        <div className="field"><label htmlFor="cf-stage">Stage</label><select id="cf-stage" value={f.Stage} onChange={set("Stage")}>{STAGES.map(s=><option key={s}>{s}</option>)}</select></div>
+        <div className="field"><label htmlFor="cf-ind">Industry</label><input id="cf-ind" value={f.Industry} onChange={set("Industry")} placeholder="e.g. Construction" /></div>
+      </div>
+      <div className="field-row">
+        <div className="field"><label htmlFor="cf-owner">Owner / Contact</label><input id="cf-owner" value={f["Owner Contact"]} onChange={set("Owner Contact")} /></div>
+        <div className="field"><label htmlFor="cf-email">Email</label><input id="cf-email" value={f.Email} onChange={set("Email")} type="email" /></div>
+      </div>
+      <div className="field-row">
+        <div className="field"><label htmlFor="cf-phone">Phone</label><input id="cf-phone" value={f.Phone} onChange={set("Phone")} /></div>
+        <div className="field"><label htmlFor="cf-diff">Difficulty</label><select id="cf-diff" value={f.Difficulty} onChange={set("Difficulty")}><option value="">--</option>{SIZES.map(s=><option key={s}>{s}</option>)}</select></div>
+      </div>
+      <div className="field"><label htmlFor="cf-quote">Recommended Quote ($)</label><input id="cf-quote" value={f["Recommended Quote"]} onChange={set("Recommended Quote")} type="number" placeholder="0" /></div>
+      <div className="field"><label>Tech Stack</label><TagInput value={f["Tech Stack"]||[]} options={techOptions} onChange={v=>setF(p=>({...p,"Tech Stack":v}))} /></div>
+      <div className="field">
+        <label>Key Information</label>
+        {KEY_INFO_FIELDS.map(k=>(
+          <input key={k.key} value={f[k.key]||""} onChange={set(k.key)} placeholder={`${k.icon} ${k.placeholder}`} type="url" style={{marginBottom:8}} />
+        ))}
+      </div>
+      <div className="field"><label htmlFor="cf-notes">Notes</label><textarea id="cf-notes" value={f.Notes} onChange={set("Notes")} rows={3} /></div>
+    </Modal>
+  );
+}
+
+
+function TaskForm({ initial, clients, selectedClientId, onSave, onClose }) {
+  const [f,setF] = useState(initial||{Title:"",Status:"To Do",Assignee:"SC",Priority:"Medium","Due Date":"",Notes:"",Client:selectedClientId?[selectedClientId]:[]});
+  const set  = k => e => setF(p=>({...p,[k]:e.target.value}));
+  const setL = k => e => setF(p=>({...p,[k]:e.target.value?[e.target.value]:[]}));
+  return (
+    <Modal title={initial?"Edit Task":"New Task"} onClose={onClose} actions={
+      <><button className="btn btn-ghost" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={()=>onSave(f)}>Save</button></>
+    }>
+      <div className="field"><label htmlFor="tf-title">Title</label><input id="tf-title" value={f.Title} onChange={set("Title")} placeholder="What needs to happen?" autoFocus /></div>
+      <div className="field"><label htmlFor="tf-client">Client</label>
+        <select id="tf-client" value={f.Client?.[0]||""} onChange={setL("Client")}>
+          <option value="">-- No client --</option>
+          {clients.map(c=><option key={c.id} value={c.id}>{fmt(c).Name}</option>)}
+        </select>
+      </div>
+      <div className="field-row">
+        <div className="field"><label htmlFor="tf-status">Status</label><select id="tf-status" value={f.Status} onChange={set("Status")}>{STATUSES.map(s=><option key={s}>{s}</option>)}</select></div>
+        <div className="field"><label htmlFor="tf-assignee">Assignee</label><select id="tf-assignee" value={f.Assignee} onChange={set("Assignee")}>{ASSIGNEES.map(s=><option key={s}>{s}</option>)}</select></div>
+      </div>
+      <div className="field-row">
+        <div className="field"><label htmlFor="tf-priority">Priority</label><select id="tf-priority" value={f.Priority} onChange={set("Priority")}>{PRIORITIES.map(s=><option key={s}>{s}</option>)}</select></div>
+        <div className="field"><label htmlFor="tf-due">Due Date</label><input id="tf-due" value={fmtDateInp(f["Due Date"])} onChange={set("Due Date")} type="date" /></div>
+      </div>
+      <div className="field"><label htmlFor="tf-notes">Notes</label><textarea id="tf-notes" value={f.Notes} onChange={set("Notes")} rows={3} /></div>
+    </Modal>
+  );
+}
+
+function CommForm({ initial, clients, tasks, selectedClientId, onSave, onClose }) {
+  const clientTasks = tasks.filter(t=>fmt(t).Client?.[0]===(initial?.Client?.[0]||selectedClientId));
+  const [f,setF] = useState(initial||{Summary:"",Type:"Call",Author:"SC",Date:new Date().toISOString().split("T")[0],Notes:"",Client:selectedClientId?[selectedClientId]:[],"Linked Task":[],Visibility:"Internal"});
+  const set  = k => e => setF(p=>({...p,[k]:e.target.value}));
+  const setL = k => e => setF(p=>({...p,[k]:e.target.value?[e.target.value]:[]}));
+  return (
+    <Modal title={initial?"Edit Comm Entry":"Log Communication"} onClose={onClose} actions={
+      <><button className="btn btn-ghost" onClick={onClose}>Cancel</button><button className="btn btn-primary" onClick={()=>onSave(f)}>Save</button></>
+    }>
+      <div className="field"><label htmlFor="xf-sum">Summary</label><input id="xf-sum" value={f.Summary} onChange={set("Summary")} placeholder="Brief description of the interaction" autoFocus /></div>
+      <div className="field"><label htmlFor="xf-client">Client</label>
+        <select id="xf-client" value={f.Client?.[0]||""} onChange={setL("Client")}>
+          <option value="">-- No client --</option>
+          {clients.map(c=><option key={c.id} value={c.id}>{fmt(c).Name}</option>)}
+        </select>
+      </div>
+      <div className="field-row">
+        <div className="field"><label htmlFor="xf-type">Type</label><select id="xf-type" value={f.Type} onChange={set("Type")}>{COMM_TYPES.map(s=><option key={s}>{s}</option>)}</select></div>
+        <div className="field"><label htmlFor="xf-author">Author</label><select id="xf-author" value={f.Author} onChange={set("Author")}><option>SC</option><option>AG</option></select></div>
+      </div>
+      <div className="field-row">
+        <div className="field"><label htmlFor="xf-date">Date</label><input id="xf-date" value={fmtDateInp(f.Date)} onChange={set("Date")} type="date" /></div>
+        <div className="field"><label htmlFor="xf-task">Link to Task</label>
+          <select id="xf-task" value={f["Linked Task"]?.[0]||""} onChange={setL("Linked Task")}>
+            <option value="">-- None --</option>
+            {clientTasks.map(t=><option key={t.id} value={t.id}>{fmt(t).Title}</option>)}
+          </select>
+        </div>
+      </div>
+      <div className="field">
+        <label htmlFor="xf-vis">Visibility</label>
+        <select id="xf-vis" value={f.Visibility||"Internal"} onChange={set("Visibility")}>
+          <option value="Internal">Internal (SC / AG only)</option>
+          <option value="Client-Visible">Client-Visible (shows in portal)</option>
+        </select>
+      </div>
+      <div className="field"><label htmlFor="xf-notes">Notes</label><textarea id="xf-notes" value={f.Notes} onChange={set("Notes")} rows={4} placeholder="Details, follow-ups, next steps..." /></div>
+    </Modal>
+  );
+}
+
+/* ── COMMENT PANEL ───────────────────────────────────────────────────────── */
+function CommentPanel({ taskId, comments, onAdd }) {
+  const [body,setBody]=useState(""); const [author,setAuthor]=useState("SC");
+  const [visibility,setVisibility]=useState("Internal");
+  const taskComments = comments.filter(c=>fmt(c).Task?.[0]===taskId);
+  const submit = () => { if(!body.trim()) return; onAdd({Body:body,Task:[taskId],Author:author,Visibility:visibility}); setBody(""); setVisibility("Internal"); };
+  return (
+    <div>
+      <div style={{marginBottom:12}}>
+        {taskComments.length===0 && <div style={{fontSize:13,color:"var(--text-3)",textAlign:"center",padding:"14px 0"}}>No comments yet</div>}
+        {taskComments.map(c=>{
+          const clientVisible = fmt(c).Visibility==="Client-Visible";
+          return (
+            <div key={c.id} className="comment">
+              <div className="comment-header">
+                <span className="comment-author">{fmt(c).Author}</span>
+                <span className="comment-time">{timeAgo(fmt(c).Created)}</span>
+                <span className="badge" style={clientVisible
+                  ? {background:"rgba(74,222,154,.15)",color:"var(--green)",fontSize:10}
+                  : {background:"var(--hover)",color:"var(--text-3)",fontSize:10}}>
+                  {clientVisible ? "👁 Client-visible" : "🔒 Internal"}
+                </span>
+              </div>
+              <div className="comment-body">{fmt(c).Body}</div>
+            </div>
+          );
+        })}
+      </div>
+      <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+        <select value={author} onChange={e=>setAuthor(e.target.value)} aria-label="Comment author"
+          style={{background:"var(--bg)",border:"1px solid var(--border)",borderRadius:"var(--r)",color:"var(--text)",padding:"9px 10px",fontSize:13,fontFamily:"var(--mono)",width:68}}>
+          <option>SC</option><option>AG</option>
+        </select>
+        <button type="button" onClick={()=>setVisibility(v=>v==="Internal"?"Client-Visible":"Internal")}
+          aria-label="Toggle comment visibility"
+          title={visibility==="Internal" ? "Internal only — click to make client-visible" : "Client-visible — click to make internal"}
+          style={{background:"var(--bg)",border:"1px solid var(--border)",borderRadius:"var(--r)",padding:"9px 10px",fontSize:12,fontFamily:"var(--mono)",cursor:"pointer",
+            color: visibility==="Internal" ? "var(--text-3)" : "var(--green)", whiteSpace:"nowrap"}}>
+          {visibility==="Internal" ? "🔒 Internal" : "👁 Client"}
+        </button>
+        <input value={body} onChange={e=>setBody(e.target.value)} placeholder="Add a comment…" aria-label="Comment text"
+          onKeyDown={e=>e.key==="Enter"&&submit()}
+          style={{flex:1,minWidth:120,background:"var(--bg)",border:"1px solid var(--border)",borderRadius:"var(--r)",color:"var(--text)",padding:"9px 12px",fontSize:14,fontFamily:"var(--font)",outline:"none"}} />
+        <button className="btn btn-primary btn-sm" onClick={submit}>Post</button>
+      </div>
+    </div>
+  );
+}
+
+/* ── TASK DETAIL ─────────────────────────────────────────────────────────── */
+function TaskDetail({ task, clients, comments, onAddComment, onEdit, onClose, onNavigateClient }) {
+  const f=fmt(task); const client=clients.find(c=>c.id===f.Client?.[0]);
+  return (
+    <Modal title="" onClose={onClose} actions={
+      <><button className="btn btn-ghost btn-sm" onClick={onClose}>Close</button><button className="btn btn-primary btn-sm" onClick={()=>onEdit(task)}>Edit</button></>
+    }>
+      <div style={{marginBottom:18}}>
+        <div style={{fontSize:17,fontWeight:700,color:"var(--text)",marginBottom:10,lineHeight:1.3}}>{f.Title}</div>
+        <div style={{display:"flex",gap:7,flexWrap:"wrap"}}>
+          <span className="tag" style={{background:`${STATUS_COLOR[f.Status]}1a`,color:STATUS_COLOR[f.Status]}}>{f.Status}</span>
+          {f.Priority && <span className="tag" style={{background:`${PRIORITY_COLOR[f.Priority]}1a`,color:PRIORITY_COLOR[f.Priority]}}>{f.Priority}</span>}
+          {f.Assignee && <span className="badge" style={{background:"var(--blue-tint)",color:"var(--blue)"}}>{f.Assignee}</span>}
+          {client && onNavigateClient && (
+            <span className="badge" style={{background:"var(--hover)",color:"var(--blue)",cursor:"pointer"}}
+              role="button" tabIndex={0}
+              onClick={()=>{onClose();onNavigateClient(client.id);}}
+              onKeyDown={e=>e.key==="Enter"&&(onClose(),onNavigateClient(client.id))}>{fmt(client).Name} ↗</span>
+          )}
+          {client && !onNavigateClient && <span className="badge" style={{background:"var(--hover)",color:"var(--text-2)"}}>{fmt(client).Name}</span>}
+        </div>
+        {f["Due Date"] && <div style={{marginTop:9,fontSize:13,color:"var(--text-3)",fontFamily:"var(--mono)"}}>Due {fmtDate(f["Due Date"])}</div>}
+        {f.Notes && <div style={{marginTop:11,fontSize:14,color:"var(--text-2)",background:"var(--bg)",borderRadius:"var(--r)",padding:"10px 12px",whiteSpace:"pre-wrap",lineHeight:1.55}}>{f.Notes}</div>}
+      </div>
+      <div style={{borderTop:"1px solid var(--border)",paddingTop:14}}>
+        <div style={{fontSize:11,fontFamily:"var(--mono)",letterSpacing:"1px",textTransform:"uppercase",color:"var(--text-3)",marginBottom:11}}>Comments</div>
+        <CommentPanel taskId={task.id} comments={comments} onAdd={onAddComment} />
+      </div>
+    </Modal>
+  );
+}
+
+/* ── TASKS VIEW ──────────────────────────────────────────────────────────── */
+function TasksView({ tasks, clients, comments, onAddComment, selectedClientId, onUpdate, notify, requestDelete, onNavigateClient }) {
+  const [showForm,setShowForm]=useState(false);
+  const [editTask,setEditTask]=useState(null);
+  const [detailTask,setDetailTask]=useState(null);
+  const [filter,setFilter]=useState("active");
+  const [dragId,setDragId]=useState(null);
+  const [dragOverId,setDragOverId]=useState(null);
+  const [sortBy,setSortBy]=useState("manual");
+  const [confirmTask,setConfirmTask]=useState(null);
+  const [selectedIds,setSelectedIds]=useState([]);
+  const [celebrateId,setCelebrateId]=useState(null);
+
+  const SORTERS = {
+    manual:   (a,b)=>(fmt(a)["Sort Order"]||0)-(fmt(b)["Sort Order"]||0),
+    due:      (a,b)=>{ const da=fmt(a)["Due Date"],db=fmt(b)["Due Date"]; if(!da&&!db) return 0; if(!da) return 1; if(!db) return -1; return new Date(da)-new Date(db); },
+    priority: (a,b)=>{ const order={High:0,Medium:1,Low:2,undefined:3}; return order[fmt(a).Priority]-order[fmt(b).Priority]; },
+    created:  (a,b)=>new Date(fmt(b).Created||0)-new Date(fmt(a).Created||0),
+  };
+
+  const filtered = tasks
+    .filter(t=>!selectedClientId||fmt(t).Client?.[0]===selectedClientId)
+    .filter(t=>filter==="all"?true:filter==="active"?fmt(t).Status!=="Done":fmt(t).Status==="Done")
+    .sort(SORTERS[sortBy]);
+
+  const draggable = sortBy==="manual";
+
+  const saveTask = async fields => {
+    try {
+      const f = clean(fields);
+      if (editTask) await atUpdate("Tasks",editTask.id,f);
+      else await atCreate("Tasks",{...f,"Sort Order":tasks.length});
+      onUpdate(); setShowForm(false); setEditTask(null); notify("Task saved","success");
+    } catch { notify("Error saving","error"); }
+  };
+  const toggleDone = async task => {
+    const wasDone = fmt(task).Status==="Done";
+    const s = wasDone ? "To Do" : "Done";
+    if (!wasDone) { setCelebrateId(task.id); setTimeout(()=>setCelebrateId(id=>id===task.id?null:id), 800); }
+    try { await atUpdate("Tasks",task.id,{Status:s}); onUpdate(); } catch { notify("Error","error"); }
+  };
+  const drop = async targetId => {
+    if (!dragId||dragId===targetId) return;
+    const ids=filtered.map(t=>t.id), from=ids.indexOf(dragId), to=ids.indexOf(targetId);
+    const r=[...ids]; r.splice(from,1); r.splice(to,0,dragId);
+    try { await Promise.all(r.map((id,i)=>atUpdate("Tasks",id,{"Sort Order":i}))); onUpdate(); }
+    catch { notify("Error reordering","error"); }
+    setDragId(null); setDragOverId(null);
+  };
+  const toggleSelect = (id,e) => { e.stopPropagation(); setSelectedIds(p=>p.includes(id)?p.filter(x=>x!==id):[...p,id]); };
+  const bulkComplete = async () => {
+    try { await Promise.all(selectedIds.map(id=>atUpdate("Tasks",id,{Status:"Done"}))); onUpdate(); notify(`${selectedIds.length} tasks marked done`,"success"); setSelectedIds([]); }
+    catch { notify("Error","error"); }
+  };
+  const bulkDelete = () => {
+    selectedIds.forEach(id=>{ const t=tasks.find(x=>x.id===id); if(t) requestDelete("Tasks",id,fmt(t).Title); });
+    setSelectedIds([]);
+  };
+  const bulkReassign = async assignee => {
+    try { await Promise.all(selectedIds.map(id=>atUpdate("Tasks",id,{Assignee:assignee}))); onUpdate(); notify(`Reassigned to ${assignee}`,"success"); setSelectedIds([]); }
+    catch { notify("Error","error"); }
+  };
+
+  return (
+    <div>
+      <div className="section-header">
+        <div style={{display:"flex",alignItems:"center",gap:10,flexWrap:"wrap"}}>
+          <div className="tabs" role="tablist">
+            {[["active","Active"],["done","Done"],["all","All"]].map(([v,l])=>(
+              <button key={v} role="tab" aria-selected={filter===v} className={`tab ${filter===v?"active":""}`} onClick={()=>setFilter(v)}>{l}</button>
+            ))}
+          </div>
+          <span className="section-count">{filtered.length} tasks</span>
+        </div>
+        <div style={{display:"flex",gap:8,alignItems:"center"}}>
+          <select className="sort-select" value={sortBy} onChange={e=>setSortBy(e.target.value)} aria-label="Sort tasks">
+            <option value="manual">Manual order</option>
+            <option value="due">Due date</option>
+            <option value="priority">Priority</option>
+            <option value="created">Newest</option>
+          </select>
+          <button className="btn btn-primary btn-sm" onClick={()=>setShowForm(true)}>+ New Task</button>
+        </div>
+      </div>
+
+      {selectedIds.length>0&&(
+        <div className="bulk-bar">
+          <span>{selectedIds.length} selected</span>
+          <button className="btn btn-ghost btn-sm" onClick={bulkComplete}>Mark Done</button>
+          <select className="sort-select" defaultValue="" onChange={e=>{ if(e.target.value) bulkReassign(e.target.value); e.target.value=""; }} aria-label="Bulk reassign">
+            <option value="">Reassign to…</option>
+            {ASSIGNEES.map(a=><option key={a} value={a}>{a}</option>)}
+          </select>
+          <button className="btn btn-danger btn-sm" onClick={bulkDelete}>Delete</button>
+          <button className="btn btn-ghost btn-sm" onClick={()=>setSelectedIds([])} style={{marginLeft:"auto"}}>Clear</button>
+        </div>
+      )}
+
+      {!draggable&&filtered.length>0&&<div style={{fontSize:12,color:"var(--text-3)",marginBottom:8}}>Drag-to-reorder is available under "Manual order" sort.</div>}
+
+      {filtered.length===0
+        ? <div className="empty"><div className="empty-icon">✓</div><div className="empty-text">No tasks here</div></div>
+        : filtered.map(task=>{
+          const f=fmt(task);
+          const clientName=clients.find(c=>c.id===f.Client?.[0]);
+          const commentCount=comments.filter(c=>fmt(c).Task?.[0]===task.id).length;
+          const overdue=f["Due Date"]&&new Date(f["Due Date"])<new Date()&&f.Status!=="Done";
+          const isSelected=selectedIds.includes(task.id);
+          return (
+            <div key={task.id}
+              className={`task-row ${f.Status==="Done"?"done":""} ${dragId===task.id?"dragging":""} ${dragOverId===task.id?"drag-over":""} ${celebrateId===task.id?"celebrating":""}`}
+              role="button" tabIndex={0}
+              aria-label={`Task: ${f.Title}${f.Status==="Done"?" (completed)":""}`}
+              draggable={draggable} onDragStart={()=>draggable&&setDragId(task.id)} onDragEnd={()=>{setDragId(null);setDragOverId(null);}}
+              onDragOver={e=>{ if(draggable){ e.preventDefault(); setDragOverId(task.id); } }} onDrop={()=>draggable&&drop(task.id)}
+              onClick={()=>setDetailTask(task)}
+              onKeyDown={e=>e.key==="Enter"&&setDetailTask(task)}>
+              {draggable
+                ? <div className="drag-handle" onClick={e=>e.stopPropagation()} aria-hidden="true">⠿</div>
+                : <div className="task-select-box" role="checkbox" aria-checked={isSelected} aria-label="Select task"
+                    onClick={e=>toggleSelect(task.id,e)}>{isSelected&&<span style={{color:"#0f172a",fontSize:11}}>✓</span>}</div>}
+              <div className="task-check-wrap">
+                <div className={`task-check ${f.Status==="Done"?"done":""}`}
+                  role="checkbox" aria-checked={f.Status==="Done"} tabIndex={0}
+                  onClick={e=>{e.stopPropagation();toggleDone(task);}}
+                  onKeyDown={e=>e.key===" "&&(e.preventDefault(),toggleDone(task))}>
+                  {f.Status==="Done"&&<span style={{color:"#0f172a",fontSize:11}}>✓</span>}
+                </div>
+                {celebrateId===task.id&&<BurstEffect />}
+              </div>
+              <div className="task-body">
+                <div className={`task-title ${f.Status==="Done"?"done":""}`}>{f.Title}</div>
+                <div className="task-meta">
+                  <span className="tag" style={{background:`${STATUS_COLOR[f.Status]}1a`,color:STATUS_COLOR[f.Status]}}>{f.Status}</span>
+                  {f.Priority&&<span className="tag" style={{background:`${PRIORITY_COLOR[f.Priority]}1a`,color:PRIORITY_COLOR[f.Priority]}}>{f.Priority}</span>}
+                  {f.Assignee&&<span className="badge" style={{background:"var(--blue-tint)",color:"var(--blue)",fontSize:11}}>{f.Assignee}</span>}
+                  {!selectedClientId&&clientName&&<span className="badge" style={{background:"var(--hover)",color:"var(--text-2)",fontSize:11}}>{fmt(clientName).Name}</span>}
+                  {f["Due Date"]&&<span style={{fontSize:12,color:overdue?"var(--red)":"var(--text-3)",fontFamily:"var(--mono)"}}>{overdue?"⚠ ":""}{fmtDate(f["Due Date"])}</span>}
+                  {commentCount>0&&<span style={{fontSize:12,color:"var(--text-3)"}}>💬 {commentCount}</span>}
+                </div>
+              </div>
+              <div className="task-actions" onClick={e=>e.stopPropagation()}>
+                <button className="btn-icon" aria-label="Edit task" onClick={()=>{setEditTask(task);setShowForm(true);}}>✏️</button>
+                <button className="btn-icon" aria-label="Delete task" onClick={()=>setConfirmTask(task)}>🗑</button>
+              </div>
+            </div>
+          );
+        })
+      }
+      {(showForm||editTask)&&<TaskForm initial={editTask?fmt(editTask):null} clients={clients} selectedClientId={selectedClientId} onSave={saveTask} onClose={()=>{setShowForm(false);setEditTask(null);}} />}
+      {detailTask&&<TaskDetail task={detailTask} clients={clients} comments={comments} onAddComment={onAddComment} onEdit={t=>{setDetailTask(null);setEditTask(t);setShowForm(true);}} onClose={()=>setDetailTask(null)} onNavigateClient={onNavigateClient} />}
+      {confirmTask&&<ConfirmModal title="Delete task?" message={`"${fmt(confirmTask).Title}" will be removed. You can undo for a few seconds after.`} onCancel={()=>setConfirmTask(null)} onConfirm={()=>{ requestDelete("Tasks",confirmTask.id,fmt(confirmTask).Title); setConfirmTask(null); }} />}
+    </div>
+  );
+}
+
+/* ── COMMS VIEW ──────────────────────────────────────────────────────────── */
+function CommsView({ comms, clients, tasks, selectedClientId, onUpdate, notify, requestDelete }) {
+  const [showForm,setShowForm]=useState(false);
+  const [editComm,setEditComm]=useState(null);
+  const [confirmComm,setConfirmComm]=useState(null);
+  const [linkFilter,setLinkFilter]=useState("all"); // all | unlinked
+  const filtered=comms.filter(c=>!selectedClientId||fmt(c).Client?.[0]===selectedClientId)
+    .filter(c=>linkFilter==="all"||!(fmt(c)["Linked Task"]?.length))
+    .sort((a,b)=>new Date(fmt(b).Date||fmt(b).Created)-new Date(fmt(a).Date||fmt(a).Created));
+  const saveComm=async fields=>{
+    try {
+      const f = clean(fields);
+      if(editComm) await atUpdate("Comms Log",editComm.id,f); else await atCreate("Comms Log",f);
+      onUpdate(); setShowForm(false); setEditComm(null); notify("Saved","success");
+    } catch { notify("Error saving","error"); }
+  };
+  const TYPE_ICON={Call:"📞",Email:"✉️",Meeting:"🤝",Text:"💬",Other:"📝"};
+  return (
+    <div>
+      <div className="section-header">
+        <div style={{display:"flex",alignItems:"center",gap:10,flexWrap:"wrap"}}>
+          <span className="section-title">Comms Log</span>
+          <div className="tabs" role="tablist">
+            {[["all","All"],["unlinked","Not linked to a task"]].map(([v,l])=>(
+              <button key={v} role="tab" aria-selected={linkFilter===v} className={`tab ${linkFilter===v?"active":""}`} onClick={()=>setLinkFilter(v)}>{l}</button>
+            ))}
+          </div>
+          <span className="section-count">{filtered.length} entries</span>
+        </div>
+        <button className="btn btn-primary btn-sm" onClick={()=>setShowForm(true)}>+ Log Comm</button>
+      </div>
+      {filtered.length===0
+        ? <div className="empty"><div className="empty-icon">📋</div><div className="empty-text">No comms logged yet</div></div>
+        : filtered.map(comm=>{
+          const f=fmt(comm);
+          const client=clients.find(c=>c.id===f.Client?.[0]);
+          const linkedTask=tasks.find(t=>t.id===f["Linked Task"]?.[0]);
+          return (
+            <div key={comm.id} className="comm-row"
+            role="button" tabIndex={0}
+            aria-label={`${f.Type}: ${f.Summary}`}
+            onClick={()=>{setEditComm(comm);setShowForm(true);}}
+            onKeyDown={e=>e.key==="Enter"&&(setEditComm(comm),setShowForm(true))}>
+              <div className="comm-left">
+                <span style={{fontSize:20}}>{TYPE_ICON[f.Type]||"📝"}</span>
+                <span className="comm-date">{fmtDate(f.Date||f.Created)}</span>
+                <span style={{fontSize:11,fontFamily:"var(--mono)",color:"var(--blue)"}}>{f.Author}</span>
+              </div>
+              <div className="comm-body">
+                <div className="comm-summary">{f.Summary}</div>
+                <div style={{display:"flex",gap:7,marginTop:4,flexWrap:"wrap"}}>
+                  <span className="badge" style={{background:"var(--hover)",color:"var(--text-2)"}}>{f.Type}</span>
+                  {!selectedClientId&&client&&<span className="badge" style={{background:"var(--hover)",color:"var(--text-2)"}}>{fmt(client).Name}</span>}
+                  {linkedTask&&<span className="badge" style={{background:"var(--blue-tint)",color:"var(--blue)"}}>↗ {fmt(linkedTask).Title}</span>}
+                  <span className="badge" style={f.Visibility==="Client-Visible"
+                    ? {background:"rgba(74,222,154,.15)",color:"var(--green)"}
+                    : {background:"var(--hover)",color:"var(--text-3)"}}>
+                    {f.Visibility==="Client-Visible" ? "👁 Client-visible" : "🔒 Internal"}
+                  </span>
+                </div>
+                {f.Notes&&<div className="comm-notes">{f.Notes}</div>}
+              </div>
+              <div onClick={e=>e.stopPropagation()} style={{flexShrink:0}}>
+                <button className="btn-icon" aria-label="Delete comm entry" onClick={()=>setConfirmComm(comm)}>🗑</button>
+              </div>
+            </div>
+          );
+        })
+      }
+      {(showForm||editComm)&&<CommForm initial={editComm?fmt(editComm):null} clients={clients} tasks={tasks} selectedClientId={selectedClientId} onSave={saveComm} onClose={()=>{setShowForm(false);setEditComm(null);}} />}
+      {confirmComm&&<ConfirmModal title="Delete comm entry?" message={`"${fmt(confirmComm).Summary}" will be removed. You can undo for a few seconds after.`} onCancel={()=>setConfirmComm(null)} onConfirm={()=>{ requestDelete("Comms Log",confirmComm.id,fmt(confirmComm).Summary); setConfirmComm(null); }} />}
+    </div>
+  );
+}
+
+/* ── CLIENT DETAIL ───────────────────────────────────────────────────────── */
+function ClientDetail({ client, clients, tasks, comms, comments, onAddComment, onUpdate, onEdit, notify, requestDelete, techOptions=[], onNavigateClient }) {
+  const [tab,setTab]=useState("activity");
+  const [copied,setCopied]=useState(false);
+  const [confirmDelete,setConfirmDelete]=useState(false);
+  const f=fmt(client);
+  const [keyInfo,setKeyInfo]=useState({ "Shared Folder URL":f["Shared Folder URL"]||"", "Meeting Link":f["Meeting Link"]||"", "Contract URL":f["Contract URL"]||"" });
+  useEffect(()=>{ setKeyInfo({ "Shared Folder URL":f["Shared Folder URL"]||"", "Meeting Link":f["Meeting Link"]||"", "Contract URL":f["Contract URL"]||"" }); },[client.id]);
+  const saveKeyInfo = async (key,value) => {
+    try { await atUpdate("Clients",client.id,{[key]:value||null}); onUpdate(); } catch { notify("Error saving link","error"); }
+  };
+  const clientTasks=tasks.filter(t=>fmt(t).Client?.[0]===client.id);
+  const doneTasks=clientTasks.filter(t=>fmt(t).Status==="Done").length;
+  const clientComms=comms.filter(c=>fmt(c).Client?.[0]===client.id);
+  const stale = ["Prospect","Pre-Engagement"].includes(f.Stage) && lastActivityDays(client.id,tasks,comms) >= 14;
+  const portalUrl = `${window.location.origin}${window.location.pathname}?client=${slugify(f.Name)}`;
+  const copyPortalLink = () => { navigator.clipboard?.writeText(portalUrl); setCopied(true); setTimeout(()=>setCopied(false),2000); };
+
+  // Combined activity feed: tasks + comms, newest first
+  const activity = [
+    ...clientTasks.map(t=>({type:"task",date:fmt(t).Created,record:t})),
+    ...clientComms.map(c=>({type:"comm",date:fmt(c).Date||fmt(c).Created,record:c})),
+  ].filter(a=>a.date).sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const TYPE_ICON={Call:"📞",Email:"✉️",Meeting:"🤝",Text:"💬",Other:"📝"};
+
+  return (
+    <div className="detail-panel">
+      <div className="detail-header">
+        <div>
+          <div className="detail-name">{f.Name}</div>
+          <div className="detail-meta">
+            <span className="tag" style={{background:`${STAGE_COLOR[f.Stage]}1a`,color:STAGE_COLOR[f.Stage]}}>{f.Stage}</span>
+            {f.Difficulty&&<span className="tag" style={{background:`${SIZE_COLOR[f.Difficulty]}1a`,color:SIZE_COLOR[f.Difficulty]}}>{f.Difficulty}</span>}
+            {f.Industry&&<span style={{fontSize:13,color:"var(--text-3)"}}>{f.Industry}</span>}
+            {stale&&<span className="stale-flag">⚠ No activity {lastActivityDays(client.id,tasks,comms)}d</span>}
+          </div>
+        </div>
+        <div style={{display:"flex",gap:6}}>
+          <button className="btn btn-ghost btn-sm" onClick={()=>onEdit(client)}>Edit</button>
+          <button className="btn btn-danger btn-sm" onClick={()=>setConfirmDelete(true)}>Delete</button>
+        </div>
+      </div>
+      <div className="portal-link-row">
+        <code>{portalUrl}</code>
+        <button className="btn btn-ghost btn-sm" onClick={copyPortalLink}>{copied?"Copied ✓":"Copy Portal Link"}</button>
+      </div>
+      <div style={{marginBottom:18}}>
+        <label style={{display:"block",fontFamily:"var(--mono)",fontSize:11,letterSpacing:"1px",textTransform:"uppercase",color:"var(--text-3)",marginBottom:7}}>
+          Key Information <span style={{textTransform:"none",fontFamily:"var(--font)",fontWeight:400,color:"var(--text-3)"}}>— filled-in links show on the client portal</span>
+        </label>
+        {KEY_INFO_FIELDS.map(k=>(
+          <div key={k.key} className="key-info-row">
+            <span className="key-info-icon" aria-hidden="true">{k.icon}</span>
+            <input value={keyInfo[k.key]} placeholder={k.placeholder} type="url"
+              onChange={e=>setKeyInfo(p=>({...p,[k.key]:e.target.value}))}
+              onBlur={()=>saveKeyInfo(k.key,keyInfo[k.key])} />
+            {keyInfo[k.key]
+              ? <a className="key-info-open" href={keyInfo[k.key]} target="_blank" rel="noopener noreferrer" title={`Open ${k.label}`}>↗</a>
+              : <span className="key-info-open" style={{opacity:.4}} title="Not set — hidden from client portal">🔒</span>}
+          </div>
+        ))}
+      </div>
+      <div style={{marginBottom:18}}>
+        <label style={{display:"block",fontFamily:"var(--mono)",fontSize:11,letterSpacing:"1px",textTransform:"uppercase",color:"var(--text-3)",marginBottom:7}}>Tech Stack</label>
+        <TagInput value={f["Tech Stack"]||[]} options={techOptions} placeholder="Add a tool used with this client…"
+          onChange={async v=>{ try { await atUpdate("Clients",client.id,{"Tech Stack":v}); onUpdate(); } catch { notify("Error saving tech stack","error"); } }} />
+      </div>
+      <div className="detail-grid">
+        {f["Owner Contact"]&&<div className="detail-field"><label>Contact</label><span>{f["Owner Contact"]}</span></div>}
+        {f.Email&&<div className="detail-field"><label>Email</label><span>{f.Email}</span></div>}
+        {f.Phone&&<div className="detail-field"><label>Phone</label><span>{f.Phone}</span></div>}
+        {f["Recommended Quote"]&&<div className="detail-field"><label>Quote</label><span>${Number(f["Recommended Quote"]).toLocaleString()}</span></div>}
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:8,marginBottom:18}}>
+        {[["Tasks",clientTasks.length],["Done",doneTasks],["Comms",clientComms.length]].map(([l,v])=>(
+          <div key={l} style={{background:"var(--bg)",borderRadius:"var(--r)",padding:"10px 12px",textAlign:"center"}}>
+            <div style={{fontSize:20,fontWeight:700,color:"var(--text)"}}>{v}</div>
+            <div style={{fontSize:10,fontFamily:"var(--mono)",color:"var(--text-3)",letterSpacing:.8,textTransform:"uppercase",marginTop:2}}>{l}</div>
+          </div>
+        ))}
+      </div>
+      {f.Notes&&<div style={{marginBottom:18,fontSize:14,color:"var(--text-2)",background:"var(--bg)",borderRadius:"var(--r)",padding:"11px 13px",whiteSpace:"pre-wrap",lineHeight:1.55}}>{f.Notes}</div>}
+      <div className="tabs" role="tablist">
+        {[["activity","Activity"],["tasks","Tasks"],["comms","Comms"]].map(([v,l])=>(
+          <button key={v} role="tab" aria-selected={tab===v} className={`tab ${tab===v?"active":""}`} onClick={()=>setTab(v)}>{l}</button>
+        ))}
+      </div>
+      {tab==="activity"&&(
+        activity.length===0
+          ? <div className="empty"><div className="empty-icon">◎</div><div className="empty-text">No activity yet</div></div>
+          : activity.map(a=>{
+            if (a.type==="task") {
+              const tf=fmt(a.record);
+              return (
+                <div key={"t"+a.record.id} className="task-row" style={{cursor:"default"}}>
+                  <div className={`task-check ${tf.Status==="Done"?"done":""}`} aria-hidden="true">{tf.Status==="Done"&&<span style={{color:"#0f172a",fontSize:11}}>✓</span>}</div>
+                  <div className="task-body">
+                    <div className={`task-title ${tf.Status==="Done"?"done":""}`}>{tf.Title}</div>
+                    <div className="task-meta">
+                      <span className="tag" style={{background:`${STATUS_COLOR[tf.Status]}1a`,color:STATUS_COLOR[tf.Status]}}>{tf.Status}</span>
+                      <span style={{fontSize:12,color:"var(--text-3)",fontFamily:"var(--mono)"}}>{fmtDate(a.date)}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+            const cf=fmt(a.record);
+            return (
+              <div key={"c"+a.record.id} className="comm-row" style={{cursor:"default"}}>
+                <div className="comm-left">
+                  <span style={{fontSize:20}}>{TYPE_ICON[cf.Type]||"📝"}</span>
+                  <span className="comm-date">{fmtDate(a.date)}</span>
+                </div>
+                <div className="comm-body">
+                  <div className="comm-summary">{cf.Summary}</div>
+                  <div style={{display:"flex",gap:6,marginTop:4}}>
+                    <span className="badge" style={{background:"var(--hover)",color:"var(--text-2)"}}>{cf.Type}</span>
+                    <span className="badge" style={cf.Visibility==="Client-Visible"
+                      ? {background:"rgba(74,222,154,.15)",color:"var(--green)"}
+                      : {background:"var(--hover)",color:"var(--text-3)"}}>
+                      {cf.Visibility==="Client-Visible" ? "👁 Client-visible" : "🔒 Internal"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+      )}
+      {tab==="tasks"&&<TasksView tasks={tasks} clients={clients} comments={comments} onAddComment={onAddComment} selectedClientId={client.id} onUpdate={onUpdate} notify={notify} requestDelete={requestDelete} onNavigateClient={onNavigateClient} />}
+      {tab==="comms"&&<CommsView comms={comms} clients={clients} tasks={tasks} selectedClientId={client.id} onUpdate={onUpdate} notify={notify} requestDelete={requestDelete} />}
+      {confirmDelete&&<ConfirmModal title="Delete client?" message={`"${f.Name}" will be removed. Their tasks and comms will remain but unlinked. You can undo for a few seconds after.`} onCancel={()=>setConfirmDelete(false)} onConfirm={()=>{ requestDelete("Clients",client.id,f.Name); setConfirmDelete(false); }} />}
+    </div>
+  );
+}
+
+/* ── CLIENTS VIEW ────────────────────────────────────────────────────────── */
+function ClientsView({ clients, tasks, comms, comments, onAddComment, onUpdate, notify, requestDelete, stageFilter, toolFilter, onClearStageFilter, onClearToolFilter, initialClientId, onNavigateClient }) {
+  const [selected,setSelected]=useState(initialClientId||null);
+  const [showForm,setShowForm]=useState(false);
+  const [editClient,setEditClient]=useState(null);
+  const [search,setSearch]=useState("");
+  const [sortBy,setSortBy]=useState("name");
+
+  useEffect(()=>{ if(initialClientId) setSelected(initialClientId); },[initialClientId]);
+
+  const techOptions = allTechStackOptions(clients);
+
+  const SORTERS = {
+    name:    (a,b)=>(fmt(a).Name||"").localeCompare(fmt(b).Name||""),
+    stage:   (a,b)=>STAGES.indexOf(fmt(a).Stage)-STAGES.indexOf(fmt(b).Stage),
+    quote:   (a,b)=>(Number(fmt(b)["Recommended Quote"])||0)-(Number(fmt(a)["Recommended Quote"])||0),
+    created: (a,b)=>new Date(fmt(b).Created||0)-new Date(fmt(a).Created||0),
+    diff:    (a,b)=>SIZES.indexOf(fmt(a).Difficulty)-SIZES.indexOf(fmt(b).Difficulty),
+  };
+
+  const filtered = clients
+    .filter(c=>fmt(c).Name?.toLowerCase().includes(search.toLowerCase()))
+    .filter(c=>!stageFilter||fmt(c).Stage===stageFilter)
+    .filter(c=>!toolFilter||(fmt(c)["Tech Stack"]||[]).includes(toolFilter))
+    .sort(SORTERS[sortBy]);
+
+  const saveClient=async fields=>{
+    try {
+      const f = clean(fields);
+      if (editClient) await atUpdate("Clients",editClient.id,f); else await atCreate("Clients",f);
+      onUpdate(); setShowForm(false); setEditClient(null); notify("Client saved","success");
+    } catch { notify("Error saving","error"); }
+  };
+  const selectedClient=clients.find(c=>c.id===selected);
+  return (
+    <div>
+      {stageFilter&&(
+        <div className="bulk-bar" style={{marginBottom:14}}>
+          <span>Filtered to stage: {stageFilter}</span>
+          <button className="btn btn-ghost btn-sm" onClick={onClearStageFilter} style={{marginLeft:"auto"}}>✕ Clear</button>
+        </div>
+      )}
+      {toolFilter&&(
+        <div className="bulk-bar" style={{marginBottom:14}}>
+          <span>Using: {toolFilter}</span>
+          <button className="btn btn-ghost btn-sm" onClick={onClearToolFilter} style={{marginLeft:"auto"}}>✕ Clear</button>
+        </div>
+      )}
+      <div style={{display:"grid",gridTemplateColumns:selected?"280px 1fr":"1fr",gap:18}}>
+        <div>
+          <div className="section-header">
+            <input className="search-input" placeholder="Search clients…" value={search} onChange={e=>setSearch(e.target.value)} aria-label="Search clients" />
+            <div style={{display:"flex",gap:8}}>
+              <select className="sort-select" value={sortBy} onChange={e=>setSortBy(e.target.value)} aria-label="Sort clients">
+                <option value="name">Name A–Z</option>
+                <option value="stage">Stage</option>
+                <option value="quote">Quote (high–low)</option>
+                <option value="created">Newest</option>
+                <option value="diff">Difficulty</option>
+              </select>
+              <button className="btn btn-primary btn-sm" onClick={()=>{setEditClient(null);setShowForm(true);}}>+ New</button>
+            </div>
+          </div>
+          {filtered.map(c=>{
+            const f=fmt(c), taskCount=tasks.filter(t=>fmt(t).Client?.[0]===c.id).length;
+            const stale = ["Prospect","Pre-Engagement"].includes(f.Stage) && lastActivityDays(c.id,tasks,comms) >= 14;
+            const stack = f["Tech Stack"]||[];
+            return (
+              <div key={c.id} className={`client-card ${selected===c.id?"selected":""}`}
+                role="button" tabIndex={0} aria-pressed={selected===c.id}
+                onClick={()=>setSelected(c.id===selected?null:c.id)}
+                onKeyDown={e=>e.key==="Enter"&&setSelected(c.id===selected?null:c.id)}>
+                <div className="client-card-name">{f.Name}</div>
+                <div className="client-card-meta">
+                  <span className="tag" style={{background:`${STAGE_COLOR[f.Stage]}1a`,color:STAGE_COLOR[f.Stage]}}>{f.Stage}</span>
+                  {f.Difficulty&&<span className="tag" style={{background:`${SIZE_COLOR[f.Difficulty]}1a`,color:SIZE_COLOR[f.Difficulty]}}>{f.Difficulty}</span>}
+                  {stale&&<span className="stale-flag">⚠ stale</span>}
+                </div>
+                <div className="client-card-stats">
+                  {f.Industry&&<span className="client-card-stat">{f.Industry}</span>}
+                  <span className="client-card-stat"><span>{taskCount}</span> tasks</span>
+                  {f["Recommended Quote"]&&<span className="client-card-stat"><span>${Number(f["Recommended Quote"]).toLocaleString()}</span></span>}
+                </div>
+                {stack.length>0&&(
+                  <div style={{display:"flex",flexWrap:"wrap",gap:5,marginTop:8}}>
+                    {stack.slice(0,4).map(t=><span key={t} className="badge" style={{background:"var(--hover)",color:"var(--text-2)",fontSize:11}}>{t}</span>)}
+                    {stack.length>4&&<span className="badge" style={{background:"var(--hover)",color:"var(--text-3)",fontSize:11}}>+{stack.length-4}</span>}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+          {filtered.length===0&&<div className="empty"><div className="empty-text">No clients found</div></div>}
+        </div>
+        {selectedClient&&<ClientDetail client={selectedClient} clients={clients} tasks={tasks} comms={comms} comments={comments} onAddComment={onAddComment} onUpdate={onUpdate} onEdit={c=>{setEditClient(c);setShowForm(true);}} notify={notify} requestDelete={requestDelete} techOptions={techOptions} onNavigateClient={id=>{ setSelected(id); onNavigateClient&&onNavigateClient(id); }} />}
+        {showForm&&<ClientForm initial={editClient?fmt(editClient):null} techOptions={techOptions} onSave={saveClient} onClose={()=>{setShowForm(false);setEditClient(null);}} />}
+      </div>
+    </div>
+  );
+}
+
+/* ── PIPELINE VIEW ───────────────────────────────────────────────────────── */
+function PipelineView({ clients, tasks, comms, onUpdate, notify, onOpenClient }) {
+  const move=async(id,stage)=>{
+    try { await atUpdate("Clients",id,{Stage:stage}); onUpdate(); notify(`Moved to ${stage}`,"success"); } catch { notify("Error","error"); }
+  };
+  return (
+    <div>
+      <div className="section-header"><span className="section-title">Pipeline</span></div>
+      <div className="pipeline">
+        {STAGES.map(stage=>{
+          const sc=clients.filter(c=>fmt(c).Stage===stage);
+          return (
+            <div key={stage} className="pipeline-col">
+              <div className="pipeline-col-header">
+                <span style={{color:STAGE_COLOR[stage]}}>{stage}</span>
+                <span style={{fontSize:12,fontFamily:"var(--mono)",color:"var(--text-3)"}}>{sc.length}</span>
+              </div>
+              {sc.map(c=>{
+                const f=fmt(c), open=tasks.filter(t=>fmt(t).Client?.[0]===c.id&&fmt(t).Status!=="Done").length;
+                const stale = ["Prospect","Pre-Engagement"].includes(f.Stage) && lastActivityDays(c.id,tasks,comms) >= 14;
+                return (
+                  <div key={c.id} className="pipeline-client"
+                    role="button" tabIndex={0}
+                    onClick={()=>onOpenClient&&onOpenClient(c.id)}
+                    onKeyDown={e=>e.key==="Enter"&&onOpenClient&&onOpenClient(c.id)}>
+                    <div className="pipeline-client-name">{f.Name}</div>
+                    <div style={{display:"flex",gap:5,flexWrap:"wrap",marginBottom:7}}>
+                      {f.Difficulty&&<span className="tag" style={{background:`${SIZE_COLOR[f.Difficulty]}1a`,color:SIZE_COLOR[f.Difficulty],fontSize:10}}>{f.Difficulty}</span>}
+                      {open>0&&<span style={{fontSize:11,color:"var(--text-3)",fontFamily:"var(--mono)"}}>{open} open</span>}
+                      {stale&&<span className="stale-flag">⚠ stale</span>}
+                    </div>
+                    {f["Recommended Quote"]&&<div style={{fontSize:12,color:"var(--green)",fontFamily:"var(--mono)",marginBottom:8}}>${Number(f["Recommended Quote"]).toLocaleString()}</div>}
+                    <div style={{display:"flex",gap:4,flexWrap:"wrap"}} onClick={e=>e.stopPropagation()}>
+                      {STAGES.filter(s=>s!==stage).map(s=>(
+                        <button key={s} className="btn btn-ghost" style={{padding:"2px 7px",fontSize:11,borderRadius:4}} onClick={()=>move(c.id,s)}>→ {s}</button>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+              {sc.length===0&&<div style={{fontSize:13,color:"var(--text-3)",textAlign:"center",padding:"18px 0"}}>Empty</div>}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ── DASHBOARD ───────────────────────────────────────────────────────────── */
+function Dashboard({ clients, tasks, comms, onNavigate }) {
+  const active=clients.filter(c=>fmt(c).Stage==="Active").length;
+  const open=tasks.filter(t=>fmt(t).Status!=="Done").length;
+  const overdue=tasks.filter(t=>{const f=fmt(t);return f["Due Date"]&&new Date(f["Due Date"])<new Date()&&f.Status!=="Done";}).length;
+  const pipeline=clients.filter(c=>["Prospect","Pre-Engagement"].includes(fmt(c).Stage)).length;
+  const quoted=clients.reduce((s,c)=>s+(Number(fmt(c)["Recommended Quote"])||0),0);
+  const recentComms=[...comms].sort((a,b)=>new Date(fmt(b).Date||fmt(b).Created)-new Date(fmt(a).Date||fmt(a).Created)).slice(0,5);
+  const upcoming=tasks.filter(t=>fmt(t)["Due Date"]&&fmt(t).Status!=="Done").sort((a,b)=>new Date(fmt(a)["Due Date"])-new Date(fmt(b)["Due Date"])).slice(0,6);
+  const staleCount = clients.filter(c=>["Prospect","Pre-Engagement"].includes(fmt(c).Stage) && lastActivityDays(c.id,tasks,comms)>=14).length;
+  const [techSearch,setTechSearch]=useState("");
+  const techFreq = techStackFrequency(clients); // [[tag,count], ...] most-used first
+  const techMatches = techSearch.trim() ? techFreq.filter(([t])=>t.toLowerCase().includes(techSearch.trim().toLowerCase())) : [];
+  return (
+    <div>
+      <div className="stats-row">
+        <div className="stat-card" role="button" tabIndex={0} onClick={()=>onNavigate("clients",{stage:"Active"})} onKeyDown={e=>e.key==="Enter"&&onNavigate("clients",{stage:"Active"})}>
+          <div className="stat-label">Active</div><div className="stat-value">{active}</div><div className="stat-sub">{pipeline} in pipeline{staleCount>0?` · ${staleCount} stale`:""}</div>
+        </div>
+        <div className="stat-card" role="button" tabIndex={0} onClick={()=>onNavigate("tasks")} onKeyDown={e=>e.key==="Enter"&&onNavigate("tasks")}>
+          <div className="stat-label">Open Tasks</div><div className="stat-value">{open}</div><div className="stat-sub" style={{color:overdue>0?"var(--red)":undefined}}>{overdue>0?`${overdue} overdue`:"on track"}</div>
+        </div>
+        <div className="stat-card" role="button" tabIndex={0} onClick={()=>onNavigate("clients")} onKeyDown={e=>e.key==="Enter"&&onNavigate("clients")}>
+          <div className="stat-label">Clients</div><div className="stat-value">{clients.length}</div><div className="stat-sub">all stages</div>
+        </div>
+        <div className="stat-card" role="button" tabIndex={0} onClick={()=>onNavigate("pipeline")} onKeyDown={e=>e.key==="Enter"&&onNavigate("pipeline")}>
+          <div className="stat-label">Quoted</div><div className="stat-value" style={{fontSize:22}}>${quoted>0?(quoted/1000).toFixed(0)+"k":"0"}</div><div className="stat-sub">pipeline</div>
+        </div>
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:18}}>
+        <div>
+          <div className="section-header" style={{marginBottom:10}}><span className="section-title">Upcoming Due</span></div>
+          {upcoming.length===0
+            ? <div className="empty" style={{padding:"22px"}}><div className="empty-text">Nothing due</div></div>
+            : upcoming.map(t=>{
+              const f=fmt(t), ov=new Date(f["Due Date"])<new Date();
+              return (
+                <div key={t.id} className="task-row" role="button" tabIndex={0}
+                  onClick={()=>onNavigate("tasks",{client:f.Client?.[0]||null})}
+                  onKeyDown={e=>e.key==="Enter"&&onNavigate("tasks",{client:f.Client?.[0]||null})}>
+                  <div className="task-body">
+                    <div className="task-title">{f.Title}</div>
+                    <div className="task-meta">
+                      <span style={{fontSize:12,color:ov?"var(--red)":"var(--text-3)",fontFamily:"var(--mono)"}}>{ov?"⚠ ":""}{fmtDate(f["Due Date"])}</span>
+                      {f.Assignee&&<span className="badge" style={{background:"var(--blue-tint)",color:"var(--blue)",fontSize:11}}>{f.Assignee}</span>}
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          }
+        </div>
+        <div>
+          <div className="section-header" style={{marginBottom:10}}><span className="section-title">Recent Comms</span></div>
+          {recentComms.length===0
+            ? <div className="empty" style={{padding:"22px"}}><div className="empty-text">None logged yet</div></div>
+            : recentComms.map(c=>{
+              const f=fmt(c);
+              return (
+                <div key={c.id} className="card" style={{padding:"11px 14px",marginBottom:6,cursor:"pointer"}} role="button" tabIndex={0}
+                  onClick={()=>onNavigate("comms",{client:f.Client?.[0]||null})}
+                  onKeyDown={e=>e.key==="Enter"&&onNavigate("comms",{client:f.Client?.[0]||null})}>
+                  <div style={{fontSize:14,fontWeight:500,color:"var(--text)",marginBottom:4}}>{f.Summary}</div>
+                  <div style={{display:"flex",gap:8}}>
+                    <span style={{fontSize:12,fontFamily:"var(--mono)",color:"var(--blue)"}}>{f.Author}</span>
+                    <span style={{fontSize:12,color:"var(--text-3)"}}>{f.Type}</span>
+                    <span style={{fontSize:12,color:"var(--text-3)",marginLeft:"auto"}}>{fmtDate(f.Date||f.Created)}</span>
+                  </div>
+                </div>
+              );
+            })
+          }
+        </div>
+      </div>
+      <div style={{marginTop:18}}>
+        <div className="section-header" style={{marginBottom:10}}>
+          <span className="section-title">Tech Stack<span className="section-count">{techFreq.length} tools in use</span></span>
+          <div style={{position:"relative",width:220}}>
+            <input className="search-input" style={{width:"100%"}} placeholder="Find clients using…" value={techSearch}
+              onChange={e=>setTechSearch(e.target.value)} aria-label="Search tech stack" />
+            {techSearch.trim()&&(
+              <div className="global-search-results">
+                {techMatches.length===0
+                  ? <div className="global-search-item" style={{cursor:"default",color:"var(--text-3)",fontSize:13}}>No matches</div>
+                  : techMatches.slice(0,8).map(([t,count])=>(
+                    <div key={t} className="global-search-item" onMouseDown={()=>onNavigate("clients",{tool:t})}>
+                      <div className="global-search-item-label">{t}</div>
+                      <div className="global-search-item-meta">{count} client{count===1?"":"s"}</div>
+                    </div>
+                  ))
+                }
+              </div>
+            )}
+          </div>
+        </div>
+        {techFreq.length===0
+          ? <div className="empty" style={{padding:"22px"}}><div className="empty-text">No tools logged yet — add them from a client's page</div></div>
+          : <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+              {techFreq.map(([tag,count])=>(
+                <span key={tag} className="badge" role="button" tabIndex={0}
+                  style={{background:"var(--hover)",color:"var(--text-2)",cursor:"pointer",display:"inline-flex",alignItems:"center",gap:6,padding:"6px 12px"}}
+                  onClick={()=>onNavigate("clients",{tool:tag})}
+                  onKeyDown={e=>e.key==="Enter"&&onNavigate("clients",{tool:tag})}>
+                  {tag}<span style={{fontFamily:"var(--mono)",fontSize:11,color:"var(--text-3)"}}>{count}</span>
+                </span>
+              ))}
+            </div>
+        }
+      </div>
+    </div>
+  );
+}
+
+/* ── CLIENT PORTAL ───────────────────────────────────────────────────────── */
+// Accessed via ?client=slug where slug matches the client Name (lowercased, spaces→hyphens)
+// e.g. ops.rewiretransform.com/?client=gcp-clinical-research
+// Read-only — no edit controls, no internal data exposed
+
+function slugify(name) {
+  return (name||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+}
+
+function ClientPortal() {
+  const [data, setData] = useState(null);   // { client, tasks, comms }
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
+  const [tab, setTab] = useState("tasks");
+
+  const slug = new URLSearchParams(window.location.search).get("client")||"";
+
+  useEffect(()=>{
+    (async()=>{
+      try {
+        const [clients, tasks, comms] = await Promise.all([
+          atList("Clients", {sort:[{field:"Name"}]}),
+          atList("Tasks",   {sort:[{field:"Sort Order"}]}),
+          atList("Comms Log",{sort:[{field:"Date",dir:"desc"}]}),
+        ]);
+        const client = clients.find(c => slugify(fmt(c).Name) === slug);
+        if (!client) { setNotFound(true); setLoading(false); return; }
+        const clientTasks = tasks.filter(t => fmt(t).Client?.[0] === client.id);
+        const clientComms = comms.filter(c => fmt(c).Client?.[0] === client.id && fmt(c).Visibility === "Client-Visible");
+        setData({ client, tasks: clientTasks, comms: clientComms });
+      } catch(e) {
+        setNotFound(true);
+      } finally { setLoading(false); }
+    })();
+  },[]);
+
+  if (loading) return (
+    <div className="portal">
+      <style>{CSS}</style>
+      <div className="portal-header"><div className="portal-brand">Rewire<span>.</span><sub>Client Portal</sub></div></div>
+      <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",height:"60vh"}} role="status" aria-label="Loading">
+        <div className="spinner" /><span className="loading-text" style={{marginTop:14}}>Loading…</span>
+      </div>
+    </div>
+  );
+
+  if (notFound) return (
+    <div className="portal">
+      <style>{CSS}</style>
+      <div className="portal-header"><div className="portal-brand">Rewire<span>.</span><sub>Client Portal</sub></div></div>
+      <div className="portal-not-found">
+        <div style={{fontSize:32}}>🔍</div>
+        <h2>Client not found</h2>
+        <p>Check the URL with your Rewire contact.</p>
+      </div>
+    </div>
+  );
+
+  const { client, tasks, comms } = data;
+  const f = fmt(client);
+  const openTasks = tasks.filter(t => fmt(t).Status !== "Done");
+  const doneTasks = tasks.filter(t => fmt(t).Status === "Done");
+  const TYPE_ICON = {Call:"📞",Email:"✉️",Meeting:"🤝",Text:"💬",Other:"📝"};
+
+  return (
+    <div className="portal">
+      <style>{CSS}</style>
+      <div className="portal-header">
+        <div className="portal-brand" style={{display:"flex",alignItems:"center",gap:10}}>
+          <img src="data:image/png;base64,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" alt="Rewire logo" style={{width:32,height:32,borderRadius:5,flexShrink:0}} />
+          <div>Rewire<span>.</span><sub>Client Portal</sub></div>
+        </div>
+        <div style={{textAlign:"right"}}>
+          <div className="portal-client-name">{f.Name}</div>
+          <div style={{marginTop:5,display:"flex",gap:7,justifyContent:"flex-end",flexWrap:"wrap"}}>
+            <span className="tag" style={{background:`${STAGE_COLOR[f.Stage]}1a`,color:STAGE_COLOR[f.Stage]}}>{f.Stage}</span>
+            {f.Industry && <span style={{fontSize:13,color:"var(--text-3)"}}>{f.Industry}</span>}
+          </div>
+        </div>
+      </div>
+
+      <div className="portal-body">
+
+        {/* Key Information */}
+        {KEY_INFO_FIELDS.some(k=>f[k.key]) && (
+          <div className="portal-section">
+            <div className="portal-section-title">Key Information</div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
+              {KEY_INFO_FIELDS.filter(k=>f[k.key]).map(k=>(
+                <a key={k.key} href={f[k.key]} target="_blank" rel="noopener noreferrer" className="key-info-row">
+                  <span className="key-info-icon" aria-hidden="true">{k.icon}</span>
+                  <span className="key-info-label">{k.label}</span>
+                  <span style={{marginLeft:"auto",color:"var(--text-3)"}}>↗</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Stats */}
+        <div className="portal-stat-row">
+          <div className="portal-stat"><div className="portal-stat-val">{openTasks.length}</div><div className="portal-stat-lbl">Open Tasks</div></div>
+          <div className="portal-stat"><div className="portal-stat-val">{doneTasks.length}</div><div className="portal-stat-lbl">Completed</div></div>
+          <div className="portal-stat"><div className="portal-stat-val">{comms.length}</div><div className="portal-stat-lbl">Interactions</div></div>
+        </div>
+
+        {/* Tabs */}
+        <div className="tabs" role="tablist">
+          <button role="tab" aria-selected={tab==="tasks"} className={`tab ${tab==="tasks"?"active":""}`} onClick={()=>setTab("tasks")}>Tasks ({tasks.length})</button>
+          <button role="tab" aria-selected={tab==="comms"} className={`tab ${tab==="comms"?"active":""}`} onClick={()=>setTab("comms")}>Activity ({comms.length})</button>
+        </div>
+
+        {/* Tasks */}
+        {tab==="tasks" && <>
+          {openTasks.length > 0 && (
+            <div className="portal-section">
+              <div className="portal-section-title">In Progress</div>
+              {openTasks.map(task=>{
+                const tf=fmt(task);
+                const overdue=tf["Due Date"]&&new Date(tf["Due Date"])<new Date();
+                return (
+                  <div key={task.id} className="portal-task">
+                    <div className="portal-task-check" aria-hidden="true" />
+                    <div style={{flex:1,minWidth:0}}>
+                      <div className="portal-task-title">{tf.Title}</div>
+                      <div className="portal-task-meta">
+                        <span className="tag" style={{background:`${STATUS_COLOR[tf.Status]}1a`,color:STATUS_COLOR[tf.Status]}}>{tf.Status}</span>
+                        {tf.Priority&&<span className="tag" style={{background:`${PRIORITY_COLOR[tf.Priority]}1a`,color:PRIORITY_COLOR[tf.Priority]}}>{tf.Priority}</span>}
+                        {tf["Due Date"]&&<span style={{fontSize:12,color:overdue?"var(--red)":"var(--text-3)",fontFamily:"var(--mono)"}}>{overdue?"⚠ ":""}{fmtDate(tf["Due Date"])}</span>}
+                      </div>
+                      {tf.Notes&&<div style={{marginTop:6,fontSize:13,color:"var(--text-2)",lineHeight:1.5}}>{tf.Notes}</div>}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {doneTasks.length > 0 && (
+            <div className="portal-section">
+              <div className="portal-section-title">Completed</div>
+              {doneTasks.map(task=>{
+                const tf=fmt(task);
+                return (
+                  <div key={task.id} className="portal-task" style={{opacity:.5}}>
+                    <div className="portal-task-check done" aria-hidden="true">
+                      <span style={{color:"#0f172a",fontSize:10}}>✓</span>
+                    </div>
+                    <div style={{flex:1,minWidth:0}}>
+                      <div className="portal-task-title done">{tf.Title}</div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {tasks.length===0&&<div className="empty"><div className="empty-icon">✓</div><div className="empty-text">No tasks yet</div></div>}
+        </>}
+
+        {/* Comms */}
+        {tab==="comms" && <>
+          {comms.length===0
+            ? <div className="empty"><div className="empty-icon">📋</div><div className="empty-text">No activity logged yet</div></div>
+            : comms.map(comm=>{
+              const cf=fmt(comm);
+              return (
+                <div key={comm.id} className="portal-comm">
+                  <div className="portal-comm-header">
+                    <span style={{fontSize:18}}>{TYPE_ICON[cf.Type]||"📝"}</span>
+                    <span className="badge" style={{background:"var(--hover)",color:"var(--text-2)"}}>{cf.Type}</span>
+                    <span style={{fontSize:12,fontFamily:"var(--mono)",color:"var(--text-3)",marginLeft:"auto"}}>{fmtDate(cf.Date||cf.Created)}</span>
+                  </div>
+                  <div className="portal-comm-summary">{cf.Summary}</div>
+                  {cf.Notes&&<div className="portal-comm-notes">{cf.Notes}</div>}
+                </div>
+              );
+            })
+          }
+        </>}
+
+      </div>
+    </div>
+  );
+}
+
+/* ── ROOT APP ────────────────────────────────────────────────────────────── */
+function App() {
+  const [clients,setClients]=useState([]);
+  const [tasks,setTasks]=useState([]);
+  const [comms,setComms]=useState([]);
+  const [comments,setComments]=useState([]);
+  const [loading,setLoading]=useState(true);
+  const [view,setView]=useState("dashboard");
+  const [notif,setNotif]=useState(null);
+  const [filterClient,setFilterClient]=useState(null);
+  const [filterStage,setFilterStage]=useState(null);
+  const [filterTool,setFilterTool]=useState(null);
+  const [sidebarOpen,setSidebarOpen]=useState(true);
+  const [pendingDeletes,setPendingDeletes]=useState({}); // id -> {table,label,timer}
+  const [searchQuery,setSearchQuery]=useState("");
+  const [searchOpen,setSearchOpen]=useState(false);
+  const isMobile=()=>window.innerWidth<=720;
+
+  const notify=(msg,type="success")=>setNotif({msg,type,id:Date.now()});
+
+  const load=useCallback(async()=>{
+    try {
+      const [c,t,co,cm]=await Promise.all([
+        atList("Clients",{sort:[{field:"Name"}]}),
+        atList("Tasks",{sort:[{field:"Sort Order"}]}),
+        atList("Comms Log",{sort:[{field:"Date",dir:"desc"}]}),
+        atList("Comments",{sort:[{field:"Created",dir:"desc"}]}),
+      ]);
+      setClients(c); setTasks(t); setComms(co); setComments(cm);
+    } catch { notify("Error loading — check Airtable config","error"); }
+    finally { setLoading(false); }
+  },[]);
+
+  useEffect(()=>{ load(); },[load]);
+  useEffect(()=>{ if(isMobile()) setSidebarOpen(false); },[]);
+
+  // Read initial view/client from URL on mount
+  useEffect(()=>{
+    const p = new URLSearchParams(window.location.search);
+    const v = p.get("view"), c = p.get("client"), s = p.get("stage"), t = p.get("tool");
+    if (v) setView(v);
+    if (c) setFilterClient(c);
+    if (s) setFilterStage(s);
+    if (t) setFilterTool(t);
+  },[]);
+
+  const syncURL = (v, client, stage, tool) => {
+    const p = new URLSearchParams();
+    p.set("view", v);
+    if (client) p.set("client", client);
+    if (stage) p.set("stage", stage);
+    if (tool) p.set("tool", tool);
+    history.replaceState(null, "", `?${p.toString()}`);
+  };
+
+  const addComment=async fields=>{
+    try { await atCreate("Comments",fields); load(); } catch (e) { notify(e.message || "Error adding comment","error"); }
+  };
+
+  // opts: { client, stage, tool } — passed depending on destination view
+  const navigate=(v,opts={})=>{
+    const client = opts.client!==undefined ? opts.client : null;
+    const stage = opts.stage!==undefined ? opts.stage : null;
+    const tool = opts.tool!==undefined ? opts.tool : null;
+    setView(v); setFilterClient(client); setFilterStage(stage); setFilterTool(tool);
+    syncURL(v, client, stage, tool);
+    if(isMobile()) setSidebarOpen(false);
+  };
+
+  // ── Delete with undo ──────────────────────────────────────────────────
+  const requestDelete = (table, id, label) => {
+    const timer = setTimeout(async ()=>{
+      try { await atDelete(table, id); load(); } catch { notify("Error deleting","error"); }
+      setPendingDeletes(p=>{ const n={...p}; delete n[id]; return n; });
+    }, 5000);
+    setPendingDeletes(p=>({...p,[id]:{table,label,timer}}));
+  };
+  const undoDelete = id => {
+    setPendingDeletes(p=>{
+      const entry=p[id]; if(entry) clearTimeout(entry.timer);
+      const n={...p}; delete n[id]; return n;
+    });
+  };
+
+  const pendingIds = Object.keys(pendingDeletes);
+  const visClients = clients.filter(c=>!pendingIds.includes(c.id));
+  const visTasks   = tasks.filter(t=>!pendingIds.includes(t.id));
+  const visComms   = comms.filter(c=>!pendingIds.includes(c.id));
+
+  const isConfigured = true;
+
+  const NAV=[
+    {id:"dashboard",label:"Dashboard",icon:"◈"},
+    {id:"pipeline", label:"Pipeline", icon:"▷"},
+    {id:"clients",  label:"Clients",  icon:"◉"},
+    {id:"tasks",    label:"All Tasks",icon:"◻"},
+    {id:"comms",    label:"Comms Log",icon:"◎"},
+  ];
+
+  const openTaskCount=visTasks.filter(t=>fmt(t).Status!=="Done").length;
+  const currentTitle = filterClient&&(view==="tasks"||view==="comms")
+    ? `${fmt(visClients.find(c=>c.id===filterClient))?.Name||""} — ${view==="tasks"?"Tasks":"Comms"}`
+    : NAV.find(n=>n.id===view)?.label||"";
+
+  // ── Global search ─────────────────────────────────────────────────────
+  const searchResults = (() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return [];
+    const results = [];
+    visClients.forEach(c=>{ if(fmt(c).Name?.toLowerCase().includes(q)) results.push({type:"Client",label:fmt(c).Name,action:()=>navigate("clients",{client:c.id})}); });
+    visTasks.forEach(t=>{ if(fmt(t).Title?.toLowerCase().includes(q)) results.push({type:"Task",label:fmt(t).Title,action:()=>navigate("tasks",{client:fmt(t).Client?.[0]||null})}); });
+    visComms.forEach(c=>{ if(fmt(c).Summary?.toLowerCase().includes(q)) results.push({type:"Comm",label:fmt(c).Summary,action:()=>navigate("comms",{client:fmt(c).Client?.[0]||null})}); });
+    return results.slice(0,8);
+  })();
+
+  return (
+    <>
+      <style>{CSS}</style>
+      <div className="app">
+
+        {/* Mobile overlay */}
+        {sidebarOpen&&<div className="sidebar-overlay" onClick={()=>setSidebarOpen(false)} aria-hidden="true" />}
+
+        {/* Sidebar */}
+        <aside id="sidebar" className={`sidebar ${sidebarOpen?"":"collapsed"}`} aria-label="Navigation" aria-hidden={!sidebarOpen}>
+          <div className="sidebar-logo">
+            <div style={{display:"flex",alignItems:"center",gap:10}}>
+              <img src="data:image/png;base64,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" alt="Rewire logo" style={{width:36,height:36,borderRadius:6,flexShrink:0}} />
+              <div>
+                <span style={{fontSize:16,fontWeight:700,color:"var(--text)",letterSpacing:"-.3px"}}>Rewire</span>
+                <span className="sidebar-logo-sub">Project Ops</span>
+              </div>
+            </div>
+            <button className="sidebar-close" onClick={()=>setSidebarOpen(false)} aria-label="Close menu">✕</button>
+          </div>
+
+          <div className="sidebar-section">Navigation</div>
+          {NAV.map(n=>(
+            <div key={n.id} className={`sidebar-item ${view===n.id&&!filterClient&&!filterStage&&!filterTool?"active":""}`}
+              role="button" tabIndex={0}
+              onClick={()=>navigate(n.id)}
+              onKeyDown={e=>e.key==="Enter"&&navigate(n.id)}>
+              <span style={{fontFamily:"var(--mono)",fontSize:14,flexShrink:0}}>{n.icon}</span>
+              {n.label}
+              {n.id==="tasks"&&openTaskCount>0&&<span className="count">{openTaskCount}</span>}
+            </div>
+          ))}
+
+          {visClients.length>0&&<>
+            <div className="sidebar-section" style={{marginTop:4}}>Clients</div>
+            {visClients.map(c=>{
+              const f=fmt(c);
+              const overdueCount = visTasks.filter(t=>fmt(t).Client?.[0]===c.id&&fmt(t).Status!=="Done"&&fmt(t)["Due Date"]&&new Date(fmt(t)["Due Date"])<new Date()).length;
+              return (
+                <div key={c.id}
+                  className={`sidebar-item ${filterClient===c.id&&view==="tasks"?"active":""}`}
+                  role="button" tabIndex={0}
+                  onClick={()=>navigate("tasks",{client:c.id})}
+                  onKeyDown={e=>e.key==="Enter"&&navigate("tasks",{client:c.id})}>
+                  <span className="dot" style={{background:STAGE_COLOR[f.Stage]||"var(--text-3)"}} />
+                  <span style={{overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{f.Name}</span>
+                  {overdueCount>0&&<span className="count" style={{color:"var(--red)"}}>{overdueCount}</span>}
+                </div>
+              );
+            })}
+          </>}
+
+          <div className="sidebar-footer">SC · AG · v1</div>
+        </aside>
+
+        {/* Main */}
+        <main className="main">
+          <div className="topbar">
+            <button className="topbar-menu-btn" onClick={()=>setSidebarOpen(o=>!o)} aria-label={sidebarOpen?"Close menu":"Open menu"} aria-expanded={sidebarOpen} aria-controls="sidebar">
+              {sidebarOpen
+                ? <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"/></svg>
+                : <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"/></svg>
+              }
+            </button>
+            <div className="topbar-title">{currentTitle}</div>
+            <div className="global-search-wrap">
+              <input className="search-input" style={{width:"100%"}} placeholder="Search everything…" value={searchQuery}
+                onChange={e=>{setSearchQuery(e.target.value);setSearchOpen(true);}}
+                onFocus={()=>setSearchOpen(true)}
+                onBlur={()=>setTimeout(()=>setSearchOpen(false),150)}
+                aria-label="Global search" />
+              {searchOpen&&searchQuery.trim()&&(
+                <div className="global-search-results">
+                  {searchResults.length===0
+                    ? <div className="global-search-item" style={{cursor:"default",color:"var(--text-3)",fontSize:13}}>No matches</div>
+                    : searchResults.map((r,i)=>(
+                      <div key={i} className="global-search-item" onMouseDown={()=>{r.action();setSearchQuery("");setSearchOpen(false);}}>
+                        <div className="global-search-item-label">{r.label}</div>
+                        <div className="global-search-item-meta">{r.type}</div>
+                      </div>
+                    ))
+                  }
+                </div>
+              )}
+            </div>
+            {(filterClient||filterStage||filterTool)&&(view==="tasks"||view==="comms"||view==="clients")&&(
+              <button className="btn btn-ghost btn-sm" onClick={()=>navigate(view)}>✕ Clear</button>
+            )}
+            <button className="btn btn-ghost btn-sm" onClick={load} aria-label="Refresh data">↻</button>
+          </div>
+
+          <div className="content">
+            {!isConfigured&&(
+              <div className="warn-banner">⚠ Open this file in a text editor and replace <strong>YOUR_AIRTABLE_PAT</strong> and <strong>YOUR_BASE_ID</strong> near the top to connect your data.</div>
+            )}
+            {loading
+              ? <div className="loading" role="status" aria-label="Loading"><div className="spinner" /><span className="loading-text">Loading…</span></div>
+              : <>
+                {view==="dashboard"&&<Dashboard clients={visClients} tasks={visTasks} comms={visComms} onNavigate={navigate} />}
+                {view==="pipeline" &&<PipelineView clients={visClients} tasks={visTasks} comms={visComms} onUpdate={load} notify={notify} onOpenClient={id=>navigate("clients",{client:id})} />}
+                {view==="clients"  &&<ClientsView clients={visClients} tasks={visTasks} comms={visComms} comments={comments} onAddComment={addComment} onUpdate={load} notify={notify} requestDelete={requestDelete} stageFilter={filterStage} toolFilter={filterTool} onClearStageFilter={()=>navigate("clients")} onClearToolFilter={()=>navigate("clients")} initialClientId={filterClient} onNavigateClient={id=>navigate("clients",{client:id})} />}
+                {view==="tasks"    &&<TasksView tasks={visTasks} clients={visClients} comments={comments} onAddComment={addComment} selectedClientId={filterClient} onUpdate={load} notify={notify} requestDelete={requestDelete} onNavigateClient={id=>navigate("clients",{client:id})} />}
+                {view==="comms"    &&<CommsView comms={visComms} clients={visClients} tasks={visTasks} selectedClientId={filterClient} onUpdate={load} notify={notify} requestDelete={requestDelete} />}
+              </>
+            }
+          </div>
+        </main>
+      </div>
+      {notif&&<Notif key={notif.id} msg={notif.msg} type={notif.type} onDone={()=>setNotif(null)} />}
+      <div style={{position:"fixed",bottom:20,right:20,zIndex:200,display:"flex",flexDirection:"column",gap:8,alignItems:"flex-end"}}>
+        {pendingIds.map(id=>(
+          <UndoToast key={id} msg={`Deleted "${pendingDeletes[id].label||"item"}"`} onUndo={()=>undoDelete(id)} onExpire={()=>setPendingDeletes(p=>{const n={...p};delete n[id];return n;})} />
+        ))}
+      </div>
+    </>
+  );
+}
+
+const isClientPortal = new URLSearchParams(window.location.search).has("client") && !new URLSearchParams(window.location.search).has("view");
+ReactDOM.createRoot(document.getElementById("root")).render(isClientPortal ? <ClientPortal /> : <App />);
+</script>
+</body>
+</html>
