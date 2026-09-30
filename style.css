@@ -137,16 +137,23 @@ body {
 }
 .mobile-menu a:hover { color: var(--blue); }
 
-/* ── Hero (content only — video lives in its own section below) ── */
+/* ── Hero (video now sits in its own section above this one) ── */
 .hero {
   position: relative;
   z-index: 1;
-  display: block;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 16rem 2rem 3rem;
+  padding: 4rem 2rem;
 }
-.hero-content { position: relative; }
+.hero-content {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.hero-left { position: relative; }
+.hero-right { position: relative; }
 .hero-tag {
   display: inline-flex;
   align-items: center;
@@ -261,7 +268,7 @@ body {
   z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem 5rem;
+  padding: 14rem 2rem 2rem;
 }
 .hero-visual {
   position: relative;
@@ -656,11 +663,9 @@ a.rw-orbiter-label:hover, a.rw-orbiter-label:focus-visible { color: #fff; text-s
 @media (max-width: 1024px) {
   .logo-img { height: 180px; }
   .nav.scrolled .logo-img { height: 128px; }
-  .hero {
-    padding-top: 10rem;
-    padding-bottom: 2rem;
-  }
-  .hero-video-section { padding-bottom: 4rem; }
+  .hero { padding: 2rem; }
+  .hero-content { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero-video-section { padding: 10rem 2rem 2rem; }
   .hero-visual { max-width: 420px; margin: 0 auto; }
   .about-inner { grid-template-columns: 1fr; gap: 4rem; }
   .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
@@ -681,11 +686,8 @@ a.rw-orbiter-label:hover, a.rw-orbiter-label:focus-visible { color: #fff; text-s
   .nav.scrolled .logo-img { height: 90px; }
 
   /* Hero — push down enough for the logo */
-  .hero {
-    padding-top: 8rem;
-    padding-bottom: 2rem;
-  }
-  .hero-video-section { padding-bottom: 3rem; }
+  .hero { padding: 1.5rem; }
+  .hero-video-section { padding: 8rem 1.5rem 1.5rem; }
   .hero-sub { font-size: 0.95rem; }
   .hero-stats {
     display: grid;
@@ -737,7 +739,7 @@ a.rw-orbiter-label:hover, a.rw-orbiter-label:focus-visible { color: #fff; text-s
   .container { padding: 0 1.2rem; }
   .logo-img { height: 96px; }
   .nav.scrolled .logo-img { height: 75px; }
-  .hero { padding-top: 7rem; }
+  .hero-video-section { padding-top: 7rem; }
   .hero-title { font-size: 2rem; }
   .hero-tag { font-size: 0.7rem; }
   .hero-actions { flex-direction: column; align-items: stretch; }

@@ -180,15 +180,31 @@
 </ul>
 </div>
 
-<!-- Hero -->
+<!-- Hero Video (own section, now on top) -->
+<section class="hero-video-section">
+<div class="hero-visual" aria-hidden="true">
+<div class="circuit-diagram">
+<video class="hero-video" autoplay muted loop playsinline id="hero-video">
+<source src="Digital_data_flows_to_grids_202607132219.mp4" type="video/mp4" />
+</video>
+<div class="hero-video-overlay"></div>
+<button id="video-toggle" class="video-toggle-btn" type="button" aria-label="Pause background video">⏸</button>
+</div>
+</div>
+</section>
+
+<!-- Hero (two columns: title left, copy/CTA/stats right) -->
 <section class="hero" id="hero" aria-labelledby="hero-heading">
 <div class="hero-content">
+<div class="hero-left">
 <div class="hero-tag mono">// Rewire your operations</div>
 <h1 class="hero-title" id="hero-heading">
 <span class="line">Business</span>
 <span class="line accent-word">Intelligence</span>
 <span class="line">Redefined</span>
 </h1>
+</div>
+<div class="hero-right">
 <p class="hero-sub">
 We engineer smarter systems — fusing process optimization, automation, and analytics
 to transform how your organization thinks, moves, and grows.
@@ -213,18 +229,6 @@ to transform how your organization thinks, moves, and grows.
 <span class="stat-label">Processes Automated</span>
 </div>
 </div>
-</div>
-</section>
-
-<!-- Hero Video (own section, stacked below hero content) -->
-<section class="hero-video-section">
-<div class="hero-visual" aria-hidden="true">
-<div class="circuit-diagram">
-<video class="hero-video" autoplay muted loop playsinline id="hero-video">
-<source src="Digital_data_flows_to_grids_202607132219.mp4" type="video/mp4" />
-</video>
-<div class="hero-video-overlay"></div>
-<button id="video-toggle" class="video-toggle-btn" type="button" aria-label="Pause background video">⏸</button>
 </div>
 </div>
 </section>
@@ -610,7 +614,7 @@ to transform how your organization thinks, moves, and grows.
         l.font = getComputedStyle(l.el).font;
       });
     }
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measureLabels(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measureLabels(); placeLabels(); });
 
     const ticks = [];
     for (let i = 0; i < 56; i++) ticks.push({ r: 0.35 + rnd() * 0.65 });
@@ -622,6 +626,26 @@ to transform how your organization thinks, moves, and grows.
       canvas.width = Math.round(W * dpr);
       canvas.height = Math.round(H * dpr);
       measureLabels();
+      placeLabels();
+    }
+
+    // Fixed, evenly-spaced label positions (N/E/S/W-ish) so they never
+    // overlap each other, regardless of where the animated blocks are.
+    function placeLabels() {
+      if (!labels.length) return;
+      const U = Math.min(W * 0.5 / 1.2, H * 0.5 / 0.82);
+      const cx = W / 2, cy = H / 2;
+      const labelRadius = U * 1.55;
+      const n = labels.length;
+      labels.forEach(function (lb, i) {
+        const a = -Math.PI / 2 + (TAU * i / n);
+        let lx = cx + Math.cos(a) * labelRadius;
+        let ly = cy + Math.sin(a) * labelRadius;
+        lx = Math.max(lb.w / 2 + 8, Math.min(W - lb.w / 2 - 8, lx));
+        ly = Math.max(lb.h / 2 + 8, Math.min(H - lb.h / 2 - 8, ly));
+        lb.fx = lx; lb.fy = ly;
+        lb.el.style.transform = 'translate(' + (lx - lb.w / 2).toFixed(1) + 'px,' + (ly - lb.h / 2).toFixed(1) + 'px)';
+      });
     }
 
     function render(time) {
@@ -706,19 +730,8 @@ to transform how your organization thinks, moves, and grows.
         }
 
         const lb = labels[bi];
-        if (lb) {
-          if (!lb.w) measureLabels();
-          let dx = bx - cx, dy = by - cy;
-          const dl = Math.hypot(dx, dy) || 1; dx /= dl; dy /= dl;
-          const push = cell * 3.2 + Math.abs(dx) * lb.w / 2 + Math.abs(dy) * lb.h / 2;
-          let lx = bx + dx * push, ly = by + dy * push;
-          lx = Math.max(lb.w / 2 + 8, Math.min(W - lb.w / 2 - 8, lx));
-          ly = Math.max(lb.h / 2 + 8, Math.min(H - lb.h / 2 - 8, ly));
-          if (burn) {
-            burnList.push([lb, lx, ly]);
-          } else {
-            lb.el.style.transform = 'translate(' + (lx - lb.w / 2).toFixed(1) + 'px,' + (ly - lb.h / 2).toFixed(1) + 'px)';
-          }
+        if (lb && burn && lb.fx != null) {
+          burnList.push([lb, lb.fx, lb.fy]);
         }
       });
 
