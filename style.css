@@ -349,32 +349,6 @@ body {
   outline-offset: 2px;
 }
 
-/* ── Ticker ── */
-.ticker-wrap {
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
-  padding: 0.9rem 0;
-}
-.ticker-track {
-  display: flex;
-  gap: 2rem;
-  width: max-content;
-  animation: tickerMove 30s linear infinite;
-}
-.ticker-track span {
-  white-space: nowrap;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-.ticker-track .sep { color: var(--blue); }
-
 /* ── Services ── */
 .services {
   position: relative;
@@ -544,6 +518,7 @@ body {
 
 /* ── Orbiter (animated canvas orbit, replaces old CSS spin orbit) ── */
 .about-right { display: flex; justify-content: center; }
+.about-visual { width: 100%; max-width: 420px; margin: 0 auto; }
 .rw-orbiter { position: relative; width: 100%; background: transparent; }
 .rw-orbiter canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
@@ -640,10 +615,6 @@ a.rw-orbiter-label:hover, a.rw-orbiter-label:focus-visible { color: #fff; text-s
 }
 @keyframes fadeIn {
   to { opacity: 1; }
-}
-@keyframes tickerMove {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
 }
 @keyframes drawPath {
   to { stroke-dashoffset: 0; }
