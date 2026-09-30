@@ -137,18 +137,14 @@ body {
 }
 .mobile-menu a:hover { color: var(--blue); }
 
-/* ── Hero ── */
+/* ── Hero (content only — video lives in its own section below) ── */
 .hero {
   position: relative;
   z-index: 1;
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
-  align-items: center;
-  gap: 4rem;
+  display: block;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 16rem 2rem 4rem;
+  padding: 16rem 2rem 3rem;
 }
 .hero-content { position: relative; }
 .hero-tag {
@@ -259,13 +255,20 @@ body {
 .stat-label { display: block; font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; font-weight: 500; }
 .stat-divider { width: 1px; height: 40px; background: var(--border); }
 
-/* ── Hero Visual ── */
+/* ── Hero Video Section (its own section, stacked below .hero) ── */
+.hero-video-section {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 5rem;
+}
 .hero-visual {
   position: relative;
+  max-width: 900px;
+  margin: 0 auto;
   opacity: 0;
   animation: fadeIn 1.2s ease 0.4s forwards;
-  align-self: center;
-  margin-top: -18rem;
 }
 .circuit-diagram {
   position: relative;
@@ -307,6 +310,36 @@ body {
   margin-bottom: 0.2rem;
   box-shadow: 0 0 8px var(--blue);
   animation: pulse 2s ease infinite;
+}
+
+/* ── Hero pause/play toggle (ADA: WCAG 2.2.2 Pause, Stop, Hide) ── */
+.video-toggle-btn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(4,6,8,0.6);
+  color: #e5edf3;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.video-toggle-btn:hover,
+.video-toggle-btn:focus-visible {
+  background: rgba(4,6,8,0.85);
+  border-color: rgba(14,165,233,0.6);
+}
+.video-toggle-btn:focus-visible {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
 }
 
 /* ── Ticker ── */
@@ -502,73 +535,18 @@ body {
 .value-item strong { display: block; color: var(--white); font-size: 0.9rem; margin-bottom: 0.2rem; }
 .value-item span { color: var(--muted); font-size: 0.82rem; }
 
-/* ── Orbit ── */
+/* ── Orbiter (animated canvas orbit, replaces old CSS spin orbit) ── */
 .about-right { display: flex; justify-content: center; }
-.orbit-container {
-  position: relative;
-  width: 380px;
-  height: 380px;
+.rw-orbiter { position: relative; width: 100%; background: transparent; }
+.rw-orbiter canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.rw-orbiter-label {
+  position: absolute; left: 0; top: 0; white-space: nowrap; will-change: transform;
+  font-size: clamp(12px, 1.1vw, 15px); font-weight: 500; line-height: 1.2; font-family: inherit; letter-spacing: .08em;
+  color: #d6f8ff; text-decoration: none; text-shadow: 0 0 10px rgba(63,216,238,.65), 0 0 2px rgba(0,0,0,.9);
+  transition: color .2s, text-shadow .2s;
 }
-.orbit-center {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90px; height: 90px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3;
-  box-shadow: 0 0 40px rgba(14, 165, 233, 0.15);
-}
-.orbit-logo { width: 60px; height: auto; }
-.orbit {
-  position: absolute;
-  top: 50%; left: 50%;
-  border-radius: 50%;
-  border: 1px dashed rgba(14, 165, 233, 0.15);
-  transform: translate(-50%, -50%);
-}
-.orbit-1 {
-  width: 280px; height: 280px;
-  animation: spin 20s linear infinite;
-}
-.orbit-2 {
-  width: 360px; height: 360px;
-  animation: spin 30s linear infinite reverse;
-}
-.orbit-item {
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 72px; height: 72px;
-  transform:
-    rotate(var(--angle))
-    translate(calc(var(--radius, 140px)))
-    rotate(calc(-1 * var(--angle)));
-  --radius: 140px;
-}
-.orbit-1 .orbit-item { --radius: 140px; }
-.orbit-2 .orbit-item { --radius: 180px; }
-.orbit-item span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: var(--surface2);
-  border: 1px solid rgba(14, 165, 233, 0.2);
-  border-radius: 8px;
-  font-size: 0.7rem;
-  font-family: var(--font-mono);
-  color: var(--blue);
-  white-space: nowrap;
-}
-.orbit-item.small span {
-  width: 48px; height: 48px;
-  font-size: 0.65rem;
-}
+a.rw-orbiter-label:hover, a.rw-orbiter-label:focus-visible { color: #fff; text-shadow: 0 0 16px rgba(63,216,238,1); outline: none; }
 
 /* ── Contact ── */
 .contact {
@@ -671,10 +649,6 @@ body {
   0%, 100% { box-shadow: 0 0 6px var(--blue); }
   50% { box-shadow: 0 0 14px var(--blue), 0 0 28px rgba(14,165,233,0.4); }
 }
-@keyframes spin {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
 
 /* ── Responsive ── */
 
@@ -683,18 +657,12 @@ body {
   .logo-img { height: 180px; }
   .nav.scrolled .logo-img { height: 128px; }
   .hero {
-    grid-template-columns: 1fr;
-    gap: 3rem;
     padding-top: 10rem;
-    padding-bottom: 5rem;
+    padding-bottom: 2rem;
   }
-  .hero-visual { order: -1; max-width: 420px; margin: 0 auto; }
+  .hero-video-section { padding-bottom: 4rem; }
+  .hero-visual { max-width: 420px; margin: 0 auto; }
   .about-inner { grid-template-columns: 1fr; gap: 4rem; }
-  .orbit-container { width: 300px; height: 300px; }
-  .orbit-1 { width: 230px; height: 230px; }
-  .orbit-2 { width: 290px; height: 290px; }
-  .orbit-1 .orbit-item { --radius: 115px; }
-  .orbit-2 .orbit-item { --radius: 145px; }
   .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
   .services { padding: 6rem 0; }
   .process { padding: 6rem 0; }
@@ -715,9 +683,9 @@ body {
   /* Hero — push down enough for the logo */
   .hero {
     padding-top: 8rem;
-    padding-bottom: 3rem;
-    gap: 2rem;
+    padding-bottom: 2rem;
   }
+  .hero-video-section { padding-bottom: 3rem; }
   .hero-sub { font-size: 0.95rem; }
   .hero-stats {
     display: grid;
