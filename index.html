@@ -578,14 +578,9 @@ to transform how your organization thinks, moves, and grows.
 
   function play(){ var p=v.play(); if(p&&p.catch) p.catch(function(){}); }
 
-  // Sound: try it on the first play only. Browsers block unmuted autoplay until the visitor
-  // interacts, so if blocked we fall back to muted. A click on Skip / the link / the sound button counts.
-  var firstPlay=true, userUnmuted=false, sb=document.getElementById('rw-sound');
-  function playWithSound(){
-    v.muted=false;
-    var p=v.play();
-    if(p&&p.catch) p.catch(function(){ v.muted=true; play(); });
-  }
+  // Sound: off by default. The sound button turns it on, and that choice holds until the visitor turns it off.
+  var userUnmuted=false, sb=document.getElementById('rw-sound');
+  v.muted=true;
   function syncSound(){
     if(!sb) return;
     var on=!v.muted;
@@ -612,11 +607,10 @@ to transform how your organization thinks, moves, and grows.
     showing=false; clearTimeout(timer);
     intro.classList.add('done');
     if(reduce) return;                       // reduced motion: script.js keeps the video paused; the visitor presses play
-    if(firstPlay){ firstPlay=false; playWithSound(); } else play();
+    play();
   }
 
   v.addEventListener('ended',function(){
-    if(!userUnmuted) v.muted=true;           // later loops default to no audio
     if(reduce){ try{v.currentTime=0}catch(e){} play(); return; }  // reduced motion: plain loop, no repeating intro
     show();
   });
