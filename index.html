@@ -146,12 +146,15 @@
 <!-- ═══ HERO INTRO (plays before the video) ═══ -->
 <style>
 /* Intro lives INSIDE .circuit-diagram (the video box), so it matches the video's edges and spacing exactly */
-.rw-intro{position:absolute;inset:0;z-index:4;background:transparent;border-radius:inherit;
+.rw-intro{position:absolute;inset:0;z-index:4;background:var(--black,#040608);border-radius:inherit;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:1.1rem;text-align:center;padding:0 6%;box-sizing:border-box;transition:opacity .6s ease,visibility 0s}
+  gap:1.65rem;text-align:center;padding:0 6%;box-sizing:border-box;transition:opacity .6s ease,visibility 0s}
 .rw-intro.done{opacity:0;pointer-events:none;visibility:hidden;transition:opacity .8s ease,visibility 0s .8s}
 .rw-intro-words{margin:0;color:#fff;font-family:'Syne',sans-serif;font-weight:800;
   font-size:clamp(1.4rem,4.6vw,3rem);line-height:1.15}
+/* size the intro text to the video box itself (cqw), so it fits the small box on tablets/phones too */
+.circuit-diagram{container-type:inline-size}
+.rw-intro-words{font-size:clamp(1.1rem,5.3cqw,3rem)}
 .rw-intro-words span{display:inline-block;margin:0 .15em;opacity:0;transform:translateY(12px)}
 .rw-intro.run .rw-intro-words span{animation:rwRise .7s ease forwards}
 .rw-intro.run .rw-intro-words span:nth-child(1){animation-delay:.4s}
@@ -160,15 +163,26 @@
 .rw-intro-words span:nth-child(3){color:#0ea5e9}
 /* readability over the video frame now that there is no black backing */
 .rw-intro-words,.rw-intro-link,.rw-intro-skip{text-shadow:0 2px 14px rgba(0,0,0,.85),0 0 3px rgba(0,0,0,.7)}
-.rw-intro-link{color:#fff;text-decoration:none;font-family:'DM Mono',monospace;font-size:clamp(.8rem,1.8vw,1.05rem);
+.rw-intro-link{color:#fff;text-decoration:none;font-family:'DM Mono',monospace;font-size:clamp(1.2rem,2.7vw,1.575rem);
   border-bottom:2px solid #0ea5e9;padding-bottom:.25rem;opacity:0;transform:translateY(12px)}
 .rw-intro.run .rw-intro-link{animation:rwRise .7s ease 2.8s forwards}
+.rw-intro-link{font-size:clamp(1.2rem,2.8cqw,1.575rem)}
 .rw-intro-link:hover{color:#0ea5e9}
 .video-toggle-btn.video-sound-btn{right:60px}
 .rw-intro-skip{position:absolute;left:20px;bottom:24px;background:none;border:0;color:#fff;opacity:.6;
   font-family:'DM Mono',monospace;font-size:.85rem;line-height:1;cursor:pointer;text-decoration:underline}
 .rw-intro-skip:hover,.rw-intro-skip:focus-visible{opacity:1}
 @keyframes rwRise{to{opacity:1;transform:none}}
+/* small screens: keep the text clear of the Skip / sound / pause row along the bottom */
+@media (max-width:768px){.rw-intro{padding-bottom:4rem}}
+/* phones: keep the bottom line below the top words in the size hierarchy */
+@media (max-width:480px){.rw-intro-link{font-size:clamp(1rem,2.8cqw,1.575rem)}}
+/* touch screens: 44px tap targets for Skip / sound / pause */
+@media (pointer:coarse){
+  .video-toggle-btn{width:44px;height:44px;font-size:16px;bottom:12px;right:12px}
+  .video-toggle-btn.video-sound-btn{right:64px}
+  .rw-intro-skip{min-width:44px;min-height:44px;padding:0 .75rem;display:inline-flex;align-items:center;justify-content:center;left:8px;bottom:12px}
+}
 @media (prefers-reduced-motion: reduce){
   .rw-intro-words span,.rw-intro-link,
   .rw-intro.run .rw-intro-words span,.rw-intro.run .rw-intro-link{animation:none;opacity:1;transform:none}
@@ -190,6 +204,16 @@
   .hero-video-section{padding-top:calc(.6rem + 120px + var(--vgap));padding-bottom:max(0px,calc(var(--vgap) - 1.5rem))}
 }
 @media (max-width:480px){
+  .hero-video-section{padding-top:calc(.6rem + 96px + var(--vgap))}
+}
+/* landscape phones: shrink the logo so the video row isn't pushed below the fold (must stay LAST so it wins) */
+@media (max-height:500px) and (orientation:landscape){
+  .logo-img{height:96px}
+  .nav.scrolled .logo-img{height:72px}
+  :root{--vgap:2rem}
+  .hero-video-section{padding-top:calc(1.2rem + 96px + var(--vgap))}
+}
+@media (max-height:500px) and (orientation:landscape) and (max-width:768px){
   .hero-video-section{padding-top:calc(.6rem + 96px + var(--vgap))}
 }
 </style>
