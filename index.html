@@ -143,6 +143,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="style.css?v=1" />
 
+<!-- ═══ HERO INTRO (plays before the video) ═══ -->
+<script>try{if(sessionStorage.getItem('rwIntro')||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('rw-skip')}catch(e){}</script>
+<style>
+.hero-video-section{position:relative}
+.rw-intro{position:absolute;inset:0;z-index:5;background:#000;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:1.2rem;text-align:center;padding:0 6%;transition:opacity .8s ease}
+.rw-intro.done{opacity:0;pointer-events:none}
+.rw-intro-words{margin:0;color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,6vw,4.5rem);line-height:1.1}
+.rw-intro-words span{display:inline-block;margin:0 .15em;opacity:0;transform:translateY(12px);animation:rwRise .7s ease forwards}
+.rw-intro-words span:nth-child(1){animation-delay:.4s}
+.rw-intro-words span:nth-child(2){animation-delay:1.2s}
+.rw-intro-words span:nth-child(3){animation-delay:2s;color:#0ea5e9}
+.rw-intro-link{color:#fff;text-decoration:none;font-family:'DM Mono',monospace;font-size:clamp(.85rem,2vw,1.1rem);
+  border-bottom:2px solid #0ea5e9;padding-bottom:.25rem;opacity:0;animation:rwRise .7s ease 2.8s forwards}
+.rw-intro-link:hover{color:#0ea5e9}
+.rw-intro-skip{position:absolute;right:5%;bottom:8%;background:none;border:0;color:#fff;opacity:.6;
+  font-family:'DM Mono',monospace;font-size:.85rem;cursor:pointer;text-decoration:underline}
+.rw-skip .rw-intro{display:none}
+@keyframes rwRise{to{opacity:1;transform:none}}
+</style>
+<noscript><style>.rw-intro{display:none}</style></noscript>
+
 <!-- Preload hero image for LCP -->
 <link rel="preload" as="image" href="Rewire.png" />
 </head>
@@ -185,11 +207,16 @@
 <div class="hero-visual" aria-hidden="true">
 <div class="circuit-diagram">
 <video class="hero-video" autoplay muted loop playsinline id="hero-video">
-<source src="Digital_data_flows_to_grids_202607132219.mp4" type="video/mp4" />
+<source src="Hero_Video.mp4" type="video/mp4" />
 </video>
 <div class="hero-video-overlay"></div>
 <button id="video-toggle" class="video-toggle-btn" type="button" aria-label="Pause background video">⏸</button>
 </div>
+</div>
+<div class="rw-intro" id="rwIntro">
+  <p class="rw-intro-words"><span>Optimize.</span><span>Transform.</span><span>Rewire.</span></p>
+  <a class="rw-intro-link" href="#hero">Rewire your business for the better →</a>
+  <button type="button" class="rw-intro-skip">Skip</button>
 </div>
 </section>
 
@@ -197,11 +224,11 @@
 <section class="hero" id="hero" aria-labelledby="hero-heading">
 <div class="hero-content">
 <div class="hero-left">
-<div class="hero-tag mono">// Rewire your operations</div>
+<div class="hero-tag mono">// Optimize. Transform. Rewire.</div>
 <h1 class="hero-title" id="hero-heading">
-<span class="line">Business</span>
-<span class="line accent-word">Intelligence</span>
-<span class="line">Redefined</span>
+<span class="line">Rewire your</span>
+<span class="line accent-word">business</span>
+<span class="line">for the better.</span>
 </h1>
 </div>
 <div class="hero-right">
@@ -505,6 +532,28 @@ to transform how your organization thinks, moves, and grows.
 </footer>
 
 <script src="script.js?v=1"></script>
+
+<!-- Hero intro controller -->
+<script>
+(function(){
+  var intro=document.getElementById('rwIntro'), v=document.getElementById('hero-video');
+  if(!intro||!v) return;
+  if(document.documentElement.classList.contains('rw-skip')){intro.remove();return;}
+  v.pause(); try{v.currentTime=0}catch(e){}
+  var done=false;
+  function finish(){
+    if(done) return; done=true;
+    intro.classList.add('done');
+    var p=v.play(); if(p&&p.catch) p.catch(function(){});
+    try{sessionStorage.setItem('rwIntro','1')}catch(e){}
+    setTimeout(function(){intro.remove()},900);
+  }
+  var t=setTimeout(finish,4200);
+  intro.addEventListener('click',function(e){
+    if(e.target.closest('a,button')){clearTimeout(t);finish();}
+  });
+})();
+</script>
 
 <!-- Rewire Orbiter — animated hero-style orbit (About section) -->
 <script>
