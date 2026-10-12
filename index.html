@@ -144,29 +144,51 @@
 <link rel="stylesheet" href="style.css?v=1" />
 
 <!-- ═══ HERO INTRO (plays before the video) ═══ -->
-<script>try{if(location.search.indexOf('intro')<0&&sessionStorage.getItem('rwIntro'))document.documentElement.classList.add('rw-skip')}catch(e){}</script>
 <style>
 /* Intro lives INSIDE .circuit-diagram (the video box), so it matches the video's edges and spacing exactly */
 .rw-intro{position:absolute;inset:0;z-index:4;background:#000;border-radius:inherit;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:1.1rem;text-align:center;padding:0 6%;box-sizing:border-box;transition:opacity .8s ease}
-.rw-intro.done{opacity:0;pointer-events:none}
+  gap:1.1rem;text-align:center;padding:0 6%;box-sizing:border-box;transition:opacity .6s ease,visibility 0s}
+.rw-intro.done{opacity:0;pointer-events:none;visibility:hidden;transition:opacity .8s ease,visibility 0s .8s}
 .rw-intro-words{margin:0;color:#fff;font-family:'Syne',sans-serif;font-weight:800;
   font-size:clamp(1.4rem,4.6vw,3rem);line-height:1.15}
-.rw-intro-words span{display:inline-block;margin:0 .15em;opacity:0;transform:translateY(12px);animation:rwRise .7s ease forwards}
-.rw-intro-words span:nth-child(1){animation-delay:.4s}
-.rw-intro-words span:nth-child(2){animation-delay:1.2s}
-.rw-intro-words span:nth-child(3){animation-delay:2s;color:#0ea5e9}
+.rw-intro-words span{display:inline-block;margin:0 .15em;opacity:0;transform:translateY(12px)}
+.rw-intro.run .rw-intro-words span{animation:rwRise .7s ease forwards}
+.rw-intro.run .rw-intro-words span:nth-child(1){animation-delay:.4s}
+.rw-intro.run .rw-intro-words span:nth-child(2){animation-delay:1.2s}
+.rw-intro.run .rw-intro-words span:nth-child(3){animation-delay:2s}
+.rw-intro-words span:nth-child(3){color:#0ea5e9}
 .rw-intro-link{color:#fff;text-decoration:none;font-family:'DM Mono',monospace;font-size:clamp(.8rem,1.8vw,1.05rem);
-  border-bottom:2px solid #0ea5e9;padding-bottom:.25rem;opacity:0;animation:rwRise .7s ease 2.8s forwards}
+  border-bottom:2px solid #0ea5e9;padding-bottom:.25rem;opacity:0;transform:translateY(12px)}
+.rw-intro.run .rw-intro-link{animation:rwRise .7s ease 2.8s forwards}
 .rw-intro-link:hover{color:#0ea5e9}
-.rw-intro-skip{position:absolute;right:64px;bottom:24px;background:none;border:0;color:#fff;opacity:.6;
+.video-toggle-btn.video-sound-btn{right:60px}
+.rw-intro-skip{position:absolute;left:20px;bottom:24px;background:none;border:0;color:#fff;opacity:.6;
   font-family:'DM Mono',monospace;font-size:.85rem;line-height:1;cursor:pointer;text-decoration:underline}
 .rw-intro-skip:hover,.rw-intro-skip:focus-visible{opacity:1}
-.rw-skip .rw-intro{display:none}
 @keyframes rwRise{to{opacity:1;transform:none}}
 @media (prefers-reduced-motion: reduce){
-  .rw-intro-words span,.rw-intro-link{animation:none;opacity:1;transform:none}
+  .rw-intro-words span,.rw-intro-link,
+  .rw-intro.run .rw-intro-words span,.rw-intro.run .rw-intro-link{animation:none;opacity:1;transform:none}
+}
+
+/* Equal spacing: gap from the logo (above) to the video row = gap from the video row to the headline (below).
+   Change --vgap to move the row up or down; both sides stay equal. */
+:root{--vgap:4rem}
+.hero-video-section{
+  padding-top:calc(1.2rem + 240px + var(--vgap));          /* nav padding + logo height + gap */
+  padding-bottom:max(0px,calc(var(--vgap) - 4rem));        /* .hero already adds 4rem above its content */
+}
+@media (max-width:1024px){
+  :root{--vgap:3rem}
+  .hero-video-section{padding-top:calc(1.2rem + 180px + var(--vgap));padding-bottom:max(0px,calc(var(--vgap) - 2rem))}
+}
+@media (max-width:768px){
+  :root{--vgap:2.5rem}
+  .hero-video-section{padding-top:calc(.6rem + 120px + var(--vgap));padding-bottom:max(0px,calc(var(--vgap) - 1.5rem))}
+}
+@media (max-width:480px){
+  .hero-video-section{padding-top:calc(.6rem + 96px + var(--vgap))}
 }
 </style>
 <noscript><style>.rw-intro{display:none}</style></noscript>
@@ -222,6 +244,7 @@
   <button type="button" class="rw-intro-skip">Skip</button>
 </div>
 <button id="video-toggle" class="video-toggle-btn" type="button" aria-label="Pause background video">⏸</button>
+<button id="rw-sound" class="video-toggle-btn video-sound-btn" type="button" aria-label="Turn sound on" aria-pressed="false">🔇</button>
 </div>
 </div>
 </section>
@@ -544,21 +567,58 @@ to transform how your organization thinks, moves, and grows.
 (function(){
   var intro=document.getElementById('rwIntro'), v=document.getElementById('hero-video');
   if(!intro||!v) return;
-  if(document.documentElement.classList.contains('rw-skip')){intro.remove();return;}
-  v.pause(); try{v.currentTime=0}catch(e){}
-  var done=false;
-  function finish(){
-    if(done) return; done=true;
-    intro.classList.add('done');
-    var p=v.play(); if(p&&p.catch) p.catch(function(){});
-    try{sessionStorage.setItem('rwIntro','1')}catch(e){}
-    setTimeout(function(){intro.remove()},900);
-  }
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var t=setTimeout(finish,reduce?2600:4200);
-  intro.addEventListener('click',function(e){
-    if(e.target.closest('a,button')){clearTimeout(t);finish();}
+  var HOLD=reduce?2600:4200, timer=null, showing=false;
+
+  // Loop is driven here: intro -> video plays once -> 'ended' -> intro again.
+  v.loop=false; v.removeAttribute('loop');
+
+  function play(){ var p=v.play(); if(p&&p.catch) p.catch(function(){}); }
+
+  // Sound: try it on the first play only. Browsers block unmuted autoplay until the visitor
+  // interacts, so if blocked we fall back to muted. A click on Skip / the link / the sound button counts.
+  var firstPlay=true, userUnmuted=false, sb=document.getElementById('rw-sound');
+  function playWithSound(){
+    v.muted=false;
+    var p=v.play();
+    if(p&&p.catch) p.catch(function(){ v.muted=true; play(); });
+  }
+  function syncSound(){
+    if(!sb) return;
+    var on=!v.muted;
+    sb.textContent=on?'🔊':'🔇';
+    sb.setAttribute('aria-label',on?'Turn sound off':'Turn sound on');
+    sb.setAttribute('aria-pressed',on?'true':'false');
+  }
+  v.addEventListener('volumechange',syncSound); syncSound();
+  if(sb) sb.addEventListener('click',function(){
+    v.muted=!v.muted; userUnmuted=!v.muted;
+    if(!v.muted && v.paused && !showing) play();
   });
+
+  function show(){
+    showing=true; clearTimeout(timer);
+    v.pause(); try{v.currentTime=0}catch(e){}
+    intro.classList.remove('run','done');
+    void intro.offsetWidth;                  // restart the word animations
+    intro.classList.add('run');
+    timer=setTimeout(hide,HOLD);
+  }
+  function hide(){
+    if(!showing) return;
+    showing=false; clearTimeout(timer);
+    intro.classList.add('done');
+    if(firstPlay){ firstPlay=false; playWithSound(); } else play();
+  }
+
+  v.addEventListener('ended',function(){
+    if(!userUnmuted) v.muted=true;           // later loops default to no audio
+    if(reduce){ try{v.currentTime=0}catch(e){} play(); return; }  // reduced motion: plain loop, no repeating intro
+    show();
+  });
+  intro.addEventListener('click',function(e){ if(e.target.closest('a,button')) hide(); });
+
+  show();
 })();
 </script>
 
